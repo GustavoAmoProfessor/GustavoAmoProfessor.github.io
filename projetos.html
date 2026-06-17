@@ -1,0 +1,309 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Projetos | Gustavo Garcia de Amo</title>
+
+<style>
+
+:root{
+    --primary:#0b5f8a;
+    --primary-dark:#084a6c;
+    --accent:#18a999;
+    --bg:#f5f8fb;
+    --card:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#dbe5ee;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+header{
+    background:white;
+    border-bottom:1px solid var(--border);
+}
+
+.nav{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-weight:bold;
+    color:var(--primary);
+    font-size:1.2rem;
+}
+
+.menu{
+    display:flex;
+    gap:20px;
+}
+
+.menu a{
+    text-decoration:none;
+    color:var(--text);
+    font-weight:600;
+}
+
+.menu a:hover{
+    color:var(--primary);
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:50px 20px;
+}
+
+.hero{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.hero h1{
+    color:var(--primary);
+    font-size:3rem;
+    margin-bottom:15px;
+}
+
+.hero p{
+    color:var(--muted);
+    max-width:800px;
+    margin:auto;
+}
+
+.disciplina{
+    margin-bottom:50px;
+}
+
+.disciplina h2{
+    margin-bottom:20px;
+    color:var(--primary);
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,.05);
+}
+
+.card h3{
+    margin-bottom:10px;
+}
+
+.card p{
+    color:var(--muted);
+    margin-bottom:15px;
+}
+
+.badge{
+    display:inline-block;
+    background:#e8f6fa;
+    color:var(--primary);
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:.85rem;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.btn{
+    display:inline-block;
+    text-decoration:none;
+    background:var(--primary);
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+}
+
+.btn:hover{
+    background:var(--primary-dark);
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:var(--muted);
+    border-top:1px solid var(--border);
+    background:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="nav">
+
+        <div class="logo">
+            Gustavo Garcia de Amo
+        </div>
+
+        <div class="menu">
+            <a href="index.html">Início</a>
+            <a href="publicacoes.html">Publicações</a>
+            <a href="rea.html">REA</a>
+            <a href="contato.html">Contato</a>
+        </div>
+
+    </div>
+</header>
+
+<section class="container">
+
+    <div class="hero">
+
+        <h1>Projetos Acadêmicos</h1>
+
+        <p>
+            Espaço destinado aos projetos desenvolvidos nas disciplinas,
+            contemplando propostas práticas, documentação, critérios de
+            avaliação e materiais complementares.
+        </p>
+
+    </div>
+
+    <div class="disciplina">
+
+        <h2>Desenvolvimento de Sistemas</h2>
+
+        <div class="grid">
+
+            <div class="card">
+                <span class="badge">Projeto Integrador</span>
+
+                <h3>Sistema de Biblioteca</h3>
+
+                <p>
+                    Desenvolvimento de uma aplicação para cadastro,
+                    empréstimo e devolução de livros.
+                </p>
+
+                <a href="#" class="btn">Ver Projeto</a>
+            </div>
+
+            <div class="card">
+                <span class="badge">Projeto Integrador</span>
+
+                <h3>Gestão de Eventos</h3>
+
+                <p>
+                    Sistema para cadastro e gerenciamento de eventos,
+                    participantes e inscrições.
+                </p>
+
+                <a href="#" class="btn">Ver Projeto</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="disciplina">
+
+        <h2>Lógica de Programação</h2>
+
+        <div class="grid">
+
+            <div class="card">
+                <span class="badge">Algoritmos</span>
+
+                <h3>Ordenação de Arquivos</h3>
+
+                <p>
+                    Aplicação de algoritmos de ordenação para organização
+                    de arquivos por tamanho.
+                </p>
+
+                <a href="#" class="btn">Ver Projeto</a>
+            </div>
+
+            <div class="card">
+                <span class="badge">Algoritmos</span>
+
+                <h3>Sistema de Cadastro</h3>
+
+                <p>
+                    Desenvolvimento de algoritmos para cadastro,
+                    consulta, alteração e exclusão de registros.
+                </p>
+
+                <a href="#" class="btn">Ver Projeto</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="disciplina">
+
+        <h2>Informática Básica</h2>
+
+        <div class="grid">
+
+            <div class="card">
+                <span class="badge">Produtividade</span>
+
+                <h3>Currículo Digital</h3>
+
+                <p>
+                    Elaboração de currículo utilizando ferramentas digitais
+                    e boas práticas de apresentação profissional.
+                </p>
+
+                <a href="#" class="btn">Ver Projeto</a>
+            </div>
+
+            <div class="card">
+                <span class="badge">Planilhas</span>
+
+                <h3>Controle Financeiro</h3>
+
+                <p>
+                    Construção de planilha eletrônica para organização
+                    financeira pessoal.
+                </p>
+
+                <a href="#" class="btn">Ver Projeto</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    © 2026 Gustavo Garcia de Amo
+</footer>
+
+</body>
+</html>
+```
