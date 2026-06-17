@@ -1,0 +1,324 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Contato | Gustavo Garcia de Amo</title>
+
+<style>
+
+:root{
+    --primary:#0b5f8a;
+    --primary-dark:#084a6c;
+    --accent:#18a999;
+    --bg:#f5f8fb;
+    --card:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#dbe5ee;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:40px 20px;
+}
+
+header{
+    background:white;
+    border-bottom:1px solid var(--border);
+}
+
+.nav{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:1.3rem;
+    font-weight:bold;
+    color:var(--primary);
+}
+
+.nav-links{
+    display:flex;
+    gap:20px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:var(--text);
+    font-weight:600;
+}
+
+.nav-links a:hover{
+    color:var(--primary);
+}
+
+.hero{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.hero h1{
+    font-size:3rem;
+    color:var(--primary);
+    margin-bottom:15px;
+}
+
+.hero p{
+    color:var(--muted);
+    max-width:700px;
+    margin:auto;
+}
+
+.contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1.2fr;
+    gap:30px;
+}
+
+.card{
+    background:var(--card);
+    border-radius:16px;
+    padding:30px;
+    border:1px solid var(--border);
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+}
+
+.card h2{
+    color:var(--primary);
+    margin-bottom:20px;
+}
+
+.info-item{
+    margin-bottom:20px;
+}
+
+.info-item h3{
+    margin-bottom:8px;
+    font-size:1rem;
+}
+
+.info-item a{
+    color:var(--primary);
+    text-decoration:none;
+}
+
+.info-item a:hover{
+    text-decoration:underline;
+}
+
+form{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+label{
+    font-weight:600;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    font-size:1rem;
+}
+
+input:focus,
+textarea:focus{
+    outline:none;
+    border-color:var(--primary);
+}
+
+button{
+    background:var(--primary);
+    color:white;
+    border:none;
+    padding:14px;
+    border-radius:10px;
+    font-size:1rem;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button:hover{
+    background:var(--primary-dark);
+}
+
+footer{
+    margin-top:60px;
+    padding:30px;
+    text-align:center;
+    color:var(--muted);
+}
+
+@media(max-width:900px){
+
+.contact-grid{
+    grid-template-columns:1fr;
+}
+
+.hero h1{
+    font-size:2.2rem;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <nav class="nav">
+
+        <div class="logo">
+            Gustavo Garcia de Amo
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html">Início</a>
+            <a href="publicacoes.html">Publicações</a>
+            <a href="rea.html">REA</a>
+            <a href="ensino.html">Ensino</a>
+            <a href="dissertacao.html">Dissertação</a>
+        </div>
+
+    </nav>
+</header>
+
+<section class="container hero">
+
+    <h1>Contato</h1>
+
+    <p>
+        Entre em contato para parcerias acadêmicas,
+        projetos de pesquisa, palestras, atividades de ensino,
+        desenvolvimento de recursos educacionais ou colaborações científicas.
+    </p>
+
+</section>
+
+<section class="container">
+
+    <div class="contact-grid">
+
+        <div class="card">
+
+            <h2>Informações de Contato</h2>
+
+            <div class="info-item">
+                <h3>📧 E-mail</h3>
+                <a href="mailto:gustavo.garcia.de.amo@gmail.com">
+                    gustavo.garcia.de.amo@gmail.com
+                </a>
+            </div>
+
+            <div class="info-item">
+                <h3>📄 Currículo Lattes</h3>
+                <a href="http://lattes.cnpq.br/8461796088196201" target="_blank">
+                    Acessar currículo
+                </a>
+            </div>
+
+            <div class="info-item">
+                <h3>🆔 ORCID</h3>
+                <a href="https://orcid.org/0009-0009-5390-4066" target="_blank">
+                    0009-0009-5390-4066
+                </a>
+            </div>
+
+            <div class="info-item">
+                <h3>🎓 Google Scholar</h3>
+                <a href="https://scholar.google.com.br/citations?user=vehTwo4AAAAJ" target="_blank">
+                    Perfil Acadêmico
+                </a>
+            </div>
+
+            <div class="info-item">
+                <h3>🏛 Instituição</h3>
+                <p>
+                    Instituto Federal Catarinense (IFC)<br>
+                    Programa de Pós-Graduação em Educação
+                </p>
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Envie uma mensagem</h2>
+
+            <form action="https://formsubmit.co/gustavo.garcia.de.amo@gmail.com" method="POST">
+
+                <input type="hidden" name="_captcha" value="false">
+
+                <input type="hidden"
+                       name="_subject"
+                       value="Contato pelo Portfólio Acadêmico">
+
+                <input type="hidden"
+                       name="_next"
+                       value="https://SEUUSUARIO.github.io/obrigado.html">
+
+                <div>
+                    <label>Nome</label>
+                    <input type="text" name="Nome" required>
+                </div>
+
+                <div>
+                    <label>E-mail</label>
+                    <input type="email" name="Email" required>
+                </div>
+
+                <div>
+                    <label>Assunto</label>
+                    <input type="text" name="Assunto" required>
+                </div>
+
+                <div>
+                    <label>Mensagem</label>
+                    <textarea name="Mensagem" rows="8" required></textarea>
+                </div>
+
+                <button type="submit">
+                    Enviar Mensagem
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    © 2026 Gustavo Garcia de Amo • Portfólio Acadêmico
+</footer>
+
+</body>
+</html>
+```
