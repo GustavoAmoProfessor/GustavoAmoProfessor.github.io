@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Produtos & Serviços | Gustavo Garcia de Amo</title>
+<meta name="description" content="Consultorias, palestras, aulas particulares e treinamentos para desenvolvimento de pesquisas científicas, educação, IA e tecnologias digitais.">
+
+<style>
+:root{
+    --primary:#0b5f8a;
+    --primary-dark:#084a6c;
+    --accent:#18a999;
+    --bg:#f6f8fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#64748b;
+    --border:#dbe5ee;
+    --soft:#e8f6fa;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+}
+
+a{
+    text-decoration:none;
+}
+
+header{
+    background:white;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.nav{
+    max-width:1150px;
+    margin:auto;
+    padding:18px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.logo{
+    color:var(--primary);
+    font-weight:800;
+    font-size:1.1rem;
+}
+
+.menu{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+}
+
+.menu a{
+    color:var(--text);
+    font-weight:600;
+    font-size:.94rem;
+}
+
+.menu a:hover{
+    color:var(--primary);
+}
+
+.container{
+    max-width:1150px;
+    margin:auto;
+    padding:48px 20px;
+}
+
+.hero{
+    text-align:center;
+    padding:48px 0 30px;
+}
+
+.kicker{
+    display:inline-block;
+    margin-bottom:16px;
+    padding:8px 14px;
+    border-radius:999px;
+    background:var(--soft);
+    color:var(--primary-dark);
+    font-weight:700;
+}
+
+.hero h1{
+    font-size:clamp(2.2rem, 6vw, 4rem);
+    color:var(--primary);
+    line-height:1.1;
+    margin-bottom:16px;
+}
+
+.hero p{
+    color:var(--muted);
+    max-width:780px;
+    margin:auto;
+    font-size:1.08rem;
+}
+
+.actions{
+    margin-top:26px;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.btn{
+    display:inline-block;
+    padding:13px 18px;
+    border-radius:999px;
+    background:var(--primary);
+    color:white;
+    font-weight:800;
+    border:1px solid var(--primary);
+}
+
+.btn:hover{
+    background:var(--primary-dark);
+}
+
+.btn-light{
+    background:white;
+    color:var(--primary);
+    border:1px solid var(--border);
+}
+
+.btn-light:hover{
+    background:var(--soft);
+}
+
+.quick{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:20px;
+    margin:24px 0 36px;
+    box-shadow:0 8px 22px rgba(0,0,0,.04);
+}
+
+.quick h2{
+    color:var(--primary);
+    font-size:1.1rem;
+    margin-bottom:12px;
+}
+
+.quick-links{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.quick-links a{
+    background:var(--soft);
+    color:var(--primary-dark);
+    border:1px solid #cce7ef;
+    border-radius:999px;
+    padding:9px 13px;
+    font-weight:700;
+    font-size:.92rem;
+}
+
+.quick-links a:hover{
+    background:var(--primary);
+    color:white;
+}
+
+.section{
+    margin-bottom:42px;
+}
+
+.section-title{
+    margin-bottom:18px;
+    border-bottom:2px solid var(--border);
+    padding-bottom:12px;
+}
+
+.section-title h2{
+    color:var(--primary);
+    font-size:1.9rem;
+}
+
+.section-title p{
+    color:var(--muted);
+    max-width:800px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:24px;
+    box-shadow:0 8px 22px rgba(0,0,0,.04);
+}
+
+.card h3{
+    color:var(--primary-dark);
+    margin-bottom:10px;
+    font-size:1.2rem;
+}
+
+.card p{
+    color:var(--muted);
+    margin-bottom:14px;
+}
+
+.card ul{
+    padding-left:20px;
+    color:var(--muted);
+}
+
+.card li{
+    margin-bottom:7px;
+}
+
+.badge{
+    display:inline-block;
+    background:var(--soft);
+    color:var(--primary);
+    border-radius:999px;
+    padding:6px 10px;
+    font-size:.78rem;
+    font-weight:800;
+    margin-bottom:12px;
+}
+
+.package{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.banner{
+    background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+    color:white;
+    border-radius:24px;
+    padding:34px;
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    align-items:center;
+    gap:20px;
+}
+
+.banner h2{
+    font-size:2rem;
+    margin-bottom:10px;
+}
+
+.banner p{
+    color:#e2e8f0;
+}
+
+.banner .btn{
+    background:white;
+    color:var(--primary);
+    border-color:white;
+    justify-self:end;
+}
+
+.banner .btn:hover{
+    background:var(--soft);
+}
+
+.info-list{
+    display:grid;
+    gap:12px;
+}
+
+.info{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:18px;
+}
+
+.info strong{
+    color:var(--primary-dark);
+}
+
+.info p{
+    color:var(--muted);
+    margin-top:4px;
+}
+
+footer{
+    margin-top:50px;
+    padding:30px 20px;
+    background:white;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+    text-align:center;
+}
+
+@media(max-width:950px){
+    .grid,
+    .package,
+    .banner{
+        grid-template-columns:1fr;
+    }
+
+    .banner .btn{
+        justify-self:start;
+    }
+}
+
+@media(max-width:680px){
+    .nav{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .actions{
+        flex-direction:column;
+    }
+
+    .btn{
+        text-align:center;
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <nav class="nav">
+        <a class="logo" href="index.html">Gustavo Garcia de Amo</a>
+
+        <div class="menu">
+            <a href="index.html">Início</a>
+            <a href="publicacoes.html">Publicações</a>
+            <a href="dissertacao.html">Dissertação</a>
+            <a href="projetos.html">Projetos</a>
+            <a href="rea.html">REA</a>
+            <a href="servicos.html">Produtos & Serviços</a>
+            <a href="contato.html">Contato</a>
+        </div>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <span class="kicker">Consultorias • Palestras • Aulas Particulares • Treinamentos</span>
+
+        <h1>Produtos & Serviços</h1>
+
+        <p>
+            Apoio especializado para estudantes, professores, pesquisadores e instituições
+            que desejam desenvolver pesquisas científicas, projetos educacionais,
+            formações em tecnologia e práticas com Inteligência Artificial.
+        </p>
+
+        <div class="actions">
+            <a class="btn" href="mailto:gustavo.garcia.de.amo@gmail.com?subject=Solicitação de serviço ou consultoria">Solicitar proposta</a>
+            <a class="btn btn-light" href="#servicos">Ver serviços</a>
+        </div>
+    </section>
+
+    <section class="quick">
+        <h2>Navegação rápida</h2>
+        <div class="quick-links">
+            <a href="#consultoria">Consultoria acadêmica</a>
+            <a href="#palestras">Palestras</a>
+            <a href="#aulas">Aulas particulares</a>
+            <a href="#treinamentos">Treinamentos</a>
+            <a href="#pacotes">Formatos</a>
+            <a href="#contato-servico">Contato</a>
+        </div>
+    </section>
+
+    <section class="section" id="servicos">
+        <div class="section-title">
+            <h2>Serviços oferecidos</h2>
+            <p>
+                As atividades podem ser realizadas de forma presencial, remota ou híbrida,
+                conforme objetivo, público e disponibilidade.
+            </p>
+        </div>
+
+        <div class="grid">
+
+            <article class="card" id="consultoria">
+                <span class="badge">Pesquisa científica</span>
+                <h3>Consultoria acadêmica</h3>
+                <p>
+                    Apoio na organização, planejamento e desenvolvimento de pesquisas científicas.
+                </p>
+                <ul>
+                    <li>Definição de tema, problema e objetivos.</li>
+                    <li>Estruturação metodológica.</li>
+                    <li>Revisão de literatura e protocolo PRISMA.</li>
+                    <li>Organização de artigos, TCCs e projetos.</li>
+                    <li>Uso ético de IA no apoio à escrita científica.</li>
+                </ul>
+            </article>
+
+            <article class="card" id="palestras">
+                <span class="badge">Eventos e instituições</span>
+                <h3>Palestras</h3>
+                <p>
+                    Palestras para escolas, instituições, eventos acadêmicos e formações docentes.
+                </p>
+                <ul>
+                    <li>Inteligência Artificial na Educação.</li>
+                    <li>Cidadania digital e segurança digital.</li>
+                    <li>LGPD para educadores.</li>
+                    <li>Metodologias ativas e tecnologias digitais.</li>
+                    <li>Permanência estudantil e inovação educacional.</li>
+                </ul>
+            </article>
+
+            <article class="card" id="aulas">
+                <span class="badge">Acompanhamento individual</span>
+                <h3>Aulas particulares</h3>
+                <p>
+                    Atendimento individual ou em pequenos grupos para estudantes e profissionais.
+                </p>
+                <ul>
+                    <li>Lógica de programação.</li>
+                    <li>Informática básica e produtividade digital.</li>
+                    <li>Redes de computadores e segurança da informação.</li>
+                    <li>Introdução à pesquisa científica.</li>
+                    <li>Ferramentas digitais para estudo e trabalho.</li>
+                </ul>
+            </article>
+
+            <article class="card" id="treinamentos">
+                <span class="badge">Formação prática</span>
+                <h3>Treinamentos</h3>
+                <p>
+                    Capacitações práticas para turmas, equipes pedagógicas e grupos de pesquisa.
+                </p>
+                <ul>
+                    <li>IA generativa para professores.</li>
+                    <li>Elaboração de prompts acadêmicos.</li>
+                    <li>Zotero, organização bibliográfica e citações.</li>
+                    <li>Produção de materiais educacionais.</li>
+                    <li>Segurança digital para estudantes e docentes.</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <span class="badge">Educação e tecnologia</span>
+                <h3>Recursos educacionais</h3>
+                <p>
+                    Desenvolvimento e organização de materiais didáticos e recursos digitais.
+                </p>
+                <ul>
+                    <li>Apostilas e roteiros de aula.</li>
+                    <li>Atividades práticas e avaliações.</li>
+                    <li>Objetos de aprendizagem.</li>
+                    <li>Portfólios educacionais.</li>
+                    <li>Materiais com acessibilidade.</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <span class="badge">Projetos digitais</span>
+                <h3>Soluções para ensino</h3>
+                <p>
+                    Apoio na criação de páginas, repositórios e ambientes simples para ensino.
+                </p>
+                <ul>
+                    <li>Portfólio docente.</li>
+                    <li>Repositório de materiais de aula.</li>
+                    <li>Páginas para projetos educacionais.</li>
+                    <li>Organização de recursos em GitHub Pages.</li>
+                    <li>Estruturação de trilhas de aprendizagem.</li>
+                </ul>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="section" id="pacotes">
+        <div class="section-title">
+            <h2>Formatos de atendimento</h2>
+            <p>
+                Os formatos abaixo ajudam a organizar a contratação. Os valores podem ser definidos
+                conforme carga horária, demanda, complexidade e modalidade.
+            </p>
+        </div>
+
+        <div class="package">
+
+            <article class="card">
+                <span class="badge">Pontual</span>
+                <h3>Atendimento individual</h3>
+                <p>Ideal para tirar dúvidas, revisar um projeto ou organizar uma etapa específica.</p>
+                <ul>
+                    <li>Encontro único.</li>
+                    <li>Orientação objetiva.</li>
+                    <li>Indicação de próximos passos.</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <span class="badge">Acompanhamento</span>
+                <h3>Mentoria por etapas</h3>
+                <p>Indicado para quem deseja desenvolver pesquisa, artigo, TCC ou projeto com acompanhamento.</p>
+                <ul>
+                    <li>Planejamento da pesquisa.</li>
+                    <li>Reuniões periódicas.</li>
+                    <li>Acompanhamento da escrita e metodologia.</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <span class="badge">Institucional</span>
+                <h3>Formação para grupos</h3>
+                <p>Voltado para escolas, equipes docentes, turmas e grupos de pesquisa.</p>
+                <ul>
+                    <li>Oficinas práticas.</li>
+                    <li>Palestras temáticas.</li>
+                    <li>Material de apoio.</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <span class="badge">Sob demanda</span>
+                <h3>Projeto personalizado</h3>
+                <p>Construído a partir de uma necessidade específica da instituição, turma ou pesquisador.</p>
+                <ul>
+                    <li>Diagnóstico inicial.</li>
+                    <li>Proposta customizada.</li>
+                    <li>Entrega combinada por escopo.</li>
+                </ul>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-title">
+            <h2>Temas de maior atuação</h2>
+            <p>Áreas em que os serviços podem ser organizados.</p>
+        </div>
+
+        <div class="info-list">
+            <div class="info">
+                <strong>Pesquisa científica:</strong>
+                <p>tema, problema, objetivos, metodologia, revisão de literatura, PRISMA, análise documental e escrita acadêmica.</p>
+            </div>
+
+            <div class="info">
+                <strong>Educação e IA:</strong>
+                <p>uso pedagógico da IA, elaboração de prompts, metodologias ativas, DUA, acessibilidade e formação docente.</p>
+            </div>
+
+            <div class="info">
+                <strong>Tecnologia e segurança digital:</strong>
+                <p>informática básica, lógica de programação, redes, segurança da informação, LGPD e cidadania digital.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="banner" id="contato-servico">
+        <div>
+            <h2>Quer conversar sobre uma proposta?</h2>
+            <p>
+                Envie uma mensagem com o tipo de serviço, público-alvo, carga horária desejada
+                e objetivo da atividade.
+            </p>
+        </div>
+
+        <a class="btn" href="mailto:gustavo.garcia.de.amo@gmail.com?subject=Solicitação de proposta - Produtos e Serviços">
+            Entrar em contato
+        </a>
+    </section>
+
+</main>
+
+<footer>
+    © 2026 Gustavo Garcia de Amo • Produtos & Serviços
+</footer>
+
+</body>
+</html>
