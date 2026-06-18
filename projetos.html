@@ -1,14 +1,11 @@
-```html
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Projetos | Gustavo Garcia de Amo</title>
+<title>Projetos de Ensino | Gustavo Garcia de Amo</title>
 
 <style>
-
 :root{
     --primary:#0b5f8a;
     --primary-dark:#084a6c;
@@ -18,6 +15,7 @@
     --text:#1e293b;
     --muted:#64748b;
     --border:#dbe5ee;
+    --soft:#e8f6fa;
 }
 
 *{
@@ -26,41 +24,55 @@
     box-sizing:border-box;
 }
 
+html{
+    scroll-behavior:smooth;
+}
+
 body{
     font-family:Arial, Helvetica, sans-serif;
     background:var(--bg);
     color:var(--text);
+    line-height:1.6;
+}
+
+a{
+    text-decoration:none;
 }
 
 header{
     background:white;
     border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:10;
 }
 
 .nav{
     max-width:1200px;
     margin:auto;
-    padding:20px;
+    padding:18px 20px;
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
+    gap:20px;
 }
 
 .logo{
     font-weight:bold;
     color:var(--primary);
-    font-size:1.2rem;
+    font-size:1.15rem;
 }
 
 .menu{
     display:flex;
-    gap:20px;
+    gap:18px;
+    flex-wrap:wrap;
 }
 
 .menu a{
-    text-decoration:none;
     color:var(--text);
     font-weight:600;
+    font-size:.95rem;
 }
 
 .menu a:hover{
@@ -70,240 +82,587 @@ header{
 .container{
     max-width:1200px;
     margin:auto;
-    padding:50px 20px;
+    padding:45px 20px;
 }
 
 .hero{
     text-align:center;
-    margin-bottom:50px;
+    padding-bottom:25px;
 }
 
 .hero h1{
     color:var(--primary);
     font-size:3rem;
-    margin-bottom:15px;
+    margin-bottom:14px;
 }
 
 .hero p{
-    color:var(--muted);
-    max-width:800px;
+    max-width:850px;
     margin:auto;
+    color:var(--muted);
 }
 
-.disciplina{
-    margin-bottom:50px;
-}
-
-.disciplina h2{
-    margin-bottom:20px;
-    color:var(--primary);
-}
-
-.grid{
+.layout{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-    gap:20px;
+    grid-template-columns:280px 1fr;
+    gap:30px;
+    align-items:start;
 }
 
-.card{
+.sidebar{
     background:white;
     border:1px solid var(--border);
-    border-radius:15px;
-    padding:25px;
-    box-shadow:0 5px 20px rgba(0,0,0,.05);
+    border-radius:16px;
+    padding:22px;
+    position:sticky;
+    top:95px;
+    box-shadow:0 8px 25px rgba(0,0,0,.04);
 }
 
-.card h3{
-    margin-bottom:10px;
-}
-
-.card p{
-    color:var(--muted);
+.sidebar h2{
+    color:var(--primary);
+    font-size:1.1rem;
     margin-bottom:15px;
 }
 
-.badge{
-    display:inline-block;
-    background:#e8f6fa;
-    color:var(--primary);
-    padding:6px 10px;
-    border-radius:20px;
-    font-size:.85rem;
-    font-weight:bold;
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar li{
     margin-bottom:10px;
 }
 
-.btn{
-    display:inline-block;
-    text-decoration:none;
-    background:var(--primary);
-    color:white;
-    padding:10px 15px;
-    border-radius:8px;
+.sidebar a{
+    display:block;
+    color:var(--text);
+    padding:10px 12px;
+    border-radius:10px;
+    font-weight:600;
 }
 
-.btn:hover{
-    background:var(--primary-dark);
+.sidebar a:hover{
+    background:var(--soft);
+    color:var(--primary);
+}
+
+.content{
+    display:flex;
+    flex-direction:column;
+    gap:35px;
+}
+
+.disciplina{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:28px;
+    box-shadow:0 8px 25px rgba(0,0,0,.04);
+}
+
+.disciplina-header{
+    border-bottom:1px solid var(--border);
+    padding-bottom:18px;
+    margin-bottom:22px;
+}
+
+.disciplina-header h2{
+    color:var(--primary);
+    font-size:1.8rem;
+    margin-bottom:8px;
+}
+
+.disciplina-header p{
+    color:var(--muted);
+}
+
+.bloco{
+    margin-bottom:28px;
+}
+
+.bloco:last-child{
+    margin-bottom:0;
+}
+
+.bloco h3{
+    color:var(--primary-dark);
+    margin-bottom:12px;
+    font-size:1.2rem;
+}
+
+.lista-projetos,
+.lista-materiais{
+    list-style:none;
+    display:grid;
+    gap:10px;
+}
+
+.lista-projetos a,
+.lista-materiais a{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    align-items:center;
+    background:#fbfdff;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px 16px;
+    color:var(--text);
+    transition:.2s;
+}
+
+.lista-projetos a:hover,
+.lista-materiais a:hover{
+    background:var(--soft);
+    border-color:#b7dce7;
+    transform:translateX(3px);
+}
+
+.titulo-link{
+    font-weight:700;
+    color:var(--primary-dark);
+}
+
+.descricao-link{
+    color:var(--muted);
+    font-size:.92rem;
+}
+
+.badge{
+    background:var(--soft);
+    color:var(--primary);
+    border-radius:999px;
+    padding:5px 10px;
+    font-size:.78rem;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.grid-info{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+}
+
+.info-card{
+    background:#fbfdff;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px;
+}
+
+.info-card h4{
+    color:var(--primary);
+    margin-bottom:6px;
+}
+
+.info-card p{
+    color:var(--muted);
+    font-size:.94rem;
 }
 
 footer{
-    text-align:center;
+    margin-top:50px;
     padding:30px;
-    color:var(--muted);
-    border-top:1px solid var(--border);
+    text-align:center;
     background:white;
+    border-top:1px solid var(--border);
+    color:var(--muted);
 }
 
+@media(max-width:900px){
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        position:static;
+    }
+
+    .grid-info{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:2.2rem;
+    }
+}
+
+@media(max-width:650px){
+    .nav{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .lista-projetos a,
+    .lista-materiais a{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+}
 </style>
 </head>
 
 <body>
 
 <header>
-    <div class="nav">
-
-        <div class="logo">
-            Gustavo Garcia de Amo
-        </div>
+    <nav class="nav">
+        <a class="logo" href="index.html">Gustavo Garcia de Amo</a>
 
         <div class="menu">
             <a href="index.html">Início</a>
             <a href="publicacoes.html">Publicações</a>
             <a href="rea.html">REA</a>
+            <a href="ensino.html">Ensino</a>
+            <a href="projetos.html">Projetos</a>
             <a href="contato.html">Contato</a>
         </div>
-
-    </div>
+    </nav>
 </header>
 
-<section class="container">
+<main class="container">
 
-    <div class="hero">
-
-        <h1>Projetos Acadêmicos</h1>
-
+    <section class="hero">
+        <h1>Projetos de Ensino</h1>
         <p>
-            Espaço destinado aos projetos desenvolvidos nas disciplinas,
-            contemplando propostas práticas, documentação, critérios de
-            avaliação e materiais complementares.
+            Página destinada à organização dos projetos, atividades, materiais e critérios de avaliação
+            das disciplinas. O objetivo é facilitar o acesso dos estudantes aos conteúdos e tornar o
+            percurso de aprendizagem mais claro, navegável e documentado.
         </p>
+    </section>
 
-    </div>
+    <section class="layout">
 
-    <div class="disciplina">
+        <aside class="sidebar">
+            <h2>Navegação</h2>
 
-        <h2>Desenvolvimento de Sistemas</h2>
+            <ul>
+                <li><a href="#desenvolvimento">Desenvolvimento de Sistemas</a></li>
+                <li><a href="#logica">Lógica de Programação</a></li>
+                <li><a href="#informatica">Informática Básica</a></li>
+            </ul>
 
-        <div class="grid">
+            <br>
 
-            <div class="card">
-                <span class="badge">Projeto Integrador</span>
+            <h2>Acesso rápido</h2>
 
-                <h3>Sistema de Biblioteca</h3>
+            <ul>
+                <li><a href="#projetos-ds">Projetos DS</a></li>
+                <li><a href="#projetos-logica">Projetos Lógica</a></li>
+                <li><a href="#projetos-info">Projetos Informática</a></li>
+                <li><a href="#avaliacao">Critérios gerais</a></li>
+            </ul>
+        </aside>
 
-                <p>
-                    Desenvolvimento de uma aplicação para cadastro,
-                    empréstimo e devolução de livros.
-                </p>
+        <div class="content">
 
-                <a href="#" class="btn">Ver Projeto</a>
-            </div>
+            <section class="disciplina" id="desenvolvimento">
 
-            <div class="card">
-                <span class="badge">Projeto Integrador</span>
+                <div class="disciplina-header">
+                    <h2>Desenvolvimento de Sistemas</h2>
+                    <p>
+                        Projetos voltados à análise, modelagem, documentação e construção de sistemas,
+                        com foco em resolução de problemas, organização de requisitos e desenvolvimento de soluções.
+                    </p>
+                </div>
 
-                <h3>Gestão de Eventos</h3>
+                <div class="bloco" id="projetos-ds">
+                    <h3>Projetos disponíveis</h3>
 
-                <p>
-                    Sistema para cadastro e gerenciamento de eventos,
-                    participantes e inscrições.
-                </p>
+                    <ul class="lista-projetos">
+                        <li>
+                            <a href="projetos/sistema-biblioteca.html">
+                                <span>
+                                    <span class="titulo-link">Sistema de Biblioteca</span><br>
+                                    <span class="descricao-link">Cadastro de livros, usuários, empréstimos e devoluções.</span>
+                                </span>
+                                <span class="badge">Projeto integrador</span>
+                            </a>
+                        </li>
 
-                <a href="#" class="btn">Ver Projeto</a>
-            </div>
+                        <li>
+                            <a href="projetos/sistema-eventos.html">
+                                <span>
+                                    <span class="titulo-link">Sistema de Gestão de Eventos</span><br>
+                                    <span class="descricao-link">Cadastro de eventos, participantes, inscrições e relatórios.</span>
+                                </span>
+                                <span class="badge">Aplicação web</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="projetos/sistema-estoque.html">
+                                <span>
+                                    <span class="titulo-link">Sistema de Controle de Estoque</span><br>
+                                    <span class="descricao-link">Produtos, entradas, saídas, fornecedores e movimentações.</span>
+                                </span>
+                                <span class="badge">CRUD</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="projetos/sistema-academico.html">
+                                <span>
+                                    <span class="titulo-link">Sistema Acadêmico</span><br>
+                                    <span class="descricao-link">Turmas, estudantes, notas, frequência e acompanhamento pedagógico.</span>
+                                </span>
+                                <span class="badge">Modelagem</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bloco">
+                    <h3>Materiais da disciplina</h3>
+
+                    <ul class="lista-materiais">
+                        <li>
+                            <a href="materiais/desenvolvimento-sistemas/plano-ensino.pdf">
+                                <span class="titulo-link">Plano de ensino</span>
+                                <span class="badge">PDF</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="materiais/desenvolvimento-sistemas/criterios-avaliacao.pdf">
+                                <span class="titulo-link">Critérios de avaliação dos projetos</span>
+                                <span class="badge">PDF</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="materiais/desenvolvimento-sistemas/modelo-documentacao.pdf">
+                                <span class="titulo-link">Modelo de documentação de sistema</span>
+                                <span class="badge">Modelo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </section>
+
+            <section class="disciplina" id="logica">
+
+                <div class="disciplina-header">
+                    <h2>Lógica de Programação</h2>
+                    <p>
+                        Projetos e exercícios para desenvolver raciocínio lógico, algoritmos, estruturas de decisão,
+                        repetição, vetores, funções e resolução de problemas computacionais.
+                    </p>
+                </div>
+
+                <div class="bloco" id="projetos-logica">
+                    <h3>Projetos disponíveis</h3>
+
+                    <ul class="lista-projetos">
+                        <li>
+                            <a href="projetos/ordenacao-arquivos.html">
+                                <span>
+                                    <span class="titulo-link">Ordenação de Arquivos</span><br>
+                                    <span class="descricao-link">Aplicação de método de ordenação para organizar arquivos por tamanho.</span>
+                                </span>
+                                <span class="badge">Algoritmos</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="projetos/cadastro-livros.html">
+                                <span>
+                                    <span class="titulo-link">Cadastro de Livros</span><br>
+                                    <span class="descricao-link">Cadastro, alteração, consulta e exclusão de registros.</span>
+                                </span>
+                                <span class="badge">CRUD básico</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="projetos/agenda-contatos.html">
+                                <span>
+                                    <span class="titulo-link">Agenda de Contatos</span><br>
+                                    <span class="descricao-link">Organização de contatos com busca, validação e listagem.</span>
+                                </span>
+                                <span class="badge">Estruturas</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="projetos/controle-financeiro-logica.html">
+                                <span>
+                                    <span class="titulo-link">Controle Financeiro Simples</span><br>
+                                    <span class="descricao-link">Entradas, saídas, saldo, categorias e relatório final.</span>
+                                </span>
+                                <span class="badge">Prática</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bloco">
+                    <h3>Materiais da disciplina</h3>
+
+                    <ul class="lista-materiais">
+                        <li>
+                            <a href="materiais/logica-programacao/lista-exercicios.pdf">
+                                <span class="titulo-link">Lista de exercícios</span>
+                                <span class="badge">PDF</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="materiais/logica-programacao/roteiro-projeto.pdf">
+                                <span class="titulo-link">Roteiro de projeto final</span>
+                                <span class="badge">Roteiro</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="materiais/logica-programacao/criterios-avaliacao.pdf">
+                                <span class="titulo-link">Critérios de avaliação</span>
+                                <span class="badge">PDF</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </section>
+
+            <section class="disciplina" id="informatica">
+
+                <div class="disciplina-header">
+                    <h2>Informática Básica</h2>
+                    <p>
+                        Atividades voltadas ao uso crítico, produtivo e seguro de tecnologias digitais,
+                        com foco em ferramentas de escritório, pesquisa, comunicação e cidadania digital.
+                    </p>
+                </div>
+
+                <div class="bloco" id="projetos-info">
+                    <h3>Projetos disponíveis</h3>
+
+                    <ul class="lista-projetos">
+                        <li>
+                            <a href="projetos/curriculo-digital.html">
+                                <span>
+                                    <span class="titulo-link">Currículo Digital</span><br>
+                                    <span class="descricao-link">Criação de currículo profissional com organização visual e textual.</span>
+                                </span>
+                                <span class="badge">Documento</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="projetos/planilha-financeira.html">
+                                <span>
+                                    <span class="titulo-link">Planilha de Controle Financeiro</span><br>
+                                    <span class="descricao-link">Uso de fórmulas, tabelas, gráficos e organização de dados.</span>
+                                </span>
+                                <span class="badge">Planilhas</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="projetos/apresentacao-profissional.html">
+                                <span>
+                                    <span class="titulo-link">Apresentação Profissional</span><br>
+                                    <span class="descricao-link">Construção de apresentação com clareza, objetividade e recursos visuais.</span>
+                                </span>
+                                <span class="badge">Slides</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="projetos/seguranca-digital.html">
+                                <span>
+                                    <span class="titulo-link">Segurança Digital no Cotidiano</span><br>
+                                    <span class="descricao-link">Senhas, golpes, privacidade, dados pessoais e uso consciente da internet.</span>
+                                </span>
+                                <span class="badge">Cidadania digital</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bloco">
+                    <h3>Materiais da disciplina</h3>
+
+                    <ul class="lista-materiais">
+                        <li>
+                            <a href="materiais/informatica-basica/apostila.pdf">
+                                <span class="titulo-link">Apostila de Informática Básica</span>
+                                <span class="badge">PDF</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="materiais/informatica-basica/atividades.pdf">
+                                <span class="titulo-link">Atividades práticas</span>
+                                <span class="badge">PDF</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="materiais/informatica-basica/criterios-avaliacao.pdf">
+                                <span class="titulo-link">Critérios de avaliação</span>
+                                <span class="badge">PDF</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </section>
+
+            <section class="disciplina" id="avaliacao">
+
+                <div class="disciplina-header">
+                    <h2>Critérios gerais de avaliação</h2>
+                    <p>
+                        Critérios comuns utilizados nas atividades e projetos. Cada disciplina pode ter pesos específicos.
+                    </p>
+                </div>
+
+                <div class="grid-info">
+                    <div class="info-card">
+                        <h4>Organização</h4>
+                        <p>Entrega estruturada, arquivos nomeados corretamente, documentação e clareza na apresentação.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>Funcionalidade</h4>
+                        <p>O projeto deve funcionar conforme o objetivo proposto e apresentar coerência com o conteúdo estudado.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>Autoria</h4>
+                        <p>O estudante deve explicar o que fez, justificar decisões e demonstrar domínio sobre a solução.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>Qualidade técnica</h4>
+                        <p>Uso adequado das ferramentas, boas práticas, legibilidade, revisão e correção dos erros principais.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>Criatividade</h4>
+                        <p>Aplicação de soluções próprias, melhorias, personalização e adequação ao problema proposto.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>Apresentação</h4>
+                        <p>Comunicação objetiva, domínio do conteúdo, demonstração do funcionamento e participação da equipe.</p>
+                    </div>
+                </div>
+
+            </section>
 
         </div>
 
-    </div>
+    </section>
 
-    <div class="disciplina">
-
-        <h2>Lógica de Programação</h2>
-
-        <div class="grid">
-
-            <div class="card">
-                <span class="badge">Algoritmos</span>
-
-                <h3>Ordenação de Arquivos</h3>
-
-                <p>
-                    Aplicação de algoritmos de ordenação para organização
-                    de arquivos por tamanho.
-                </p>
-
-                <a href="#" class="btn">Ver Projeto</a>
-            </div>
-
-            <div class="card">
-                <span class="badge">Algoritmos</span>
-
-                <h3>Sistema de Cadastro</h3>
-
-                <p>
-                    Desenvolvimento de algoritmos para cadastro,
-                    consulta, alteração e exclusão de registros.
-                </p>
-
-                <a href="#" class="btn">Ver Projeto</a>
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="disciplina">
-
-        <h2>Informática Básica</h2>
-
-        <div class="grid">
-
-            <div class="card">
-                <span class="badge">Produtividade</span>
-
-                <h3>Currículo Digital</h3>
-
-                <p>
-                    Elaboração de currículo utilizando ferramentas digitais
-                    e boas práticas de apresentação profissional.
-                </p>
-
-                <a href="#" class="btn">Ver Projeto</a>
-            </div>
-
-            <div class="card">
-                <span class="badge">Planilhas</span>
-
-                <h3>Controle Financeiro</h3>
-
-                <p>
-                    Construção de planilha eletrônica para organização
-                    financeira pessoal.
-                </p>
-
-                <a href="#" class="btn">Ver Projeto</a>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
+</main>
 
 <footer>
-    © 2026 Gustavo Garcia de Amo
+    © 2026 Gustavo Garcia de Amo • Projetos de Ensino
 </footer>
 
 </body>
 </html>
-```
