@@ -1,0 +1,487 @@
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Publicações | Gustavo Garcia de Amo</title>
+<meta name="description" content="Publicações acadêmicas de Gustavo Garcia de Amo: artigos, livros, capítulos de livros, resumos expandidos, resumos simples e apresentações de trabalho.">
+
+<style>
+:root{
+    --primary:#0b5f8a;
+    --primary-dark:#084a6c;
+    --accent:#18a999;
+    --bg:#f5f8fb;
+    --card:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#dbe5ee;
+    --soft:#e8f6fa;
+    --warning:#fff7ed;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+}
+
+a{
+    text-decoration:none;
+}
+
+header{
+    background:white;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.nav{
+    max-width:1200px;
+    margin:auto;
+    padding:18px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.logo{
+    color:var(--primary);
+    font-weight:800;
+    font-size:1.15rem;
+}
+
+.menu{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+}
+
+.menu a{
+    color:var(--text);
+    font-weight:600;
+    font-size:.95rem;
+}
+
+.menu a:hover{
+    color:var(--primary);
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:45px 20px;
+}
+
+.hero{
+    text-align:center;
+    margin-bottom:38px;
+}
+
+.hero h1{
+    color:var(--primary);
+    font-size:3rem;
+    margin-bottom:14px;
+}
+
+.hero p{
+    max-width:880px;
+    margin:auto;
+    color:var(--muted);
+}
+
+.quick-menu{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:20px;
+    margin-bottom:35px;
+    box-shadow:0 8px 25px rgba(0,0,0,.04);
+}
+
+.quick-menu h2{
+    font-size:1.1rem;
+    color:var(--primary);
+    margin-bottom:14px;
+}
+
+.quick-links{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.quick-links a{
+    background:var(--soft);
+    color:var(--primary-dark);
+    border:1px solid #cce7ef;
+    border-radius:999px;
+    padding:9px 14px;
+    font-weight:700;
+    font-size:.92rem;
+}
+
+.quick-links a:hover{
+    background:var(--primary);
+    color:white;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:12px;
+    margin-bottom:35px;
+}
+
+.stat{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:18px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.035);
+}
+
+.stat strong{
+    display:block;
+    color:var(--primary);
+    font-size:1.8rem;
+    line-height:1;
+    margin-bottom:6px;
+}
+
+.stat span{
+    color:var(--muted);
+    font-size:.86rem;
+}
+
+.section{
+    margin-bottom:45px;
+}
+
+.section-header{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:18px;
+    border-bottom:2px solid var(--border);
+    padding-bottom:12px;
+}
+
+.section-header h2{
+    color:var(--primary);
+    font-size:1.8rem;
+}
+
+.section-header p{
+    color:var(--muted);
+    max-width:650px;
+    font-size:.95rem;
+}
+
+.publication-list{
+    display:grid;
+    gap:14px;
+}
+
+.pub{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 8px 22px rgba(0,0,0,.04);
+}
+
+.pub-top{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:8px;
+}
+
+.pub h3{
+    color:var(--primary-dark);
+    font-size:1.12rem;
+    line-height:1.35;
+}
+
+.year{
+    background:var(--soft);
+    color:var(--primary);
+    border-radius:999px;
+    padding:5px 10px;
+    font-size:.8rem;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.meta{
+    color:var(--muted);
+    margin-bottom:12px;
+    font-size:.95rem;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    display:inline-block;
+    background:var(--primary);
+    color:white;
+    border-radius:10px;
+    padding:9px 13px;
+    font-weight:700;
+    font-size:.9rem;
+}
+
+.btn:hover{
+    background:var(--primary-dark);
+}
+
+.empty{
+    background:var(--warning);
+    border:1px dashed #f3c995;
+    border-radius:16px;
+    padding:18px;
+    color:#7c4a03;
+}
+
+.empty strong{
+    display:block;
+    margin-bottom:4px;
+}
+
+footer{
+    margin-top:50px;
+    padding:30px;
+    text-align:center;
+    background:white;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+}
+
+@media(max-width:1000px){
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:760px){
+    .nav{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .hero h1{
+        font-size:2.25rem;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .section-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .pub-top{
+        flex-direction:column;
+    }
+}
+
+@media(max-width:480px){
+    .stats{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <nav class="nav">
+        <a class="logo" href="index.html">Gustavo Garcia de Amo</a>
+
+        <div class="menu">
+            <a href="index.html">Início</a>
+            <a href="publicacoes.html">Publicações</a>
+            <a href="projetos.html">Projetos</a>
+            <a href="rea.html">REA</a>
+            <a href="dissertacao.html">Dissertação</a>
+            <a href="contato.html">Contato</a>
+        </div>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <h1>Publicações</h1>
+
+        <p>
+            Produção acadêmica organizada por tipo: artigos em periódicos, livros,
+            capítulos de livros, resumos expandidos, resumos simples e apresentações de trabalho.
+        </p>
+    </section>
+
+    <section class="quick-menu" aria-label="Navegação por tipo de publicação">
+        <h2>Navegação rápida</h2>
+
+        <div class="quick-links">
+            <a href="#artigos">Artigos</a>
+            <a href="#livros">Livros</a>
+            <a href="#capitulos">Capítulos de livros</a>
+            <a href="#resumos-expandidos">Resumos expandidos</a>
+            <a href="#resumos-simples">Resumos simples</a>
+            <a href="#apresentacoes">Apresentações de trabalho</a>
+        </div>
+    </section>
+
+    <section class="stats" aria-label="Resumo quantitativo das publicações">
+        <div class="stat"><strong>4</strong><span>artigos</span></div>
+        <div class="stat"><strong>0</strong><span>livros</span></div>
+        <div class="stat"><strong>0</strong><span>capítulos</span></div>
+        <div class="stat"><strong>0</strong><span>resumos expandidos</span></div>
+        <div class="stat"><strong>0</strong><span>resumos simples</span></div>
+        <div class="stat"><strong>0</strong><span>apresentações</span></div>
+    </section>
+
+    <section class="section" id="artigos">
+        <div class="section-header">
+            <div>
+                <h2>Artigos em periódicos</h2>
+                <p>Produções publicadas em revistas científicas e periódicos acadêmicos.</p>
+            </div>
+        </div>
+
+        <div class="publication-list">
+
+            <article class="pub">
+                <div class="pub-top">
+                    <h3>Inteligência artificial: (re)pensar a elaboração de prompts contextualizados no Sul Global</h3>
+                    <span class="year">2026</span>
+                </div>
+                <p class="meta">AMO, Gustavo Garcia de. <em>Contribuciones a las Ciencias Sociales</em>, v. 19.</p>
+                <div class="actions">
+                    <a class="btn" href="https://doi.org/10.55905/revconv.19n.4-027" target="_blank" rel="noopener">Acessar DOI</a>
+                </div>
+            </article>
+
+            <article class="pub">
+                <div class="pub-top">
+                    <h3>Empirismo, Natureza e Educação: diálogo entre Locke e Rousseau nas bases da pedagogia</h3>
+                    <span class="year">2025</span>
+                </div>
+                <p class="meta">AMO, G. G.; ZANCANARO, A. <em>Instrumento: Revista em Estudo e Pesquisa em Educação</em>, v. 27.</p>
+                <div class="actions">
+                    <a class="btn" href="https://periodicos.ufjf.br/index.php/revistainstrumento/article/view/49488" target="_blank" rel="noopener">Acessar artigo</a>
+                </div>
+            </article>
+
+            <article class="pub">
+                <div class="pub-top">
+                    <h3>IOT Networks and Technological Innovation in Industry</h3>
+                    <span class="year">2024</span>
+                </div>
+                <p class="meta">GARCIA DE AMO, Gustavo; ROEPKE, Hermano. <em>E-Tech: Tecnologias para Competitividade Industrial</em>, v. 17, p. 1-15.</p>
+                <div class="actions">
+                    <a class="btn" href="https://doi.org/10.18624/etech.v17i1.1381" target="_blank" rel="noopener">Acessar DOI</a>
+                </div>
+            </article>
+
+            <article class="pub">
+                <div class="pub-top">
+                    <h3>The Role of Law in Transforming Industry 4.0: how data analysts are shaping the legal future</h3>
+                    <span class="year">2023</span>
+                </div>
+                <p class="meta">
+                    GARCIA DE AMO, Gustavo; ROEPKE, Hermano. <em>E-Tech: Tecnologias para Competitividade Industrial</em>, v. 16.
+                    Título em espanhol: <em>Cómo los analistas de datos están dando forma al futuro legal</em>.
+                </p>
+                <div class="actions">
+                    <a class="btn" href="https://doi.org/10.18624/etech.v16i3.1299" target="_blank" rel="noopener">Acessar DOI</a>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="section" id="livros">
+        <div class="section-header">
+            <div>
+                <h2>Livros</h2>
+                <p>Livros publicados, organizados ou edições autorais.</p>
+            </div>
+        </div>
+        <div class="empty"><strong>Links pendentes.</strong> Envie os dados ou links dos livros para preencher esta seção.</div>
+    </section>
+
+    <section class="section" id="capitulos">
+        <div class="section-header">
+            <div>
+                <h2>Capítulos de livros</h2>
+                <p>Capítulos publicados em coletâneas, obras acadêmicas ou materiais editoriais.</p>
+            </div>
+        </div>
+        <div class="empty"><strong>Links pendentes.</strong> Envie os capítulos de livro para adicionar nesta seção.</div>
+    </section>
+
+    <section class="section" id="resumos-expandidos">
+        <div class="section-header">
+            <div>
+                <h2>Resumos expandidos</h2>
+                <p>Trabalhos publicados em anais de eventos no formato de resumo expandido.</p>
+            </div>
+        </div>
+        <div class="empty"><strong>Links pendentes.</strong> Envie os links dos resumos expandidos para preencher esta seção.</div>
+    </section>
+
+    <section class="section" id="resumos-simples">
+        <div class="section-header">
+            <div>
+                <h2>Resumos simples</h2>
+                <p>Resumos publicados em anais de eventos, mostras científicas e congressos.</p>
+            </div>
+        </div>
+        <div class="empty"><strong>Links pendentes.</strong> Envie os links dos resumos simples para preencher esta seção.</div>
+    </section>
+
+    <section class="section" id="apresentacoes">
+        <div class="section-header">
+            <div>
+                <h2>Apresentações de trabalho</h2>
+                <p>Comunicações orais, apresentações em eventos, seminários e mostras científicas.</p>
+            </div>
+        </div>
+        <div class="empty"><strong>Links pendentes.</strong> Envie os dados das apresentações para preencher esta seção.</div>
+    </section>
+
+</main>
+
+<footer>
+    © 2026 Gustavo Garcia de Amo • Publicações acadêmicas
+</footer>
+
+</body>
+</html>
