@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mapa mental interativo interno - Evasão e IA</title>
+<style>
+  @page { size: A4 landscape; margin: 0.7cm; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: Arial, Helvetica, sans-serif; background:#f7f8fb; color:#111827; font-size:9pt; }
+  h1 { text-align:center; margin:8px 0 4px; font-size:15pt; color:#082b63; text-transform:uppercase; letter-spacing:.35px; }
+  .subtitulo { text-align:center; margin:0 0 8px; color:#4b5563; font-size:9.2pt; }
+  .layout { display:grid; grid-template-columns: 1.85fr 1.15fr; gap:10px; padding:0 10px 10px; }
+  .mapa { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; align-items:start; }
+  .nucleo { grid-column:1/4; justify-self:center; background:linear-gradient(135deg,#082b63,#0b4f9c); color:#fff; padding:9px 28px; border-radius:999px; font-size:12pt; font-weight:bold; box-shadow:0 4px 12px rgba(8,43,99,.22); }
+  .codigo { border-radius:14px; padding:8px; background:#fff; border:1px solid #d8dee9; box-shadow:0 3px 10px rgba(15,23,42,.07); }
+  .codigo h2 { margin:0 0 7px; text-align:center; font-size:11.5pt; text-transform:uppercase; }
+  .institucional { border-top:7px solid #0b4f9c; } .pedagogico { border-top:7px solid #1b7f2a; } .socioeconomico { border-top:7px solid #6b2ca0; }
+  .institucional h2 { color:#0b4f9c; } .pedagogico h2 { color:#1b7f2a; } .socioeconomico h2 { color:#6b2ca0; }
+  .card { border-radius:10px; padding:7px; margin-bottom:6px; background:#f9fafb; border-left:5px solid #9ca3af; cursor:pointer; transition:all .18s ease; }
+  .card:hover, .card.active { transform:translateY(-1px); background:#fff; box-shadow:0 3px 9px rgba(15,23,42,.13); }
+  .institucional .card { border-left-color:#0b4f9c; } .pedagogico .card { border-left-color:#1b7f2a; } .socioeconomico .card { border-left-color:#6b2ca0; }
+  .card h3 { margin:0 0 5px; font-size:9.15pt; line-height:1.16; }
+  .chips { display:flex; flex-wrap:wrap; gap:3px; }
+  .chip { display:inline-block; padding:2px 5px; border-radius:999px; background:#eef2f7; border:1px solid #d6dce7; font-size:7.6pt; line-height:1.15; cursor:pointer; }
+  .chip:hover, .chip.active { background:#dbeafe; border-color:#93c5fd; }
+  .painel { position:sticky; top:8px; background:#fff; border-radius:14px; border:1px solid #d8dee9; box-shadow:0 4px 14px rgba(15,23,42,.10); padding:12px; min-height:470px; max-height:95vh; overflow:auto; }
+  .painel h2 { margin:0 0 4px; font-size:13pt; color:#082b63; }
+  .tipo { font-size:8.2pt; text-transform:uppercase; font-weight:bold; color:#6b7280; margin-bottom:8px; }
+  .box { border-radius:10px; padding:8px; margin:8px 0; }
+  .possibilidade { background:#ecfdf3; border-left:5px solid #1b7f2a; } .limite { background:#fff7ed; border-left:5px solid #ea580c; } .cuidado { background:#fef2f2; border-left:5px solid #dc2626; } .detalhe { background:#eff6ff; border-left:5px solid #2563eb; }
+  .box h3 { margin:0 0 4px; font-size:9.8pt; }
+  .box ul { margin:0; padding-left:17px; } .box li { margin-bottom:3px; line-height:1.25; }
+  .subitens { display:grid; grid-template-columns:repeat(2,1fr); gap:5px; margin:8px 0; }
+  .subitem { border:1px solid #dbe3ef; background:#f8fafc; border-radius:10px; padding:6px; cursor:pointer; font-size:8.2pt; line-height:1.2; }
+  .subitem:hover, .subitem.active { background:#eff6ff; border-color:#60a5fa; box-shadow:0 2px 7px rgba(37,99,235,.15); }
+  .relacoes { grid-column:1/4; display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-top:3px; }
+  .relacoes-titulo { grid-column:1/4; text-align:center; font-size:10.4pt; color:#082b63; font-weight:bold; margin:4px 0 0; text-transform:uppercase; }
+  .relacao { background:#fff; border:1px dashed #9ca3af; border-radius:12px; padding:6px 8px; font-size:7.7pt; color:#374151; line-height:1.25; cursor:pointer; transition:all .18s ease; }
+  .relacao:hover, .relacao.active { background:#eff6ff; border-color:#60a5fa; transform:translateY(-1px); box-shadow:0 2px 8px rgba(37,99,235,.12); }
+  .relacao b { color:#082b63; }
+  .hint { margin-top:8px; font-size:8pt; color:#6b7280; border-top:1px solid #e5e7eb; padding-top:7px; }
+  .mini { font-size:8pt; color:#4b5563; line-height:1.25; }
+
+  .referencias { margin:0 10px 12px; background:#fff; border:1px solid #d8dee9; border-radius:14px; padding:10px; box-shadow:0 3px 10px rgba(15,23,42,.07); }
+  .referencias h2 { margin:0 0 6px; font-size:11.5pt; color:#082b63; text-transform:uppercase; }
+  .refs-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .ref-card { display:block; text-decoration:none; color:#111827; border:1px solid #dbe3ef; border-radius:12px; padding:8px; background:#f8fafc; transition:all .18s ease; }
+  .ref-card:hover { background:#eff6ff; border-color:#60a5fa; transform:translateY(-1px); box-shadow:0 2px 8px rgba(37,99,235,.14); }
+  .ref-card strong { display:block; font-size:9.4pt; margin-bottom:3px; color:#082b63; }
+  .ref-card span { display:block; font-size:8pt; color:#4b5563; line-height:1.25; }
+  .ref-tag { display:inline-block !important; margin-top:5px; padding:2px 6px; border-radius:999px; background:#e0ecff; color:#0b4f9c !important; font-size:7.3pt !important; font-weight:bold; }
+  @media (max-width: 900px) { .layout{grid-template-columns:1fr;} .refs-grid{grid-template-columns:1fr;} }
+  @media print { body{-webkit-print-color-adjust:exact; print-color-adjust:exact;} .painel{position:static; max-height:none;} .ref-card{break-inside:avoid;} }
+</style>
+</head>
+<body>
+<h1>Fatores associados à evasão e uso responsável da IA</h1>
+<p class="subtitulo">Clique no critério e depois em cada fator interno para ver possibilidades, limites e cuidados específicos.</p>
+<div class="layout">
+<main class="mapa">
+<div class="nucleo">EVASÃO / ROMPIMENTO DE VÍNCULO</div>
+<section class="codigo institucional"><h2>Institucional</h2>
+  <div class="card" onclick="mostrarCriterio('gestao', this)"><h3>Gestão acadêmica e dados</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'gestao','monitoramento')">monitoramento</span><span class="chip" onclick="abrirFator(event,'gestao','metricas')">métricas</span><span class="chip" onclick="abrirFator(event,'gestao','dados')">dados</span><span class="chip" onclick="abrirFator(event,'gestao','rompimento')">rompimento</span></div></div>
+  <div class="card" onclick="mostrarCriterio('governanca', this)"><h3>Políticas e governança</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'governanca','integracao')">integração</span><span class="chip" onclick="abrirFator(event,'governanca','equipe')">equipe</span><span class="chip" onclick="abrirFator(event,'governanca','permanencia')">permanência</span></div></div>
+  <div class="card" onclick="mostrarCriterio('fluxos', this)"><h3>Acesso, fluxos e regras</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'fluxos','transferencias')">transferências</span><span class="chip" onclick="abrirFator(event,'fluxos','mudancas')">mudanças</span><span class="chip" onclick="abrirFator(event,'fluxos','vinculo')">vínculo</span></div></div>
+  <div class="card" onclick="mostrarCriterio('infra', this)"><h3>Infraestrutura e recursos</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'infra','campus')">campus</span><span class="chip" onclick="abrirFator(event,'infra','transporte')">transporte</span><span class="chip" onclick="abrirFator(event,'infra','acesso')">acesso</span><span class="chip" onclick="abrirFator(event,'infra','estrutura')">estrutura</span></div></div>
+  <div class="card" onclick="mostrarCriterio('apoio', this)"><h3>Serviços de apoio</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'apoio','assistencia')">assistência</span><span class="chip" onclick="abrirFator(event,'apoio','psicologico')">psicológico</span><span class="chip" onclick="abrirFator(event,'apoio','acolhimento')">acolhimento</span><span class="chip" onclick="abrirFator(event,'apoio','mentoria')">mentoria</span></div></div>
+</section>
+<section class="codigo pedagogico"><h2>Pedagógico</h2>
+  <div class="card" onclick="mostrarCriterio('curriculo', this)"><h3>Currículo, metodologias e avaliação</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'curriculo','aprendizagem')">aprendizagem</span><span class="chip" onclick="abrirFator(event,'curriculo','disciplinas')">disciplinas</span><span class="chip" onclick="abrirFator(event,'curriculo','texto')">interpretação</span></div></div>
+  <div class="card" onclick="mostrarCriterio('docencia', this)"><h3>Docência e relações</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'docencia','didatica')">didática</span><span class="chip" onclick="abrirFator(event,'docencia','relacao')">relação</span><span class="chip" onclick="abrirFator(event,'docencia','mediacao')">mediação</span></div></div>
+  <div class="card" onclick="mostrarCriterio('suporte', this)"><h3>Acompanhamento e suporte</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'suporte','orientacao')">orientação</span><span class="chip" onclick="abrirFator(event,'suporte','adaptacao')">adaptação</span><span class="chip" onclick="abrirFator(event,'suporte','acolhimento')">acolhimento</span></div></div>
+  <div class="card" onclick="mostrarCriterio('engajamento', this)"><h3>Engajamento e frequência</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'engajamento','faltas')">faltas</span><span class="chip" onclick="abrirFator(event,'engajamento','advertencias')">advertências</span><span class="chip" onclick="abrirFator(event,'engajamento','engajamento')">engajamento</span></div></div>
+  <div class="card" onclick="mostrarCriterio('pertencimento', this)"><h3>Pertencimento e motivação</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'pertencimento','identificacao')">identificação</span><span class="chip" onclick="abrirFator(event,'pertencimento','rotina')">rotina</span><span class="chip" onclick="abrirFator(event,'pertencimento','socializacao')">socialização</span></div></div>
+  <div class="card" onclick="mostrarCriterio('desempenho', this)"><h3>Desempenho e progressão</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'desempenho','baixo')">baixo desempenho</span><span class="chip" onclick="abrirFator(event,'desempenho','reprovacao')">reprovação</span><span class="chip" onclick="abrirFator(event,'desempenho','progressao')">progressão</span></div></div>
+</section>
+<section class="codigo socioeconomico"><h2>Socioeconômico</h2>
+  <div class="card" onclick="mostrarCriterio('demografia', this)"><h3>Demografia e marcadores sociais</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'demografia','idadeserie')">idade-série</span><span class="chip" onclick="abrirFator(event,'demografia','turno')">turno</span><span class="chip" onclick="abrirFator(event,'demografia','saudade')">saudade de casa</span></div></div>
+  <div class="card" onclick="mostrarCriterio('motivacao', this)"><h3>Inclusão digital e motivação</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'motivacao','curso')">curso</span><span class="chip" onclick="abrirFator(event,'motivacao','desmotivacao')">desmotivação</span><span class="chip" onclick="abrirFator(event,'motivacao','interesse')">interesse</span></div></div>
+  <div class="card" onclick="mostrarCriterio('renda', this)"><h3>Renda, trabalho e condições materiais</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'renda','baixa')">baixa renda</span><span class="chip" onclick="abrirFator(event,'renda','trabalho')">trabalho</span></div></div>
+  <div class="card" onclick="mostrarCriterio('territorio', this)"><h3>Território e acesso</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'territorio','distancia')">distância</span><span class="chip" onclick="abrirFator(event,'territorio','transporte')">transporte</span><span class="chip" onclick="abrirFator(event,'territorio','acesso')">acesso</span></div></div>
+  <div class="card" onclick="mostrarCriterio('saude', this)"><h3>Saúde e risco social</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'saude','isolamento')">isolamento</span><span class="chip" onclick="abrirFator(event,'saude','mental')">saúde mental</span></div></div>
+  <div class="card" onclick="mostrarCriterio('trajetoria', this)"><h3>Trajetória escolar anterior</h3><div class="chips"><span class="chip" onclick="abrirFator(event,'trajetoria','base')">base acadêmica</span><span class="chip" onclick="abrirFator(event,'trajetoria','desempenho')">desempenho</span></div></div>
+</section>
+<div class="relacoes">
+  <div class="relacoes-titulo">Relações analíticas entre fatores</div>
+  <button class="relacao" onclick="mostrarRelacao('r1', this)"><b>Trabalho concomitante</b> → faltas → baixo desempenho → risco de evasão</button>
+  <button class="relacao" onclick="mostrarRelacao('r2', this)"><b>Transporte/acesso</b> → atrasos e ausências → fragilização do vínculo</button>
+  <button class="relacao" onclick="mostrarRelacao('r3', this)"><b>Dados frágeis</b> → atraso na identificação → intervenção tardia</button>
+  <button class="relacao" onclick="mostrarRelacao('r4', this)"><b>Saúde mental/isolamento</b> → baixo engajamento → afastamento escolar</button>
+  <button class="relacao" onclick="mostrarRelacao('r5', this)"><b>Base acadêmica insuficiente</b> → dificuldade em disciplinas → reprovação</button>
+  <button class="relacao" onclick="mostrarRelacao('r6', this)"><b>Escolha do curso</b> → desmotivação → baixa identificação → transferência</button>
+  <button class="relacao" onclick="mostrarRelacao('r7', this)"><b>Didática/relação pedagógica</b> → pertencimento → engajamento</button>
+  <button class="relacao" onclick="mostrarRelacao('r8', this)"><b>Assistência estudantil insuficiente</b> → permanência material fragilizada → rompimento</button>
+  <button class="relacao" onclick="mostrarRelacao('r9', this)"><b>Baixa integração escola-família-comunidade</b> → menor acolhimento → perda de vínculo</button>
+  <button class="relacao" onclick="mostrarRelacao('r10', this)"><b>Turno incompatível</b> → conflito com trabalho → frequência irregular</button>
+  <button class="relacao" onclick="mostrarRelacao('r11', this)"><b>Reprovação recorrente</b> → desmotivação → atraso na progressão</button>
+  <button class="relacao" onclick="mostrarRelacao('r12', this)"><b>Acolhimento frágil</b> → não adaptação à rotina → afastamento</button>
+</div>
+</main>
+<aside class="painel" id="painel">
+  <h2>Selecione um critério</h2><div class="tipo">Análise com IA em dois níveis</div>
+  <p class="mini">Clique em um card para abrir a visão geral. Depois clique em um chip interno, como <b>monitoramento</b>, <b>métricas</b> ou <b>dados</b>, para detalhar possibilidade, limite e cuidado. Ao final da página, há um bloco com bases de referência: ECA Digital, Referencial do MEC e Censo Interno IFC.</p>
+  <div class="box possibilidade"><h3>Possibilidade</h3><ul><li>A IA pode apoiar leitura de padrões, alertas e organização de evidências.</li></ul></div>
+  <div class="box limite"><h3>Limite</h3><ul><li>A IA não explica sozinha as causas da evasão e não substitui análise humana.</li></ul></div>
+  <div class="box cuidado"><h3>Cuidado ético</h3><ul><li>Evitar rotular estudantes como “prováveis evadidos” sem mediação e proteção de dados.</li></ul></div>
+</aside>
+</div>
+
+<section class="referencias" id="bases-referencia">
+  <h2>Bases de referência para leitura ética, normativa e institucional</h2>
+  <div class="refs-grid">
+    <a class="ref-card" href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/l15211.htm" target="_blank" rel="noopener noreferrer">
+      <strong>ECA Digital — Lei nº 15.211/2025</strong>
+      <span>Usar como referência normativa para proteção de crianças e adolescentes no ambiente digital, privacidade, cuidado e responsabilização.</span>
+      <span class="ref-tag">limites legais</span>
+    </a>
+    <a class="ref-card" href="https://www.gov.br/mec/pt-br/media/segape/referencial-oficial-pt.pdf" target="_blank" rel="noopener noreferrer">
+      <strong>Referencial para uso responsável de IA na Educação — MEC</strong>
+      <span>Usar para orientar princípios, riscos, governança, transparência, equidade e mediação humana no uso educacional da IA.</span>
+      <span class="ref-tag">uso responsável da IA</span>
+    </a>
+    <a class="ref-card" href="https://public.tableau.com/app/profile/pesquisa.institucional.do.ifc/viz/CensoInterno-InstitutoFederalCatarinense/CensoInterno?publish=yes" target="_blank" rel="noopener noreferrer">
+      <strong>Censo Interno — IFC</strong>
+      <span>Usar como base institucional para leitura de dados, indicadores, registros e evidências sobre permanência, evasão e trajetória estudantil.</span>
+      <span class="ref-tag">evidência institucional</span>
+    </a>
+  </div>
+</section>
+
+<script>
+const criterios = {
+ gestao:{tipo:'Institucional',titulo:'Gestão acadêmica e dados',resumo:'Organiza o acompanhamento institucional da evasão por registros, indicadores, métricas e identificação do rompimento de vínculo.', fatores:['monitoramento','metricas','dados','rompimento']},
+ governanca:{tipo:'Institucional',titulo:'Políticas e governança',resumo:'Articula decisões institucionais, integração escola-família-comunidade, equipe e permanência.', fatores:['integracao','equipe','permanencia']},
+ fluxos:{tipo:'Institucional',titulo:'Acesso, fluxos e regras',resumo:'Observa mudanças de escola, transferências e manutenção ou perda do vínculo institucional.', fatores:['transferencias','mudancas','vinculo']},
+ infra:{tipo:'Institucional',titulo:'Infraestrutura e recursos',resumo:'Relaciona campus, transporte, acesso e condições estruturais que afetam a permanência.', fatores:['campus','transporte','acesso','estrutura']},
+ apoio:{tipo:'Institucional',titulo:'Serviços de apoio',resumo:'Abrange assistência estudantil, apoio psicológico, acolhimento e mentoria.', fatores:['assistencia','psicologico','acolhimento','mentoria']},
+ curriculo:{tipo:'Pedagógico',titulo:'Currículo, metodologias e avaliação',resumo:'Analisa dificuldades de aprendizagem, disciplinas e interpretação de texto.', fatores:['aprendizagem','disciplinas','texto']},
+ docencia:{tipo:'Pedagógico',titulo:'Docência e relações',resumo:'Observa didática, vínculo professor-estudante e mediação pedagógica.', fatores:['didatica','relacao','mediacao']},
+ suporte:{tipo:'Pedagógico',titulo:'Acompanhamento e suporte',resumo:'Inclui orientação, adaptação institucional e acolhimento acadêmico.', fatores:['orientacao','adaptacao','acolhimento']},
+ engajamento:{tipo:'Pedagógico',titulo:'Engajamento e frequência',resumo:'Foca faltas, advertências e queda de participação escolar.', fatores:['faltas','advertencias','engajamento']},
+ pertencimento:{tipo:'Pedagógico',titulo:'Pertencimento e motivação',resumo:'Trata da identificação com o curso, adaptação à rotina e socialização.', fatores:['identificacao','rotina','socializacao']},
+ desempenho:{tipo:'Pedagógico',titulo:'Desempenho e progressão',resumo:'Acompanha baixo desempenho, reprovação e progressão acadêmica.', fatores:['baixo','reprovacao','progressao']},
+ demografia:{tipo:'Socioeconômico',titulo:'Demografia e marcadores sociais',resumo:'Considera idade-série, turno e elementos da trajetória social do estudante.', fatores:['idadeserie','turno','saudade']},
+ motivacao:{tipo:'Socioeconômico',titulo:'Inclusão digital e motivação',resumo:'Relaciona escolha do curso, desmotivação e interesse.', fatores:['curso','desmotivacao','interesse']},
+ renda:{tipo:'Socioeconômico',titulo:'Renda, trabalho e condições materiais',resumo:'Observa baixa renda, trabalho concomitante e condições materiais.', fatores:['baixa','trabalho']},
+ territorio:{tipo:'Socioeconômico',titulo:'Território e acesso',resumo:'Relaciona distância, transporte e barreiras de acesso ao campus.', fatores:['distancia','transporte','acesso']},
+ saude:{tipo:'Socioeconômico',titulo:'Saúde e risco social',resumo:'Inclui isolamento, saúde mental e situações de vulnerabilidade.', fatores:['isolamento','mental']},
+ trajetoria:{tipo:'Socioeconômico',titulo:'Trajetória escolar anterior',resumo:'Considera base acadêmica e desempenho escolar anterior.', fatores:['base','desempenho']}
+};
+const fatorDados = {
+ monitoramento:{nome:'Monitoramento',poss:['Detectar sinais iniciais: queda de frequência, reprovações, atrasos e mudanças bruscas de rendimento.','Gerar alertas para equipe pedagógica antes do rompimento do vínculo.'],lim:['Monitorar não é explicar: o alerta precisa ser interpretado por pessoas.','Pode virar vigilância se não houver finalidade pedagógica clara.'],cuidado:['Usar alertas como convite ao acolhimento, nunca como prova contra o estudante.']},
+ metricas:{nome:'Métricas',poss:['Construir indicadores de permanência, frequência, progressão e atendimento.','Comparar períodos, turmas e cursos para localizar pontos críticos.'],lim:['Métrica ruim gera diagnóstico ruim.','Indicadores podem simplificar problemas sociais e pedagógicos complexos.'],cuidado:['Explicitar o que cada métrica mede, o que ela não mede e quem pode acessá-la.']},
+ dados:{nome:'Dados',poss:['Integrar registros acadêmicos, planilhas, documentos institucionais e histórico de atendimentos.','Identificar lacunas, inconsistências e ausência de compilação contínua.'],lim:['Dados incompletos, antigos ou mal preenchidos prejudicam qualquer análise.','Ausência de dado não significa ausência de problema.'],cuidado:['Minimizar dados sensíveis e usar somente o necessário para a finalidade educacional.']},
+ rompimento:{nome:'Rompimento de vínculo',poss:['Sinalizar trajetórias que se aproximam do desligamento, abandono ou transferência.','Apoiar busca ativa e ações de reaproximação institucional.'],lim:['Não deve prever destino individual como sentença.','Rompimento pode decorrer de causas externas invisíveis aos registros.'],cuidado:['Evitar linguagem determinista: usar “sinal de atenção”, não “aluno evadido provável”.']}
+};
+const generico = {
+ integracao:['Integração escola-família-comunidade','Mapear ausência de comunicação e pontos de ruptura entre escola, família e comunidade.','IA não cria vínculo comunitário sozinha; precisa de ação institucional concreta.','Usar para apoiar contato e escuta, não para culpabilizar famílias.'],
+ equipe:['Equipe institucional','Organizar demandas e histórico de acompanhamento por setor.','Não substitui formação, tempo de trabalho e equipe suficiente.','Evitar transferir responsabilidade humana para o sistema.'],
+ permanencia:['Permanência estudantil','Cruzar fatores para orientar ações de permanência e êxito.','Permanência não se resolve só com indicador técnico.','Vincular análise a políticas reais de apoio.'],
+ transferencias:['Transferências','Identificar padrões de transferências internas e externas.','Transferência não é necessariamente evasão ou fracasso.','Analisar o contexto antes de classificar.'],
+ mudancas:['Mudanças de escola','Mapear instabilidade na trajetória escolar.','Dados podem não revelar motivos familiares, territoriais ou econômicos.','Evitar leitura punitiva da mobilidade escolar.'],
+ vinculo:['Vínculo institucional','Acompanhar sinais de fragilização do vínculo com o curso ou campus.','Vínculo é relacional, não apenas administrativo.','Priorizar ações de acolhimento.'],
+ campus:['Localização do campus','Relacionar localização com transporte, frequência e acesso.','IA não muda distância física nem oferta transporte.','Não culpabilizar o estudante pelo território.'],
+ transporte:['Transporte','Cruzar dados de deslocamento, faltas e horários.','Não resolve precariedade ou ausência de transporte.','Usar como evidência para política institucional.'],
+ acesso:['Acesso','Identificar barreiras de horário, deslocamento e infraestrutura.','Acesso não é só matrícula; envolve permanência real.','Analisar barreiras materiais com responsabilidade institucional.'],
+ estrutura:['Infraestrutura','Organizar reclamações e evidências sobre espaços, recursos e condições.','Diagnóstico não substitui investimento.','Evitar reduzir infraestrutura a satisfação individual.'],
+ assistencia:['Assistência estudantil','Apoiar identificação de demandas por bolsa, alimentação, transporte e apoio material.','Não deve automatizar concessão ou negação de benefício.','Dados socioeconômicos exigem sigilo e finalidade clara.'],
+ psicologico:['Apoio psicológico','Organizar fluxos de acolhimento e encaminhamento.','IA não faz diagnóstico psicológico.','Atuação humana e sigilo são indispensáveis.'],
+ acolhimento:['Acolhimento','Sugerir ações de recepção, tutoria e acompanhamento.','Acolhimento não é mensagem automática.','Precisa de escuta e vínculo humano.'],
+ mentoria:['Mentoria','Apoiar pareamento entre estudantes, tutores e demandas acadêmicas.','Não substitui presença e acompanhamento real.','Evitar expor dificuldades pessoais do estudante.'],
+ aprendizagem:['Dificuldades de aprendizagem','Sugerir materiais adaptados, exercícios e trilhas de reforço.','Pode gerar resposta errada ou superficial.','Professor precisa validar e contextualizar.'],
+ disciplinas:['Dificuldades em disciplinas','Identificar componentes com maior reprovação ou dificuldade recorrente.','Não explica sozinho a causa da dificuldade.','Usar para revisar ensino, avaliação e suporte.'],
+ texto:['Interpretação de texto','Gerar atividades graduadas de leitura e compreensão.','Pode simplificar demais ou substituir esforço formativo.','Usar como mediação, não muleta permanente.'],
+ didatica:['Didática','Apoiar variação de estratégias e exemplos.','Não substitui formação docente.','Preservar autonomia pedagógica.'],
+ relacao:['Relação professor-aluno','Apoiar instrumentos de feedback e escuta.','Vínculo não é automatizável.','Evitar medir relação humana só por indicadores.'],
+ mediacao:['Mediação pedagógica','Sugerir intervenções e feedbacks formativos.','Mediação exige leitura contextual.','Validar pela equipe docente.'],
+ orientacao:['Orientação acadêmica','Organizar plano de acompanhamento e recuperação.','Orientação automática pode ser genérica.','Articular com professor e equipe pedagógica.'],
+ adaptacao:['Adaptação institucional','Identificar dificuldades de adaptação à rotina do campus.','Adaptação não é responsabilidade exclusiva do estudante.','Apoiar acolhimento institucional.'],
+ faltas:['Faltas','Gerar alerta de ausência recorrente ou queda brusca de frequência.','Falta é sintoma, não causa isolada.','Abordagem deve ser acolhedora, não punitiva.'],
+ advertencias:['Advertências','Cruzar ocorrências com contexto de frequência e desempenho.','Pode reforçar rotulação disciplinar.','Analisar com cuidado pedagógico.'],
+ engajamento:['Baixo engajamento','Mapear queda de participação em atividades.','Engajamento não é totalmente mensurável.','Investigar causas antes de intervir.'],
+ identificacao:['Identificação com o curso','Apoiar escutas sobre escolha e sentido do curso.','Não resolve frustração vocacional sozinho.','Orientação deve ser humana e contextual.'],
+ rotina:['Rotina escolar','Sugerir estratégias de organização e adaptação.','Rotina pode ser afetada por trabalho, transporte e família.','Não individualizar problema estrutural.'],
+ socializacao:['Socialização','Identificar isolamento e baixa participação em grupos.','Não mede pertencimento plenamente.','Evitar exposição pública do estudante.'],
+ baixo:['Baixo desempenho','Sinalizar queda de rendimento e necessidade de apoio.','Não deve virar rótulo de incapacidade.','Relacionar desempenho ao contexto.'],
+ reprovacao:['Reprovação','Mapear recorrência de reprovações e pontos críticos.','Reprovação é resultado de múltiplos fatores.','Usar para apoiar recuperação, não seleção.'],
+ progressao:['Progressão acadêmica','Acompanhar avanço no curso e gargalos curriculares.','Progressão irregular não explica causa sozinha.','Articular com acompanhamento pedagógico.'],
+ idadeserie:['Defasagem idade-série','Analisar trajetórias agregadas e necessidades de apoio.','Pode gerar discriminação se usada individualmente.','Tratar como questão de equidade.'],
+ turno:['Turno incompatível','Relacionar turno, trabalho e frequência.','IA não altera oferta de turno.','Subsidiar decisão institucional.'],
+ saudade:['Saudade de casa','Registrar sinais de dificuldade de adaptação e afastamento familiar.','Fator subjetivo não cabe em métrica simples.','Exige acolhimento e escuta.'],
+ curso:['Escolha do curso','Apoiar orientação vocacional e reorientação de trajetória.','Não decide pelo estudante.','Garantir escuta e autonomia.'],
+ desmotivacao:['Desmotivação','Identificar sinais de queda de interesse e participação.','Desmotivação pode ter causas estruturais.','Não culpabilizar o estudante.'],
+ interesse:['Interesse','Gerar atividades mais contextualizadas ao perfil da turma.','Interesse não é estático nem totalmente mensurável.','Usar com mediação docente.'],
+ baixa:['Baixa renda','Apoiar identificação de demanda por assistência.','Não substitui política de financiamento estudantil.','Proteger dados socioeconômicos.'],
+ trabalho:['Trabalho concomitante','Relacionar trabalho, faltas, turno e desempenho.','Trabalho pode ser necessidade, não escolha.','Evitar leitura moralizante.'],
+ distancia:['Distância casa-escola','Mapear impacto do deslocamento na frequência.','Distância não é resolvida por algoritmo.','Usar para justificar apoio e transporte.'],
+ isolamento:['Isolamento','Apoiar identificação cuidadosa de retraimento social.','Não diagnostica sofrimento ou risco.','Encaminhar com sigilo e cuidado profissional.'],
+ mental:['Saúde mental','Organizar fluxos de acolhimento e encaminhamento.','IA não faz diagnóstico nem terapia.','Alto cuidado com privacidade e consentimento.'],
+ base:['Base acadêmica insuficiente','Sugerir nivelamento e trilhas de reforço.','Não tratar como culpa individual.','Articular com inclusão e apoio pedagógico.']
+};
+
+const relacoesAnaliticas = {
+ r1:{titulo:'Trabalho concomitante → faltas → baixo desempenho → evasão', tipo:'Socioeconômico + Pedagógico', leitura:['O trabalho pode reduzir tempo de estudo, descanso e participação escolar.','A frequência irregular tende a impactar acompanhamento, desempenho e progressão.','O risco aumenta quando a instituição interpreta a ausência apenas como desinteresse.'], ia:['Cruzar turno, frequência, rendimento e registros de atendimento.','Sinalizar estudantes que precisam de flexibilização, acolhimento ou assistência.'], limite:['A IA não pode tratar trabalho como falha individual.','Sem escuta, o dado vira julgamento e não política de permanência.']},
+ r2:{titulo:'Transporte/acesso → atrasos e ausências → fragilização do vínculo', tipo:'Institucional + Socioeconômico', leitura:['Distância e transporte precário afetam presença, pontualidade e permanência.','O problema é territorial e institucional, não apenas individual.'], ia:['Mapear padrões de ausência por horário, território e curso.','Subsidiar decisões sobre transporte, horário e apoio estudantil.'], limite:['Algoritmo não cria linha de ônibus nem resolve distância física.','O dado precisa virar ação institucional concreta.']},
+ r3:{titulo:'Dados frágeis → atraso na identificação → intervenção tardia', tipo:'Institucional', leitura:['Sem registro contínuo, a evasão aparece quando o vínculo já está rompido.','A ausência de dados prejudica diagnóstico, busca ativa e avaliação de políticas.'], ia:['Integrar registros acadêmicos, atendimentos e indicadores.','Apontar lacunas, inconsistências e ausência de atualização.'], limite:['IA depende da qualidade do dado. Dado ruim produz alerta ruim.','Não se deve automatizar decisão com base incompleta.']},
+ r4:{titulo:'Saúde mental/isolamento → baixo engajamento → afastamento escolar', tipo:'Socioeconômico + Pedagógico + Institucional', leitura:['Isolamento e sofrimento podem aparecer como faltas, silêncio, queda de rendimento ou baixa socialização.','O afastamento pode ser lido equivocadamente como desinteresse.'], ia:['Apoiar triagem de sinais indiretos e fluxos de acolhimento.','Organizar encaminhamentos para equipe responsável.'], limite:['IA não diagnostica, não faz terapia e não substitui profissional qualificado.','Exige sigilo, consentimento e cuidado extremo com dados sensíveis.']},
+ r5:{titulo:'Base acadêmica insuficiente → dificuldade em disciplinas → reprovação', tipo:'Pedagógico + Trajetória anterior', leitura:['Fragilidades anteriores impactam interpretação, aprendizagem e desempenho em componentes curriculares.','A reprovação pode intensificar desmotivação e atraso na progressão.'], ia:['Gerar trilhas de reforço, exercícios graduados e materiais adaptados.','Identificar disciplinas com maior concentração de dificuldade.'], limite:['Não pode transformar lacuna formativa em culpa individual.','Material gerado por IA precisa de validação docente.']},
+ r6:{titulo:'Escolha do curso → desmotivação → baixa identificação → transferência', tipo:'Socioeconômico + Pedagógico', leitura:['A falta de identificação com o curso pode reduzir pertencimento, participação e sentido da trajetória escolar.','A transferência pode ser estratégia de reorganização, não necessariamente fracasso.'], ia:['Apoiar orientação vocacional, questionários de interesse e escuta orientada.','Mapear padrões de transferência por curso/período.'], limite:['IA não decide o percurso do estudante.','A decisão precisa preservar autonomia e escuta humana.']},
+ r7:{titulo:'Didática/relação pedagógica → pertencimento → engajamento', tipo:'Pedagógico', leitura:['A relação professor-estudante e as metodologias influenciam participação, confiança e permanência.','Pertencimento é elemento central para continuidade no curso.'], ia:['Apoiar criação de atividades diversificadas, feedbacks e instrumentos de escuta.','Identificar pontos de dificuldade recorrentes nas turmas.'], limite:['Vínculo humano não é automatizável.','Indicadores não capturam plenamente a qualidade da relação pedagógica.']},
+ r8:{titulo:'Assistência estudantil insuficiente → permanência material fragilizada → rompimento', tipo:'Institucional + Socioeconômico', leitura:['Baixa renda, transporte, alimentação e condições materiais podem pressionar o estudante para fora da escola.','A permanência depende de política institucional, não só de esforço individual.'], ia:['Ajudar a identificar demandas e priorizar acompanhamento.','Apoiar análise agregada para planejamento da assistência.'], limite:['Não deve automatizar concessão ou negação de benefícios.','Dados socioeconômicos exigem proteção e finalidade clara.']},
+ r9:{titulo:'Baixa integração escola-família-comunidade → menor acolhimento → perda de vínculo', tipo:'Institucional', leitura:['Quando escola, família e comunidade não dialogam, sinais de risco podem passar despercebidos.','A perda de vínculo tende a se intensificar sem rede de apoio.'], ia:['Organizar registros de contato, fluxos de comunicação e busca ativa.','Mapear ausência de retorno ou pontos de ruptura no acompanhamento.'], limite:['IA não substitui presença institucional, escuta e vínculo comunitário.','Comunicação automatizada não pode virar cobrança fria.']},
+ r10:{titulo:'Turno incompatível → conflito com trabalho → frequência irregular', tipo:'Socioeconômico + Institucional', leitura:['O conflito entre horário escolar e trabalho afeta presença, rotina e rendimento.','É um problema de organização da vida material do estudante.'], ia:['Cruzar turno, faltas, trabalho concomitante e desempenho.','Subsidiar análise sobre flexibilização e políticas de apoio.'], limite:['IA não altera sozinha a oferta de turno.','Não pode culpabilizar o estudante pela necessidade de trabalhar.']},
+ r11:{titulo:'Reprovação recorrente → desmotivação → atraso na progressão', tipo:'Pedagógico', leitura:['Reprovações sucessivas podem gerar sensação de fracasso e afastamento progressivo.','O atraso na progressão aumenta a distância entre estudante e turma de referência.'], ia:['Identificar padrões de reprovação e disciplinas críticas.','Sugerir acompanhamento preventivo antes da repetição do fracasso.'], limite:['Não usar reprovação como rótulo de incapacidade.','A intervenção precisa revisar práticas pedagógicas e apoio institucional.']},
+ r12:{titulo:'Acolhimento frágil → não adaptação à rotina → afastamento', tipo:'Institucional + Pedagógico', leitura:['A entrada no campus exige adaptação a regras, ritmo, linguagem e cultura institucional.','Sem acolhimento, dificuldades iniciais podem virar afastamento.'], ia:['Apoiar trilhas de integração, lembretes, tutoria e acompanhamento inicial.','Sinalizar estudantes sem participação nos primeiros períodos.'], limite:['Acolhimento não é mensagem automática.','Precisa de presença, escuta e vínculo humano.']}
+};
+
+function normalizarFator(chave){
+ if(fatorDados[chave]) return fatorDados[chave];
+ const g=generico[chave];
+ return {nome:g[0], poss:[g[1]], lim:[g[2]], cuidado:[g[3]]};
+}
+function mostrarCriterio(chave, el){
+ document.querySelectorAll('.card').forEach(c=>c.classList.remove('active')); if(el) el.classList.add('active');
+ document.querySelectorAll('.chip,.subitem').forEach(c=>c.classList.remove('active'));
+ const c=criterios[chave];
+ const botoes=c.fatores.map(f=>`<button class="subitem" onclick="mostrarFator('${chave}','${f}', this)">${normalizarFator(f).nome}</button>`).join('');
+ document.getElementById('painel').innerHTML=`<h2>${c.titulo}</h2><div class="tipo">${c.tipo} · visão geral</div><p class="mini">${c.resumo}</p><div class="box detalhe"><h3>Fatores internos clicáveis</h3><div class="subitens">${botoes}</div></div><div class="box possibilidade"><h3>Possibilidade geral da IA</h3><ul><li>Apoiar organização, cruzamento de evidências, alertas e priorização de acompanhamento.</li></ul></div><div class="box limite"><h3>Limite geral</h3><ul><li>A IA não substitui interpretação pedagógica, institucional e social dos fatores.</li></ul></div><div class="box cuidado"><h3>Cuidado ético</h3><ul><li>Usar a IA para ampliar a permanência, nunca para classificar, punir ou responsabilizar o estudante.</li></ul></div>`;
+}
+function mostrarFator(criterio, fator, el){
+ document.querySelectorAll('.subitem').forEach(c=>c.classList.remove('active')); if(el) el.classList.add('active');
+ const c=criterios[criterio]; const f=normalizarFator(fator);
+ document.getElementById('painel').innerHTML=`<h2>${f.nome}</h2><div class="tipo">${c.titulo} · ${c.tipo}</div><div class="box possibilidade"><h3>Possibilidades da IA</h3><ul>${f.poss.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="box limite"><h3>Limites da IA</h3><ul>${f.lim.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="box cuidado"><h3>Cuidado ético</h3><ul>${f.cuidado.map(x=>`<li>${x}</li>`).join('')}<li>A decisão final precisa ser humana, contextualizada e documentada.</li></ul></div><div class="hint"><b>Leitura analítica:</b> este fator deve ser interpretado em relação aos demais códigos, porque evasão não é efeito de uma única variável.</div><div class="box detalhe"><h3>Voltar aos fatores internos</h3><div class="subitens">${c.fatores.map(ff=>`<button class="subitem ${ff===fator?'active':''}" onclick="mostrarFator('${criterio}','${ff}', this)">${normalizarFator(ff).nome}</button>`).join('')}</div></div>`;
+}
+
+function mostrarRelacao(chave, el){
+ document.querySelectorAll('.card,.chip,.subitem,.relacao').forEach(c=>c.classList.remove('active'));
+ if(el) el.classList.add('active');
+ const r=relacoesAnaliticas[chave];
+ document.getElementById('painel').innerHTML=`<h2>${r.titulo}</h2><div class="tipo">Relação analítica · ${r.tipo}</div><div class="box detalhe"><h3>Leitura analítica</h3><ul>${r.leitura.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="box possibilidade"><h3>Possibilidades da IA</h3><ul>${r.ia.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="box limite"><h3>Limites da IA</h3><ul>${r.limite.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="box cuidado"><h3>Cuidado ético</h3><ul><li>Usar a relação como hipótese de análise, não como causalidade automática.</li><li>A decisão final deve envolver equipe pedagógica, contexto institucional e escuta do estudante.</li></ul></div>`;
+}
+
+function abrirFator(event, criterio, fator){
+ event.stopPropagation();
+ document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
+ event.target.closest('.card').classList.add('active');
+ document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+ event.target.classList.add('active');
+ mostrarFator(criterio,fator,null);
+}
+</script>
+</body>
+</html>
