@@ -1,0 +1,398 @@
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dissertação | Gustavo Garcia de Amo</title>
+
+<style>
+
+:root{
+    --primary:#0b5f8a;
+    --primary-dark:#084a6c;
+    --accent:#18a999;
+    --bg:#f5f8fb;
+    --card:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#dbe5ee;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+}
+
+a{
+    text-decoration:none;
+}
+
+header{
+    background:white;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.nav{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:var(--primary);
+    font-weight:bold;
+    font-size:1.2rem;
+}
+
+.menu{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.menu a{
+    color:var(--text);
+    font-weight:600;
+}
+
+.menu a:hover{
+    color:var(--primary);
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:50px 20px;
+}
+
+.hero{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.hero h1{
+    color:var(--primary);
+    font-size:3rem;
+    margin-bottom:15px;
+}
+
+.hero p{
+    max-width:900px;
+    margin:auto;
+    color:var(--muted);
+}
+
+.badges{
+    margin-top:20px;
+}
+
+.badge{
+    display:inline-block;
+    margin:5px;
+    padding:8px 14px;
+    border-radius:20px;
+    background:#e8f6fa;
+    color:var(--primary);
+    font-weight:bold;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+.card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
+}
+
+.card h2{
+    color:var(--primary);
+    margin-bottom:15px;
+}
+
+.card p{
+    color:var(--muted);
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+.btn-area{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.btn{
+    display:inline-block;
+    padding:14px 20px;
+    background:var(--primary);
+    color:white;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.btn:hover{
+    background:var(--primary-dark);
+}
+
+.lista{
+    padding-left:20px;
+}
+
+.lista li{
+    margin-bottom:10px;
+}
+
+.destaque{
+    background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+    color:white;
+}
+
+.destaque h2{
+    color:white;
+}
+
+.destaque p{
+    color:#e2e8f0;
+}
+
+footer{
+    margin-top:50px;
+    text-align:center;
+    padding:30px;
+    background:white;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+}
+
+@media(max-width:900px){
+
+.grid{
+    grid-template-columns:1fr;
+}
+
+.hero h1{
+    font-size:2.2rem;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+    <nav class="nav">
+
+        <div class="logo">
+            Gustavo Garcia de Amo
+        </div>
+
+        <div class="menu">
+            <a href="index.html">Início</a>
+            <a href="publicacoes.html">Publicações</a>
+            <a href="projetos.html">Projetos</a>
+            <a href="rea.html">REA</a>
+            <a href="contato.html">Contato</a>
+        </div>
+
+    </nav>
+
+</header>
+
+<section class="container">
+
+    <div class="hero">
+
+        <h1>Dissertação de Mestrado</h1>
+
+        <p>
+            Pesquisa desenvolvida no Programa de Pós-Graduação em Educação
+            do Instituto Federal Catarinense (IFC), na linha de pesquisa
+            Processos Educativos e Inclusão.
+        </p>
+
+        <div class="badges">
+            <span class="badge">Inteligência Artificial</span>
+            <span class="badge">Permanência Estudantil</span>
+            <span class="badge">Evasão Escolar</span>
+            <span class="badge">Educação Profissional</span>
+        </div>
+
+    </div>
+
+    <div class="grid">
+
+        <div class="card full">
+
+            <h2>Título</h2>
+
+            <p>
+                Desvendando a Evasão Escolar com o Apoio da IA:
+                Predição, Fatores Associados e Estratégias para a
+                Permanência no Ensino Médio no Instituto Federal Catarinense.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Problema de Pesquisa</h2>
+
+            <p>
+                Como a Inteligência Artificial pode contribuir para a
+                identificação de fatores associados à evasão escolar e
+                apoiar estratégias institucionais voltadas à promoção da
+                permanência e do êxito estudantil?
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Objetivo Geral</h2>
+
+            <p>
+                Investigar a contribuição da Inteligência Artificial para
+                identificação de fatores associados à evasão escolar e
+                apoio à permanência estudantil no Ensino Médio do IFC.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Objetivos Específicos</h2>
+
+            <ul class="lista">
+                <li>Compreender fatores associados à evasão escolar.</li>
+                <li>Descrever fatores associados utilizando dados institucionais.</li>
+                <li>Investigar contribuições e limites da IA na análise educacional.</li>
+                <li>Propor reflexões para fortalecimento das ações de permanência.</li>
+            </ul>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Metodologia</h2>
+
+            <ul class="lista">
+                <li>Natureza: Pesquisa básica.</li>
+                <li>Abordagem: Mista.</li>
+                <li>Objetivos: Exploratória e explicativa.</li>
+                <li>Procedimentos: Pesquisa documental e bibliográfica.</li>
+                <li>Análise de Conteúdo (Bardin).</li>
+                <li>Uso de IA para classificação, extração e sumarização de dados.</li>
+            </ul>
+
+        </div>
+
+        <div class="card destaque full">
+
+            <h2>Mapa Mental Interativo</h2>
+
+            <p>
+                Explore visualmente as relações entre fatores institucionais,
+                pedagógicos e socioeconômicos associados à evasão escolar,
+                bem como as possibilidades e limites do uso responsável da
+                Inteligência Artificial na análise educacional.
+            </p>
+
+            <div class="btn-area">
+
+                <a class="btn"
+                   href="mapa_mental_ia_interativo_relacoes_analiticas3.html">
+                    🧠 Abrir Mapa Mental Interativo
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Produções Relacionadas</h2>
+
+            <ul class="lista">
+                <li>Artigos sobre IA e permanência estudantil.</li>
+                <li>Pesquisas sobre cidadania digital.</li>
+                <li>Educação digital em cibersegurança.</li>
+                <li>Estudos sobre LGPD e educação.</li>
+            </ul>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Informações Acadêmicas</h2>
+
+            <ul class="lista">
+                <li><strong>Programa:</strong> PPGE/IFC</li>
+                <li><strong>Linha:</strong> Processos Educativos e Inclusão</li>
+                <li><strong>Orientador:</strong> Prof. Dr. Airton Zancanaro</li>
+                <li><strong>Status:</strong> Em andamento</li>
+                <li><strong>Defesa prevista:</strong> 2026</li>
+            </ul>
+
+        </div>
+
+        <div class="card full">
+
+            <h2>Downloads e Recursos</h2>
+
+            <div class="btn-area">
+
+                <a class="btn" href="#">
+                    📄 Versão da Dissertação
+                </a>
+
+                <a class="btn" href="publicacoes.html">
+                    📚 Publicações Relacionadas
+                </a>
+
+                <a class="btn"
+                   href="mapa_mental_ia_interativo_relacoes_analiticas3.html">
+                    🧠 Mapa Mental
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    © 2026 Gustavo Garcia de Amo • Dissertação de Mestrado
+</footer>
+
+</body>
+</html>
+```
