@@ -464,7 +464,7 @@
         <a href="rea.html">REA</a>
         <a href="ensino.html">Ensino</a>
         <a href="dissertacao.html">Dissertação</a>
-        <a href="projetos.html">Projetos</a>
+        <a href="projetos.html">Arquivos Aula</a>
         <a href="contato.html">Contato</a>
       </nav>
     </div>
