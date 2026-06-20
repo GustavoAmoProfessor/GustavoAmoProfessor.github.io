@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REA | Gustavo Garcia de Amo</title>
+<style>
+:root{--p:#0b5f8a;--pd:#084a6c;--a:#18a999;--bg:#f6f8fb;--t:#172033;--m:#64748b;--b:#dbe5ee;--s:#e8f6fa}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--t);line-height:1.6}
+a{text-decoration:none}
+header{background:white;border-bottom:1px solid var(--b);position:sticky;top:0;z-index:10}
+.nav{max-width:1180px;margin:auto;padding:18px 20px;display:flex;justify-content:space-between;gap:18px;align-items:center}
+.logo{font-weight:800;color:var(--p)}
+.menu{display:flex;gap:16px;flex-wrap:wrap}
+.menu a{color:var(--t);font-weight:600;font-size:.94rem}
+.menu a:hover{color:var(--p)}
+.container{max-width:1180px;margin:auto;padding:46px 20px}
+.hero{text-align:center;padding:30px 0}
+.kicker{display:inline-block;background:var(--s);color:var(--pd);font-weight:700;padding:8px 14px;border-radius:999px;margin-bottom:14px}
+h1{font-size:clamp(2.2rem,6vw,4rem);color:var(--p);line-height:1.1;margin-bottom:14px}
+.hero p{color:var(--m);max-width:850px;margin:auto;font-size:1.05rem}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:28px 0}
+.stat{background:white;border:1px solid var(--b);border-radius:18px;padding:20px;text-align:center}
+.stat strong{display:block;color:var(--p);font-size:2rem;line-height:1;margin-bottom:6px}
+.stat span{color:var(--m)}
+.info{background:white;border:1px solid var(--b);border-radius:20px;padding:24px;margin-bottom:30px}
+.info h2,.section-title h2{color:var(--p);margin-bottom:8px}
+.info p,.section-title p,.card p{color:var(--m)}
+.quick{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.quick a{background:var(--s);color:var(--pd);border:1px solid #cce7ef;border-radius:999px;padding:9px 13px;font-weight:700}
+.quick a:hover{background:var(--p);color:white}
+.section-title{border-bottom:2px solid var(--b);padding-bottom:12px;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:white;border:1px solid var(--b);border-radius:20px;padding:22px;display:flex;flex-direction:column;box-shadow:0 8px 22px rgba(0,0,0,.04)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.top span{background:var(--s);color:var(--p);border-radius:999px;padding:6px 10px;font-size:.78rem;font-weight:800}
+.top b{color:var(--a);font-size:.83rem}
+.card h3{color:var(--pd);margin-bottom:6px;font-size:1.14rem;line-height:1.3}
+.area{color:var(--p)!important;font-weight:700;font-size:.92rem;margin-bottom:8px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:18px}
+.btn{display:inline-block;background:var(--p);color:white;border-radius:999px;padding:10px 14px;font-weight:800;font-size:.9rem}
+.btn:hover{background:var(--pd)}
+.light{background:white;color:var(--p);border:1px solid var(--b)}
+.light:hover{background:var(--s);color:var(--pd)}
+.notice{background:#fff7ed;border:1px dashed #f3c995;color:#7c4a03;border-radius:18px;padding:18px;margin-top:28px}
+footer{margin-top:50px;padding:30px 20px;background:white;border-top:1px solid var(--b);color:var(--m);text-align:center}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.nav{flex-direction:column;align-items:flex-start}.grid,.stats{grid-template-columns:1fr}.actions{flex-direction:column}.btn{width:100%;text-align:center}}
+</style>
+</head>
+<body>
+<header>
+<nav class="nav">
+<a class="logo" href="index.html">Gustavo Garcia de Amo</a>
+<div class="menu">
+<a href="index.html">Início</a><a href="publicacoes.html">Publicações</a><a href="dissertacao.html">Dissertação</a><a href="projetos.html">Projetos</a><a href="rea.html">REA</a><a href="servicos.html">Produtos & Serviços</a><a href="contato.html">Contato</a>
+</div>
+</nav>
+</header>
+<main class="container">
+<section class="hero">
+<span class="kicker">Materiais didáticos • Atividades educacionais • Licenças abertas</span>
+<h1>Recursos Educacionais Abertos</h1>
+<p>Espaço de acesso aos materiais didáticos, atividades e produções técnicas disponibilizadas em repositórios digitais abertos.</p>
+</section>
+
+<section class="stats">
+<div class="stat"><strong>8</strong><span>REA em CC BY 4.0</span></div>
+<div class="stat"><strong>1</strong><span>produção técnica MIT</span></div>
+<div class="stat"><strong>2026</strong><span>ano de disponibilização</span></div>
+<div class="stat"><strong>9</strong><span>comprovantes</span></div>
+</section>
+
+<section class="info">
+<h2>Sobre os materiais</h2>
+<p>Os REAs listados estão vinculados ao repositório público <strong>publicaCreativeCommons</strong>, com licenciamento <strong>Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)</strong>. Também há uma produção técnica em PowerShell sob <strong>MIT License</strong>.</p>
+<p>Os botões “Acessar material” direcionam para os diretórios dos documentos no GitHub. Os botões “Ver comprovante” apontam para PDFs no diretório <strong>certificados/</strong> do seu site.</p>
+<div class="quick">
+<a href="https://github.com/GustavoAmoProfessor/publicaCreativeCommons" target="_blank" rel="noopener">Repositório CC BY</a>
+<a href="https://github.com/GustavoAmoProfessor/publicaMIT" target="_blank" rel="noopener">Repositório MIT</a>
+<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">Licença CC BY 4.0</a>
+</div>
+</section>
+
+<section>
+<div class="section-title">
+<h2>Lista de REAs e produções abertas</h2>
+<p>Acesse os materiais e seus respectivos comprovantes de disponibilização.</p>
+</div>
+<div class="grid">
+
+<article class="card">
+  <div class="top"><span>Produção técnica</span><b>MIT License</b></div>
+  <h3>Scripts Educacionais em PowerShell para Ensino de Lógica de Programação</h3>
+  <p class="area">Programação / PowerShell</p>
+  <p>Conjunto de scripts computacionais com finalidade didática para ensino de lógica de programação.</p>
+  <div class="actions">
+    <a class="btn" href="https://github.com/GustavoAmoProfessor/publicaMIT" target="_blank" rel="noopener">Acessar material</a>
+    <a class="btn light" href="certificados/Comprovante_Disponibilizacao_Scripts_PowerShell.MIT.pdf" target="_blank" rel="noopener">Ver comprovante</a>
+  </div>
+</article>
+
+<article class="card">
+  <div class="top"><span>REA</span><b>CC BY 4.0</b></div>
+  <h3>Arquitetura de Redes</h3>
+  <p class="area">Redes de computadores</p>
+  <p>Material didático e atividade educacional sobre arquitetura de redes.</p>
+  <div class="actions">
+    <a class="btn" href="https://github.com/GustavoAmoProfessor/publicaCreativeCommons/tree/main/Arquitetura%20de%20Redes" target="_blank" rel="noopener">Acessar material</a>
+    <a class="btn light" href="certificados/Comprovante_REA_01_Arquitetura_de_Redes_CCBY.pdf" target="_blank" rel="noopener">Ver comprovante</a>
+  </div>
+</article>
+
+<article class="card">
+  <div class="top"><span>REA</span><b>CC BY 4.0</b></div>
+  <h3>Creatividade e Ideação</h3>
+  <p class="area">Inovação / Criatividade</p>
+  <p>Recurso para atividades de criatividade, ideação e desenvolvimento de soluções.</p>
+  <div class="actions">
+    <a class="btn" href="https://github.com/GustavoAmoProfessor/publicaCreativeCommons/tree/main/Creatividade%20e%20Idea%C3%A7%C3%A3o" target="_blank" rel="noopener">Acessar material</a>
+    <a class="btn light" href="certificados/Comprovante_REA_02_Creatividade_e_Ideação_CCBY.pdf" target="_blank" rel="noopener">Ver comprovante</a>
+  </div>
+</article>
+
+<article class="card">
+  <div class="top"><span>REA</span><b>CC BY 4.0</b></div>
+  <h3>Hardware - Montagem e Manutenção</h3>
+  <p class="area">Hardware</p>
+  <p>Material para estudo e prática de montagem, manutenção e componentes de computadores.</p>
+  <div class="actions">
+    <a class="btn" href="https://github.com/GustavoAmoProfessor/publicaCreativeCommons/tree/main/Hardware-MontagemEManuten" target="_blank" rel="noopener">Acessar material</a>
+    <a class="btn light" href="certificados/Comprovante_REA_03_Hardware_-_Montagem_e_Manutenção_CCBY.pdf" target="_blank" rel="noopener">Ver comprovante</a>
+  </div>
+</article>
+
+<article class="card">
+  <div class="top"><span>REA</span><b>CC BY 4.0</b></div>
+  <h3>Impressão 3D</h3>
+  <p class="area">Tecnologia / Fabricação digital</p>
+  <p>Recurso educacional sobre conceitos e práticas associadas à impressão 3D.</p>
+  <div class="actions">
+    <a class="btn" href="https://github.com/GustavoAmoProfessor/publicaCreativeCommons/tree/main/Impress%C3%A3o%203D" target="_blank" rel="noopener">Acessar material</a>
+    <a class="btn light" href="certificados/Comprovante_REA_04_Impressão_3D_CCBY.pdf" target="_blank" rel="noopener">Ver comprovante</a>
+  </div>
+</article>
+
+<article class="card">
+  <div class="top"><span>REA</span><b>CC BY 4.0</b></div>
+  <h3>Introdução a Processos de Melhoria e Inovação</h3>
+  <p class="area">Gestão / Inovação</p>
+  <p>Material voltado à compreensão de melhoria contínua, inovação e organização de processos.</p>
+  <div class="actions">
+    <a class="btn" href="https://github.com/GustavoAmoProfessor/publicaCreativeCommons/tree/main/Introducao%20a%20Processos%20de%20Melhoria%20e%20Inovacao" target="_blank" rel="noopener">Acessar material</a>
+    <a class="btn light" href="certificados/Comprovante_REA_05_Introdução_a_Processos_de_Melhoria_e_Inovação_CCBY.pdf" target="_blank" rel="noopener">Ver comprovante</a>
+  </div>
+</article>
+
+<article class="card">
+  <div class="top"><span>REA</span><b>CC BY 4.0</b></div>
+  <h3>Modelagem de Sistemas</h3>
+  <p class="area">Desenvolvimento de sistemas</p>
+  <p>Recurso para apoio ao ensino de análise, modelagem e documentação de sistemas.</p>
+  <div class="actions">
+    <a class="btn" href="https://github.com/GustavoAmoProfessor/publicaCreativeCommons/tree/main/Modelagem%20de%20Sistemas" target="_blank" rel="noopener">Acessar material</a>
+    <a class="btn light" href="certificados/Comprovante_REA_06_Modelagem_de_Sistemas_CCBY.pdf" target="_blank" rel="noopener">Ver comprovante</a>
+  </div>
+</article>
+
+<article class="card">
+  <div class="top"><span>REA</span><b>CC BY 4.0</b></div>
+  <h3>Métodos de Ordenação</h3>
+  <p class="area">Lógica de programação</p>
+  <p>Atividade para estudo de algoritmos e métodos de ordenação.</p>
+  <div class="actions">
+    <a class="btn" href="https://github.com/GustavoAmoProfessor/publicaCreativeCommons/tree/main/M%C3%A9todos%20de%20Ordena%C3%A7%C3%A3o" target="_blank" rel="noopener">Acessar material</a>
+    <a class="btn light" href="certificados/Comprovante_REA_07_Métodos_de_Ordenação_CCBY.pdf" target="_blank" rel="noopener">Ver comprovante</a>
+  </div>
+</article>
+
+<article class="card">
+  <div class="top"><span>REA</span><b>CC BY 4.0</b></div>
+  <h3>Programação de Aplicativos - Calculadora</h3>
+  <p class="area">Programação de aplicativos</p>
+  <p>Atividade prática para desenvolvimento de aplicativo de calculadora.</p>
+  <div class="actions">
+    <a class="btn" href="https://github.com/GustavoAmoProfessor/publicaCreativeCommons/tree/main/Programa%C3%A7%C3%A3o%20de%20Aplicativos%20-%20Calculadora" target="_blank" rel="noopener">Acessar material</a>
+    <a class="btn light" href="certificados/Comprovante_REA_08_Programação_de_Aplicativos_-_Calculadora_CCBY.pdf" target="_blank" rel="noopener">Ver comprovante</a>
+  </div>
+</article>
+</div>
+<div class="notice"><strong>Organização no GitHub Pages:</strong> salve esta página como <code>rea.html</code> na raiz do site e crie a pasta <code>certificados/</code> para armazenar os PDFs dos comprovantes com os mesmos nomes usados nos links.</div>
+</section>
+</main>
+<footer>© 2026 Gustavo Garcia de Amo • Recursos Educacionais Abertos</footer>
+</body>
+</html>
