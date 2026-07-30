@@ -1,0 +1,2337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Missão Indústria Sustentável</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --azul: #075985;
+            --azul-claro: #e0f2fe;
+            --verde: #15803d;
+            --verde-claro: #dcfce7;
+            --amarelo: #f59e0b;
+            --vermelho: #dc2626;
+            --fundo: #eef4f7;
+            --texto: #172033;
+            --cinza: #64748b;
+            --borda: #d8e3ea;
+            --branco: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: var(--texto);
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(14, 165, 233, 0.18),
+                    transparent 32%
+                ),
+                var(--fundo);
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .game-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 14px 24px;
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid var(--borda);
+            backdrop-filter: blur(10px);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            color: white;
+            background: var(--azul);
+            font-size: 1.6rem;
+        }
+
+        .brand strong,
+        .brand span {
+            display: block;
+        }
+
+        .brand strong {
+            color: var(--azul);
+        }
+
+        .brand span {
+            color: var(--cinza);
+            font-size: 0.82rem;
+        }
+
+        .hud {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .hud-item {
+            min-width: 75px;
+            padding: 8px 12px;
+            text-align: center;
+            border-radius: 12px;
+            background: #f5f9fb;
+            border: 1px solid var(--borda);
+        }
+
+        .hud-item span {
+            display: block;
+            color: var(--cinza);
+            font-size: 0.68rem;
+            text-transform: uppercase;
+        }
+
+        .hud-item strong {
+            color: var(--azul);
+            font-size: 1rem;
+        }
+
+        .game-shell {
+            width: min(1150px, calc(100% - 28px));
+            margin: 28px auto;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .intro-card,
+        .game-card,
+        .result-card {
+            background: var(--branco);
+            border: 1px solid var(--borda);
+            border-radius: 26px;
+            box-shadow: 0 18px 45px rgba(15, 50, 70, 0.11);
+        }
+
+        .intro-card {
+            min-height: 620px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+        }
+
+        .intro-content {
+            padding: clamp(30px, 6vw, 65px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .kicker {
+            display: inline-block;
+            width: fit-content;
+            padding: 8px 12px;
+            margin-bottom: 15px;
+            border-radius: 999px;
+            color: var(--verde);
+            background: var(--verde-claro);
+            font-size: 0.78rem;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+        }
+
+        h1 {
+            margin: 0 0 18px;
+            color: var(--azul);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 1;
+        }
+
+        .intro-content > p {
+            color: var(--cinza);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 26px 0;
+        }
+
+        .mission-item {
+            padding: 15px;
+            border-radius: 14px;
+            border: 1px solid var(--borda);
+            background: #f9fbfc;
+        }
+
+        .mission-item span {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.5rem;
+        }
+
+        .mission-item strong {
+            color: var(--azul);
+        }
+
+        .mission-item p {
+            margin: 5px 0 0;
+            color: var(--cinza);
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            border: 0;
+            border-radius: 13px;
+            padding: 14px 22px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .primary-btn {
+            color: white;
+            background: var(--azul);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            background: #064a70;
+        }
+
+        .secondary-btn {
+            color: var(--azul);
+            background: white;
+            border: 1px solid var(--borda);
+        }
+
+        .intro-visual {
+            position: relative;
+            min-height: 450px;
+            overflow: hidden;
+            background:
+                linear-gradient(
+                    145deg,
+                    #064663,
+                    #0c749d
+                );
+        }
+
+        .factory-bg {
+            position: absolute;
+            inset: 0;
+        }
+
+        .factory-building {
+            position: absolute;
+            bottom: 0;
+            left: 8%;
+            width: 84%;
+            height: 50%;
+            border-radius: 25px 25px 0 0;
+            background: rgba(255, 255, 255, 0.13);
+        }
+
+        .factory-building::before {
+            content: "";
+            position: absolute;
+            inset: 28px;
+            background:
+                repeating-linear-gradient(
+                    to right,
+                    rgba(255, 255, 255, 0.28) 0 24px,
+                    transparent 24px 55px
+                );
+        }
+
+        .factory-main-icon {
+            position: absolute;
+            top: 48%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 9rem;
+            filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.3));
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .phase-header h2 {
+            margin: 5px 0;
+            color: var(--azul);
+            font-size: clamp(1.8rem, 4vw, 3rem);
+        }
+
+        .phase-header p {
+            margin: 0;
+            color: var(--cinza);
+        }
+
+        .timer {
+            min-width: 100px;
+            padding: 14px;
+            text-align: center;
+            border: 1px solid var(--borda);
+            border-radius: 16px;
+            background: white;
+        }
+
+        .timer span {
+            display: block;
+            color: var(--cinza);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .timer strong {
+            color: var(--vermelho);
+            font-size: 1.8rem;
+        }
+
+        .game-card {
+            padding: clamp(20px, 4vw, 40px);
+        }
+
+        .factory-scene {
+            position: relative;
+            min-height: 520px;
+            overflow: hidden;
+            border-radius: 22px;
+            border: 2px solid #b9cad4;
+            background:
+                linear-gradient(
+                    to bottom,
+                    #dff4ff 0 62%,
+                    #8998a4 62% 100%
+                );
+        }
+
+        .wall-mark {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 61%;
+            height: 5px;
+            background: #6f7e88;
+        }
+
+        .scene-door {
+            position: absolute;
+            left: 7%;
+            bottom: 36%;
+            width: 16%;
+            height: 37%;
+            background: #475569;
+            border: 7px solid #334155;
+        }
+
+        .exit-sign {
+            position: absolute;
+            left: 8%;
+            top: 17%;
+            padding: 6px 18px;
+            color: white;
+            background: var(--verde);
+            font-weight: bold;
+        }
+
+        .machine {
+            position: absolute;
+            left: 30%;
+            bottom: 27%;
+            width: 28%;
+            height: 34%;
+            border-radius: 14px;
+            background: #25637c;
+            border: 8px solid #19485d;
+        }
+
+        .machine::before {
+            content: "";
+            position: absolute;
+            left: 15%;
+            right: 15%;
+            top: 20%;
+            height: 30%;
+            border-radius: 8px;
+            background: #0f2530;
+        }
+
+        .machine::after {
+            content: "";
+            position: absolute;
+            left: 5%;
+            right: 5%;
+            bottom: 12%;
+            height: 20%;
+            background:
+                repeating-linear-gradient(
+                    to right,
+                    #b8c5cd 0 20px,
+                    #67747d 20px 30px
+                );
+        }
+
+        .worker {
+            position: absolute;
+            z-index: 5;
+            font-size: 4.5rem;
+        }
+
+        .worker-one {
+            right: 23%;
+            bottom: 28%;
+        }
+
+        .worker-two {
+            right: 7%;
+            bottom: 29%;
+        }
+
+        .spill {
+            position: absolute;
+            left: 43%;
+            bottom: 8%;
+            width: 180px;
+            height: 55px;
+            border-radius: 50%;
+            background: rgba(37, 99, 235, 0.65);
+            transform: rotate(-8deg);
+        }
+
+        .cable {
+            position: absolute;
+            right: 18%;
+            bottom: 13%;
+            width: 250px;
+            height: 16px;
+            border-radius: 50%;
+            background: #20242b;
+            transform: rotate(12deg);
+        }
+
+        .boxes {
+            position: absolute;
+            left: 8%;
+            bottom: 10%;
+            font-size: 4rem;
+        }
+
+        .chemical {
+            position: absolute;
+            right: 4%;
+            bottom: 9%;
+            font-size: 3.5rem;
+        }
+
+        .unguarded {
+            position: absolute;
+            left: 35%;
+            top: 34%;
+            width: 135px;
+            height: 95px;
+            border: 4px dashed var(--vermelho);
+            border-radius: 12px;
+        }
+
+        .risk-btn {
+            position: absolute;
+            z-index: 20;
+            border: 0;
+            cursor: crosshair;
+            background: transparent;
+        }
+
+        .risk-btn.found {
+            pointer-events: none;
+            border-radius: 15px;
+            border: 4px solid var(--verde);
+            background: rgba(34, 197, 94, 0.17);
+        }
+
+        .risk-btn.found::after {
+            content: "✓";
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 28px;
+            height: 28px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            color: white;
+            background: var(--verde);
+            font-weight: bold;
+        }
+
+        .safe-btn {
+            position: absolute;
+            z-index: 20;
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .phase-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-top: 16px;
+        }
+
+        .progress-chip {
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: var(--azul-claro);
+            color: var(--azul);
+            font-weight: bold;
+        }
+
+        .message {
+            color: var(--cinza);
+            text-align: right;
+        }
+
+        .epi-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 22px;
+        }
+
+        .epi-stock,
+        .workers-zone {
+            padding: 22px;
+            border: 1px solid var(--borda);
+            border-radius: 20px;
+            background: #f8fbfd;
+        }
+
+        .epi-stock h3,
+        .workers-zone h3 {
+            margin-top: 0;
+            color: var(--azul);
+        }
+
+        .epi-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .epi-item {
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            border-radius: 14px;
+            border: 2px solid var(--borda);
+            background: white;
+            cursor: grab;
+            user-select: none;
+        }
+
+        .epi-item.selected {
+            border-color: var(--azul);
+            background: var(--azul-claro);
+        }
+
+        .epi-item.used {
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        .epi-item span {
+            font-size: 2rem;
+        }
+
+        .worker-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .worker-card {
+            min-height: 250px;
+            padding: 18px;
+            text-align: center;
+            border: 3px dashed #b7c7d0;
+            border-radius: 18px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .worker-card.correct {
+            border-style: solid;
+            border-color: var(--verde);
+            background: var(--verde-claro);
+        }
+
+        .worker-avatar {
+            font-size: 5rem;
+        }
+
+        .worker-card h4 {
+            color: var(--azul);
+            margin: 8px 0;
+        }
+
+        .worker-card p {
+            color: var(--cinza);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .assigned-epi {
+            min-height: 38px;
+            margin-top: 10px;
+            font-size: 1.8rem;
+        }
+
+        .waste-zone {
+            text-align: center;
+        }
+
+        .conveyor {
+            position: relative;
+            height: 170px;
+            margin: 20px 0 28px;
+            overflow: hidden;
+            border-radius: 18px;
+            background:
+                repeating-linear-gradient(
+                    135deg,
+                    #4b5563 0 25px,
+                    #374151 25px 50px
+                );
+            border: 8px solid #28313d;
+        }
+
+        .waste-card {
+            position: absolute;
+            top: 24px;
+            left: calc(50% - 90px);
+            width: 180px;
+            min-height: 105px;
+            padding: 12px;
+            border-radius: 16px;
+            background: white;
+            border: 3px solid var(--borda);
+            cursor: grab;
+            transition: 0.25s;
+        }
+
+        .waste-card span {
+            display: block;
+            font-size: 3rem;
+        }
+
+        .waste-card strong {
+            color: var(--azul);
+        }
+
+        .bins {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .bin {
+            min-height: 135px;
+            padding: 14px;
+            border-radius: 16px 16px 8px 8px;
+            border: 3px solid var(--borda);
+            background: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .bin:hover,
+        .bin.selected {
+            transform: translateY(-5px);
+            border-color: var(--azul);
+        }
+
+        .bin span {
+            display: block;
+            font-size: 2.5rem;
+            margin-bottom: 7px;
+        }
+
+        .bin b {
+            color: var(--azul);
+            font-size: 0.85rem;
+        }
+
+        .crisis-layout {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 22px;
+        }
+
+        .crisis-scene {
+            position: relative;
+            min-height: 500px;
+            overflow: hidden;
+            border-radius: 22px;
+            background:
+                linear-gradient(
+                    to bottom,
+                    #bde3ef 0 62%,
+                    #76838c 62% 100%
+                );
+        }
+
+        .tank {
+            position: absolute;
+            left: 13%;
+            bottom: 23%;
+            width: 230px;
+            height: 250px;
+            display: grid;
+            place-items: center;
+            border-radius: 35px 35px 20px 20px;
+            color: white;
+            background: #536975;
+            border: 8px solid #384a54;
+            font-weight: bold;
+        }
+
+        .leak-stream {
+            position: absolute;
+            left: 32%;
+            bottom: 20%;
+            width: 240px;
+            height: 35px;
+            border-radius: 50%;
+            background: rgba(22, 163, 74, 0.65);
+            transform: rotate(9deg);
+        }
+
+        .drain {
+            position: absolute;
+            right: 12%;
+            bottom: 14%;
+            width: 90px;
+            height: 90px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            color: white;
+            background:
+                repeating-linear-gradient(
+                    45deg,
+                    #172033 0 7px,
+                    #697783 7px 14px
+                );
+            font-size: 0.75rem;
+        }
+
+        .barrier-slot {
+            position: absolute;
+            left: 52%;
+            bottom: 15%;
+            width: 215px;
+            height: 95px;
+            display: grid;
+            place-items: center;
+            border-radius: 18px;
+            border: 4px dashed white;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .barrier-slot.filled {
+            border-style: solid;
+            border-color: var(--amarelo);
+            background:
+                repeating-linear-gradient(
+                    135deg,
+                    #facc15 0 18px,
+                    #92400e 18px 36px
+                );
+            color: white;
+        }
+
+        .tools-panel {
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid var(--borda);
+            background: #f8fbfd;
+        }
+
+        .tools-panel h3 {
+            color: var(--azul);
+            margin-top: 0;
+        }
+
+        .tool-item {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 14px;
+            margin-bottom: 12px;
+            border-radius: 14px;
+            border: 2px solid var(--borda);
+            background: white;
+            cursor: grab;
+        }
+
+        .tool-item.selected {
+            border-color: var(--azul);
+            background: var(--azul-claro);
+        }
+
+        .tool-item.used {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .tool-item span {
+            font-size: 2rem;
+        }
+
+        .decision-panel {
+            margin-top: 25px;
+            padding: 22px;
+            border-radius: 20px;
+            border: 1px solid var(--borda);
+            background: white;
+        }
+
+        .decision-panel h3 {
+            color: var(--azul);
+        }
+
+        .decision-options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .decision-btn {
+            padding: 15px;
+            text-align: left;
+            border-radius: 14px;
+            border: 2px solid var(--borda);
+            background: white;
+            cursor: pointer;
+        }
+
+        .decision-btn:hover {
+            border-color: var(--azul);
+            background: #f2f9fc;
+        }
+
+        .result-card {
+            padding: clamp(30px, 5vw, 55px);
+            text-align: center;
+        }
+
+        .result-icon {
+            font-size: 5rem;
+        }
+
+        .score-circle {
+            width: 190px;
+            height: 190px;
+            display: grid;
+            place-items: center;
+            margin: 28px auto;
+            border-radius: 50%;
+            border: 13px solid var(--azul-claro);
+            background: #f8fcfe;
+        }
+
+        .score-circle strong {
+            display: block;
+            color: var(--azul);
+            font-size: 3.2rem;
+        }
+
+        .score-circle span {
+            color: var(--cinza);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .phase-report {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .report-item {
+            padding: 18px;
+            border-radius: 15px;
+            border: 1px solid var(--borda);
+        }
+
+        .report-item span {
+            display: block;
+            color: var(--cinza);
+            font-size: 0.8rem;
+        }
+
+        .report-item strong {
+            color: var(--azul);
+            font-size: 1.5rem;
+        }
+
+        .result-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 25px;
+            z-index: 500;
+            min-width: 240px;
+            max-width: 90%;
+            padding: 14px 20px;
+            transform: translate(-50%, 120px);
+            border-radius: 13px;
+            color: white;
+            background: #172033;
+            text-align: center;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .toast.show {
+            transform: translate(-50%, 0);
+            opacity: 1;
+        }
+
+        @media print {
+            .game-header,
+            .result-actions {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .intro-card,
+            .epi-layout,
+            .crisis-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .intro-visual {
+                min-height: 350px;
+            }
+
+            .bins {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .worker-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .phase-report {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 620px) {
+            .game-header {
+                position: static;
+            }
+
+            .hud {
+                width: 100%;
+            }
+
+            .hud-item {
+                flex: 1;
+            }
+
+            .mission-grid,
+            .phase-report {
+                grid-template-columns: 1fr;
+            }
+
+            .phase-header,
+            .phase-footer {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .message {
+                text-align: left;
+            }
+
+            .bins {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="game-header">
+
+        <div class="brand">
+            <div class="brand-icon">🏭</div>
+
+            <div>
+                <strong>Missão Indústria Sustentável</strong>
+                <span>Segurança, prevenção e meio ambiente</span>
+            </div>
+        </div>
+
+        <div class="hud">
+            <div class="hud-item">
+                <span>Fase</span>
+                <strong id="phaseHud">0/4</strong>
+            </div>
+
+            <div class="hud-item">
+                <span>Pontos</span>
+                <strong id="scoreHud">0</strong>
+            </div>
+
+            <div class="hud-item">
+                <span>Sequência</span>
+                <strong id="streakHud">0x</strong>
+            </div>
+
+            <div class="hud-item">
+                <span>Vidas</span>
+                <strong id="livesHud">❤❤❤</strong>
+            </div>
+        </div>
+
+    </header>
+
+    <main class="game-shell">
+
+        <!-- INTRODUÇÃO -->
+        <section id="introScreen" class="screen active">
+
+            <div class="intro-card">
+
+                <div class="intro-content">
+                    <span class="kicker">MISSÃO OPERACIONAL</span>
+
+                    <h1>
+                        A fábrica está fora de controle.
+                    </h1>
+
+                    <p>
+                        Você foi chamado para assumir uma operação emergencial.
+                        Identifique riscos, proteja os trabalhadores, organize
+                        os resíduos e impeça que um vazamento alcance o sistema
+                        de drenagem.
+                    </p>
+
+                    <div class="mission-grid">
+
+                        <div class="mission-item">
+                            <span>🔍</span>
+                            <strong>Investigar</strong>
+                            <p>Localize perigos escondidos na fábrica.</p>
+                        </div>
+
+                        <div class="mission-item">
+                            <span>🦺</span>
+                            <strong>Proteger</strong>
+                            <p>Entregue os EPIs corretos aos trabalhadores.</p>
+                        </div>
+
+                        <div class="mission-item">
+                            <span>♻️</span>
+                            <strong>Classificar</strong>
+                            <p>Separe corretamente os resíduos.</p>
+                        </div>
+
+                        <div class="mission-item">
+                            <span>☣️</span>
+                            <strong>Conter</strong>
+                            <p>Impeça que o vazamento cause um dano ambiental.</p>
+                        </div>
+
+                    </div>
+
+                    <button
+                        id="beginBtn"
+                        class="primary-btn"
+                    >
+                        INICIAR MISSÃO
+                    </button>
+                </div>
+
+                <div class="intro-visual">
+                    <div class="factory-bg">
+                        <div class="factory-building"></div>
+                    </div>
+
+                    <div class="factory-main-icon">
+                        🚨
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- FASE 1 -->
+        <section id="phase1" class="screen">
+
+            <div class="phase-header">
+                <div>
+                    <span class="kicker">
+                        FASE 1 · INSPEÇÃO RELÂMPAGO
+                    </span>
+
+                    <h2>Encontre os seis riscos</h2>
+
+                    <p>
+                        Clique somente nos elementos que representam perigo.
+                    </p>
+                </div>
+
+                <div class="timer">
+                    <span>Tempo</span>
+                    <strong id="timer1">55</strong>
+                </div>
+            </div>
+
+            <div class="game-card">
+
+                <div class="factory-scene" id="factoryScene">
+
+                    <div class="wall-mark"></div>
+                    <div class="scene-door"></div>
+                    <div class="exit-sign">SAÍDA</div>
+                    <div class="machine"></div>
+
+                    <div class="worker worker-one">🧑‍🔧</div>
+                    <div class="worker worker-two">👷</div>
+
+                    <div class="spill"></div>
+                    <div class="cable"></div>
+                    <div class="boxes">📦📦</div>
+                    <div class="chemical">🧪</div>
+                    <div class="unguarded"></div>
+
+                    <button
+                        class="risk-btn"
+                        data-risk="exit"
+                        style="left:5%; bottom:5%; width:21%; height:34%;"
+                        aria-label="Saída bloqueada"
+                    ></button>
+
+                    <button
+                        class="risk-btn"
+                        data-risk="spill"
+                        style="left:39%; bottom:3%; width:23%; height:18%;"
+                        aria-label="Líquido derramado"
+                    ></button>
+
+                    <button
+                        class="risk-btn"
+                        data-risk="cable"
+                        style="right:12%; bottom:5%; width:31%; height:18%;"
+                        aria-label="Cabo no caminho"
+                    ></button>
+
+                    <button
+                        class="risk-btn"
+                        data-risk="worker"
+                        style="right:3%; bottom:24%; width:17%; height:37%;"
+                        aria-label="Trabalhador sem proteção"
+                    ></button>
+
+                    <button
+                        class="risk-btn"
+                        data-risk="chemical"
+                        style="right:1%; bottom:3%; width:12%; height:24%;"
+                        aria-label="Produto químico sem identificação"
+                    ></button>
+
+                    <button
+                        class="risk-btn"
+                        data-risk="machine"
+                        style="left:31%; top:26%; width:26%; height:31%;"
+                        aria-label="Máquina sem proteção"
+                    ></button>
+
+                    <button
+                        class="safe-btn"
+                        data-safe="worker-safe"
+                        style="right:21%; bottom:24%; width:16%; height:37%;"
+                        aria-label="Trabalhador protegido"
+                    ></button>
+
+                </div>
+
+                <div class="phase-footer">
+                    <div class="progress-chip">
+                        Encontrados:
+                        <strong id="riskProgress">0/6</strong>
+                    </div>
+
+                    <div class="message" id="phase1Message">
+                        Examine toda a fábrica.
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- FASE 2 -->
+        <section id="phase2" class="screen">
+
+            <div class="phase-header">
+                <div>
+                    <span class="kicker">
+                        FASE 2 · EQUIPE PROTEGIDA
+                    </span>
+
+                    <h2>Distribua os EPIs</h2>
+
+                    <p>
+                        Arraste o equipamento ou selecione-o e clique
+                        no trabalhador adequado.
+                    </p>
+                </div>
+
+                <div class="timer">
+                    <span>Tempo</span>
+                    <strong id="timer2">65</strong>
+                </div>
+            </div>
+
+            <div class="game-card">
+
+                <div class="epi-layout">
+
+                    <div class="epi-stock">
+                        <h3>Equipamentos disponíveis</h3>
+
+                        <div class="epi-list">
+
+                            <div
+                                class="epi-item"
+                                draggable="true"
+                                data-epi="capacete"
+                            >
+                                <span>⛑️</span>
+                                <div>
+                                    <strong>Capacete</strong>
+                                    <small>Proteção contra impactos.</small>
+                                </div>
+                            </div>
+
+                            <div
+                                class="epi-item"
+                                draggable="true"
+                                data-epi="protetor"
+                            >
+                                <span>🎧</span>
+                                <div>
+                                    <strong>Protetor auricular</strong>
+                                    <small>Reduz exposição ao ruído.</small>
+                                </div>
+                            </div>
+
+                            <div
+                                class="epi-item"
+                                draggable="true"
+                                data-epi="luvas"
+                            >
+                                <span>🧤</span>
+                                <div>
+                                    <strong>Luvas químicas</strong>
+                                    <small>Proteção no manuseio de produtos.</small>
+                                </div>
+                            </div>
+
+                            <div
+                                class="epi-item"
+                                draggable="true"
+                                data-epi="oculos"
+                            >
+                                <span>🥽</span>
+                                <div>
+                                    <strong>Óculos de proteção</strong>
+                                    <small>Protege contra partículas.</small>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="workers-zone">
+                        <h3>Trabalhadores</h3>
+
+                        <div class="worker-grid">
+
+                            <div
+                                class="worker-card"
+                                data-worker="obra"
+                                data-correct="capacete"
+                            >
+                                <div class="worker-avatar">👷</div>
+                                <h4>Manutenção elevada</h4>
+                                <p>
+                                    Trabalha próximo a ferramentas
+                                    e peças suspensas.
+                                </p>
+                                <div class="assigned-epi"></div>
+                            </div>
+
+                            <div
+                                class="worker-card"
+                                data-worker="ruido"
+                                data-correct="protetor"
+                            >
+                                <div class="worker-avatar">🧑‍🏭</div>
+                                <h4>Área de alto ruído</h4>
+                                <p>
+                                    Atua ao lado de prensas industriais.
+                                </p>
+                                <div class="assigned-epi"></div>
+                            </div>
+
+                            <div
+                                class="worker-card"
+                                data-worker="quimico"
+                                data-correct="luvas"
+                            >
+                                <div class="worker-avatar">🧑‍🔬</div>
+                                <h4>Manuseio químico</h4>
+                                <p>
+                                    Transfere produtos para recipientes.
+                                </p>
+                                <div class="assigned-epi"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="phase-footer">
+                    <div class="progress-chip">
+                        Protegidos:
+                        <strong id="epiProgress">0/3</strong>
+                    </div>
+
+                    <div class="message" id="phase2Message">
+                        Um equipamento é uma distração.
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- FASE 3 -->
+        <section id="phase3" class="screen">
+
+            <div class="phase-header">
+                <div>
+                    <span class="kicker">
+                        FASE 3 · CENTRAL DE RESÍDUOS
+                    </span>
+
+                    <h2>Separe os materiais</h2>
+
+                    <p>
+                        Arraste o resíduo ou selecione e clique
+                        no coletor correto.
+                    </p>
+                </div>
+
+                <div class="timer">
+                    <span>Tempo</span>
+                    <strong id="timer3">75</strong>
+                </div>
+            </div>
+
+            <div class="game-card waste-zone">
+
+                <div class="conveyor">
+
+                    <div
+                        id="wasteCard"
+                        class="waste-card"
+                        draggable="true"
+                    >
+                        <span id="wasteIcon">📄</span>
+                        <strong id="wasteName">Papel limpo</strong>
+                    </div>
+
+                </div>
+
+                <div class="bins">
+
+                    <button class="bin" data-bin="papel">
+                        <span>📄</span>
+                        <b>Papel</b>
+                    </button>
+
+                    <button class="bin" data-bin="plastico">
+                        <span>🧴</span>
+                        <b>Plástico</b>
+                    </button>
+
+                    <button class="bin" data-bin="metal">
+                        <span>🥫</span>
+                        <b>Metal</b>
+                    </button>
+
+                    <button class="bin" data-bin="organico">
+                        <span>🍎</span>
+                        <b>Orgânico</b>
+                    </button>
+
+                    <button class="bin" data-bin="perigoso">
+                        <span>☣️</span>
+                        <b>Perigoso</b>
+                    </button>
+
+                </div>
+
+                <div class="phase-footer">
+                    <div class="progress-chip">
+                        Resíduos:
+                        <strong id="wasteProgress">0/9</strong>
+                    </div>
+
+                    <div class="message" id="phase3Message">
+                        Observe se o material está contaminado.
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- FASE 4 -->
+        <section id="phase4" class="screen">
+
+            <div class="phase-header">
+                <div>
+                    <span class="kicker">
+                        FASE 4 · EMERGÊNCIA AMBIENTAL
+                    </span>
+
+                    <h2>Impeça a contaminação</h2>
+
+                    <p>
+                        Escolha as ferramentas e complete o protocolo
+                        de emergência.
+                    </p>
+                </div>
+
+                <div class="timer">
+                    <span>Tempo</span>
+                    <strong id="timer4">60</strong>
+                </div>
+            </div>
+
+            <div class="game-card">
+
+                <div class="crisis-layout">
+
+                    <div class="crisis-scene">
+
+                        <div class="tank">TANQUE QUÍMICO</div>
+                        <div class="leak-stream"></div>
+                        <div class="drain">RALO</div>
+
+                        <div
+                            id="barrierSlot"
+                            class="barrier-slot"
+                        >
+                            ARRASTE A BARREIRA PARA ESTE LOCAL
+                        </div>
+
+                    </div>
+
+                    <div class="tools-panel">
+                        <h3>Ferramentas disponíveis</h3>
+
+                        <div
+                            class="tool-item"
+                            draggable="true"
+                            data-tool="barreira"
+                        >
+                            <span>🚧</span>
+                            <div>
+                                <strong>Barreira de contenção</strong>
+                                <small>Bloqueia o avanço do líquido.</small>
+                            </div>
+                        </div>
+
+                        <div
+                            class="tool-item"
+                            draggable="true"
+                            data-tool="agua"
+                        >
+                            <span>🚿</span>
+                            <div>
+                                <strong>Mangueira de água</strong>
+                                <small>Espalha o produto pela drenagem.</small>
+                            </div>
+                        </div>
+
+                        <div
+                            class="tool-item"
+                            draggable="true"
+                            data-tool="papel"
+                        >
+                            <span>🧻</span>
+                            <div>
+                                <strong>Papel absorvente comum</strong>
+                                <small>Não é adequado para grandes vazamentos.</small>
+                            </div>
+                        </div>
+
+                        <div
+                            class="tool-item"
+                            draggable="true"
+                            data-tool="absorvente"
+                        >
+                            <span>🧽</span>
+                            <div>
+                                <strong>Absorvente industrial</strong>
+                                <small>Recolhe o produto após a contenção.</small>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div
+                    id="decisionPanel"
+                    class="decision-panel"
+                    style="display:none;"
+                >
+                    <h3>O produto foi contido. Qual é o próximo passo?</h3>
+
+                    <div class="decision-options">
+
+                        <button
+                            class="decision-btn"
+                            data-decision="correct"
+                        >
+                            Isolar a área, utilizar absorvente industrial,
+                            comunicar os responsáveis e registrar o incidente.
+                        </button>
+
+                        <button
+                            class="decision-btn"
+                            data-decision="wrong"
+                        >
+                            Liberar a área e descartar o material no lixo comum.
+                        </button>
+
+                        <button
+                            class="decision-btn"
+                            data-decision="wrong"
+                        >
+                            Lavar o restante do produto diretamente para o ralo.
+                        </button>
+
+                    </div>
+                </div>
+
+                <div class="phase-footer">
+                    <div class="progress-chip">
+                        Protocolo:
+                        <strong id="crisisProgress">0/2</strong>
+                    </div>
+
+                    <div class="message" id="phase4Message">
+                        Primeiro impeça que o líquido alcance o ralo.
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- RESULTADO -->
+        <section id="resultScreen" class="screen">
+
+            <div class="result-card">
+
+                <div class="result-icon" id="resultIcon">
+                    🏆
+                </div>
+
+                <span class="kicker">
+                    RELATÓRIO FINAL
+                </span>
+
+                <h1 id="resultTitle">
+                    Missão concluída
+                </h1>
+
+                <p id="resultText"></p>
+
+                <div class="score-circle">
+                    <div>
+                        <strong id="finalScore">0</strong>
+                        <span>pontos</span>
+                    </div>
+                </div>
+
+                <div class="phase-report">
+
+                    <div class="report-item">
+                        <span>Inspeção</span>
+                        <strong id="report1">0</strong>
+                    </div>
+
+                    <div class="report-item">
+                        <span>EPIs</span>
+                        <strong id="report2">0</strong>
+                    </div>
+
+                    <div class="report-item">
+                        <span>Resíduos</span>
+                        <strong id="report3">0</strong>
+                    </div>
+
+                    <div class="report-item">
+                        <span>Emergência</span>
+                        <strong id="report4">0</strong>
+                    </div>
+
+                </div>
+
+                <div class="result-actions">
+
+                    <button
+                        id="restartBtn"
+                        class="primary-btn"
+                    >
+                        JOGAR NOVAMENTE
+                    </button>
+
+                    <button
+                        onclick="window.print()"
+                        class="secondary-btn"
+                    >
+                        IMPRIMIR RESULTADO
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        let phase = 0;
+        let score = 0;
+        let streak = 0;
+        let bestStreak = 0;
+        let lives = 3;
+
+        let timers = {};
+        let phaseScores = [0, 0, 0, 0];
+
+        const screens = document.querySelectorAll(".screen");
+
+        function showScreen(id) {
+            screens.forEach((screen) => {
+                screen.classList.remove("active");
+            });
+
+            document.getElementById(id).classList.add("active");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function updateHud() {
+            document.getElementById("phaseHud").textContent =
+                `${phase}/4`;
+
+            document.getElementById("scoreHud").textContent =
+                score;
+
+            document.getElementById("streakHud").textContent =
+                `${streak}x`;
+
+            document.getElementById("livesHud").textContent =
+                "❤".repeat(Math.max(lives, 0));
+        }
+
+        function toast(message) {
+            const toastBox = document.getElementById("toast");
+
+            toastBox.textContent = message;
+            toastBox.classList.add("show");
+
+            setTimeout(() => {
+                toastBox.classList.remove("show");
+            }, 1600);
+        }
+
+        function addCorrect(points = 100) {
+            streak++;
+            bestStreak = Math.max(bestStreak, streak);
+
+            const bonus = Math.min(streak * 10, 50);
+            const gained = points + bonus;
+
+            score += gained;
+            phaseScores[phase - 1] += gained;
+
+            updateHud();
+            toast(`Acerto! +${gained} pontos`);
+        }
+
+        function addWrong(message = "Ação incorreta") {
+            streak = 0;
+            lives--;
+
+            updateHud();
+            toast(`${message}. Você perdeu uma vida.`);
+
+            if (lives <= 0) {
+                setTimeout(finishGame, 1000);
+            }
+        }
+
+        function startTimer(elementId, seconds, onEnd) {
+            clearInterval(timers[elementId]);
+
+            const element = document.getElementById(elementId);
+            let remaining = seconds;
+
+            element.textContent = remaining;
+
+            timers[elementId] = setInterval(() => {
+                remaining--;
+                element.textContent = remaining;
+
+                if (remaining <= 0) {
+                    clearInterval(timers[elementId]);
+                    toast("Tempo encerrado");
+                    onEnd();
+                }
+            }, 1000);
+        }
+
+        function clearAllTimers() {
+            Object.values(timers).forEach(clearInterval);
+        }
+
+        document.getElementById("beginBtn").addEventListener(
+            "click",
+            startGame
+        );
+
+        document.getElementById("restartBtn").addEventListener(
+            "click",
+            () => location.reload()
+        );
+
+        function startGame() {
+            phase = 1;
+            updateHud();
+            showScreen("phase1");
+            startPhase1();
+        }
+
+        // FASE 1
+
+        let risksFound = 0;
+        let phase1Ended = false;
+
+        function startPhase1() {
+            startTimer("timer1", 55, finishPhase1);
+
+            document.querySelectorAll(".risk-btn").forEach((button) => {
+                button.addEventListener("click", () => {
+                    if (
+                        button.classList.contains("found") ||
+                        phase1Ended
+                    ) {
+                        return;
+                    }
+
+                    button.classList.add("found");
+                    risksFound++;
+
+                    document.getElementById(
+                        "riskProgress"
+                    ).textContent = `${risksFound}/6`;
+
+                    addCorrect(90);
+
+                    if (risksFound === 6) {
+                        finishPhase1();
+                    }
+                });
+            });
+
+            document.querySelectorAll(".safe-btn").forEach((button) => {
+                button.addEventListener("click", () => {
+                    if (!phase1Ended) {
+                        addWrong("Esse elemento não representa risco");
+                    }
+                });
+            });
+        }
+
+        function finishPhase1() {
+            if (phase1Ended) {
+                return;
+            }
+
+            phase1Ended = true;
+            clearInterval(timers.timer1);
+
+            document.getElementById("phase1Message").textContent =
+                `Fase concluída: ${risksFound} de 6 riscos encontrados.`;
+
+            setTimeout(() => {
+                phase = 2;
+                updateHud();
+                showScreen("phase2");
+                startPhase2();
+            }, 1800);
+        }
+
+        // FASE 2
+
+        let selectedEpi = null;
+        let protectedWorkers = 0;
+        let phase2Ended = false;
+
+        function startPhase2() {
+            startTimer("timer2", 65, finishPhase2);
+
+            const epis = document.querySelectorAll(".epi-item");
+            const workers = document.querySelectorAll(".worker-card");
+
+            epis.forEach((epi) => {
+                epi.addEventListener("click", () => {
+                    epis.forEach((item) => {
+                        item.classList.remove("selected");
+                    });
+
+                    selectedEpi = epi;
+                    epi.classList.add("selected");
+                });
+
+                epi.addEventListener("dragstart", (event) => {
+                    selectedEpi = epi;
+
+                    event.dataTransfer.setData(
+                        "text/plain",
+                        epi.dataset.epi
+                    );
+                });
+            });
+
+            workers.forEach((worker) => {
+                worker.addEventListener("dragover", (event) => {
+                    event.preventDefault();
+                });
+
+                worker.addEventListener("drop", (event) => {
+                    event.preventDefault();
+
+                    const epiName =
+                        event.dataTransfer.getData("text/plain");
+
+                    const epi = document.querySelector(
+                        `.epi-item[data-epi="${epiName}"]`
+                    );
+
+                    assignEpi(epi, worker);
+                });
+
+                worker.addEventListener("click", () => {
+                    if (selectedEpi) {
+                        assignEpi(selectedEpi, worker);
+                    }
+                });
+            });
+        }
+
+        function assignEpi(epi, worker) {
+            if (
+                phase2Ended ||
+                !epi ||
+                epi.classList.contains("used") ||
+                worker.classList.contains("correct")
+            ) {
+                return;
+            }
+
+            const epiName = epi.dataset.epi;
+            const correct = worker.dataset.correct;
+
+            if (epiName === correct) {
+                worker.classList.add("correct");
+                epi.classList.add("used");
+                epi.classList.remove("selected");
+
+                worker.querySelector(".assigned-epi").textContent =
+                    epi.querySelector("span").textContent;
+
+                protectedWorkers++;
+                selectedEpi = null;
+
+                document.getElementById(
+                    "epiProgress"
+                ).textContent = `${protectedWorkers}/3`;
+
+                addCorrect(130);
+
+                if (protectedWorkers === 3) {
+                    finishPhase2();
+                }
+            } else {
+                addWrong("EPI inadequado para essa atividade");
+            }
+        }
+
+        function finishPhase2() {
+            if (phase2Ended) {
+                return;
+            }
+
+            phase2Ended = true;
+            clearInterval(timers.timer2);
+
+            document.getElementById("phase2Message").textContent =
+                `${protectedWorkers} de 3 trabalhadores receberam o EPI correto.`;
+
+            setTimeout(() => {
+                phase = 3;
+                updateHud();
+                showScreen("phase3");
+                startPhase3();
+            }, 1800);
+        }
+
+        // FASE 3
+
+        const wastes = [
+            {
+                icon: "📄",
+                name: "Papel limpo",
+                bin: "papel"
+            },
+            {
+                icon: "🧴",
+                name: "Garrafa plástica",
+                bin: "plastico"
+            },
+            {
+                icon: "🥫",
+                name: "Lata de alumínio",
+                bin: "metal"
+            },
+            {
+                icon: "🍌",
+                name: "Casca de banana",
+                bin: "organico"
+            },
+            {
+                icon: "🧪",
+                name: "Frasco contaminado",
+                bin: "perigoso"
+            },
+            {
+                icon: "📦",
+                name: "Caixa de papelão",
+                bin: "papel"
+            },
+            {
+                icon: "🔩",
+                name: "Peça metálica",
+                bin: "metal"
+            },
+            {
+                icon: "🛍️",
+                name: "Embalagem plástica",
+                bin: "plastico"
+            },
+            {
+                icon: "🧤",
+                name: "Luva contaminada",
+                bin: "perigoso"
+            }
+        ];
+
+        let wasteIndex = 0;
+        let selectedWaste = false;
+        let phase3Ended = false;
+
+        function startPhase3() {
+            loadWaste();
+
+            startTimer("timer3", 75, finishPhase3);
+
+            const wasteCard = document.getElementById("wasteCard");
+
+            wasteCard.addEventListener("click", () => {
+                selectedWaste = true;
+                wasteCard.style.borderColor = "#075985";
+            });
+
+            wasteCard.addEventListener("dragstart", (event) => {
+                event.dataTransfer.setData(
+                    "text/plain",
+                    wastes[wasteIndex].bin
+                );
+            });
+
+            document.querySelectorAll(".bin").forEach((bin) => {
+                bin.addEventListener("dragover", (event) => {
+                    event.preventDefault();
+                });
+
+                bin.addEventListener("drop", (event) => {
+                    event.preventDefault();
+
+                    classifyWaste(bin.dataset.bin);
+                });
+
+                bin.addEventListener("click", () => {
+                    if (selectedWaste) {
+                        classifyWaste(bin.dataset.bin);
+                    }
+                });
+            });
+        }
+
+        function loadWaste() {
+            if (wasteIndex >= wastes.length) {
+                finishPhase3();
+                return;
+            }
+
+            const waste = wastes[wasteIndex];
+            const card = document.getElementById("wasteCard");
+
+            document.getElementById("wasteIcon").textContent =
+                waste.icon;
+
+            document.getElementById("wasteName").textContent =
+                waste.name;
+
+            card.style.borderColor = "#d8e3ea";
+            card.style.transform = "scale(1)";
+            selectedWaste = false;
+        }
+
+        function classifyWaste(bin) {
+            if (phase3Ended || wasteIndex >= wastes.length) {
+                return;
+            }
+
+            const waste = wastes[wasteIndex];
+
+            if (bin === waste.bin) {
+                addCorrect(100);
+
+                wasteIndex++;
+
+                document.getElementById(
+                    "wasteProgress"
+                ).textContent = `${wasteIndex}/${wastes.length}`;
+
+                const card = document.getElementById("wasteCard");
+
+                card.style.transform = "scale(0.2)";
+
+                setTimeout(loadWaste, 300);
+            } else {
+                addWrong("Coletor incorreto");
+            }
+        }
+
+        function finishPhase3() {
+            if (phase3Ended) {
+                return;
+            }
+
+            phase3Ended = true;
+            clearInterval(timers.timer3);
+
+            document.getElementById("phase3Message").textContent =
+                `${wasteIndex} de ${wastes.length} resíduos classificados.`;
+
+            setTimeout(() => {
+                phase = 4;
+                updateHud();
+                showScreen("phase4");
+                startPhase4();
+            }, 1800);
+        }
+
+        // FASE 4
+
+        let selectedTool = null;
+        let barrierPlaced = false;
+        let absorbentUsed = false;
+        let phase4Ended = false;
+
+        function startPhase4() {
+            startTimer("timer4", 60, finishPhase4);
+
+            const tools = document.querySelectorAll(".tool-item");
+            const slot = document.getElementById("barrierSlot");
+
+            tools.forEach((tool) => {
+                tool.addEventListener("click", () => {
+                    tools.forEach((item) => {
+                        item.classList.remove("selected");
+                    });
+
+                    selectedTool = tool;
+                    tool.classList.add("selected");
+                });
+
+                tool.addEventListener("dragstart", (event) => {
+                    selectedTool = tool;
+
+                    event.dataTransfer.setData(
+                        "text/plain",
+                        tool.dataset.tool
+                    );
+                });
+            });
+
+            slot.addEventListener("dragover", (event) => {
+                event.preventDefault();
+            });
+
+            slot.addEventListener("drop", (event) => {
+                event.preventDefault();
+
+                const toolName =
+                    event.dataTransfer.getData("text/plain");
+
+                useTool(toolName);
+            });
+
+            slot.addEventListener("click", () => {
+                if (selectedTool) {
+                    useTool(selectedTool.dataset.tool);
+                }
+            });
+
+            document.querySelectorAll(".decision-btn").forEach((button) => {
+                button.addEventListener("click", () => {
+                    if (button.dataset.decision === "correct") {
+                        addCorrect(250);
+
+                        document.getElementById(
+                            "crisisProgress"
+                        ).textContent = "2/2";
+
+                        document.getElementById(
+                            "phase4Message"
+                        ).textContent =
+                            "Protocolo executado corretamente.";
+
+                        finishPhase4();
+                    } else {
+                        addWrong("Procedimento inadequado");
+                    }
+                });
+            });
+        }
+
+        function useTool(toolName) {
+            if (phase4Ended) {
+                return;
+            }
+
+            if (!barrierPlaced) {
+                if (toolName === "barreira") {
+                    barrierPlaced = true;
+
+                    const tool = document.querySelector(
+                        `[data-tool="barreira"]`
+                    );
+
+                    tool.classList.add("used");
+
+                    const slot =
+                        document.getElementById("barrierSlot");
+
+                    slot.classList.add("filled");
+                    slot.textContent = "BARREIRA INSTALADA";
+
+                    document.getElementById(
+                        "crisisProgress"
+                    ).textContent = "1/2";
+
+                    document.getElementById(
+                        "decisionPanel"
+                    ).style.display = "block";
+
+                    document.getElementById(
+                        "phase4Message"
+                    ).textContent =
+                        "Vazamento contido. Complete o protocolo.";
+
+                    addCorrect(200);
+                } else {
+                    addWrong("Essa ferramenta não contém o vazamento");
+                }
+
+                return;
+            }
+
+            if (toolName === "absorvente" && !absorbentUsed) {
+                absorbentUsed = true;
+
+                document.querySelector(
+                    `[data-tool="absorvente"]`
+                ).classList.add("used");
+
+                addCorrect(80);
+
+                document.getElementById(
+                    "phase4Message"
+                ).textContent =
+                    "Material absorvente preparado para a coleta.";
+            }
+        }
+
+        function finishPhase4() {
+            if (phase4Ended) {
+                return;
+            }
+
+            phase4Ended = true;
+            clearInterval(timers.timer4);
+
+            setTimeout(finishGame, 1700);
+        }
+
+        function finishGame() {
+            clearAllTimers();
+            showScreen("resultScreen");
+
+            const resultTitle =
+                document.getElementById("resultTitle");
+
+            const resultText =
+                document.getElementById("resultText");
+
+            const resultIcon =
+                document.getElementById("resultIcon");
+
+            if (lives <= 0) {
+                resultIcon.textContent = "🚨";
+                resultTitle.textContent = "Operação interrompida";
+
+                resultText.textContent =
+                    "A equipe perdeu todas as vidas. Reveja as decisões " +
+                    "e tente novamente, observando os riscos, os EPIs e os " +
+                    "procedimentos ambientais.";
+            } else if (score >= 3000) {
+                resultIcon.textContent = "🏆";
+                resultTitle.textContent = "Gestão de excelência";
+
+                resultText.textContent =
+                    "Você demonstrou capacidade para identificar perigos, " +
+                    "proteger trabalhadores e responder a incidentes ambientais.";
+            } else if (score >= 2200) {
+                resultIcon.textContent = "✅";
+                resultTitle.textContent = "Missão concluída";
+
+                resultText.textContent =
+                    "A operação foi controlada, mas algumas decisões ainda " +
+                    "podem ser aprimoradas.";
+            } else {
+                resultIcon.textContent = "⚠️";
+                resultTitle.textContent = "Operação em alerta";
+
+                resultText.textContent =
+                    "A missão foi concluída com fragilidades. Refaça as fases " +
+                    "para melhorar seu desempenho.";
+            }
+
+            document.getElementById("finalScore").textContent =
+                score;
+
+            document.getElementById("report1").textContent =
+                phaseScores[0];
+
+            document.getElementById("report2").textContent =
+                phaseScores[1];
+
+            document.getElementById("report3").textContent =
+                phaseScores[2];
+
+            document.getElementById("report4").textContent =
+                phaseScores[3];
+        }
+
+        updateHud();
+    </script>
+
+</body>
+</html>
