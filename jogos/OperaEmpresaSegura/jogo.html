@@ -1,219 +1,1726 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Operação Empresa Segura — Jogo</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Gestor em Alerta — Segurança e Sustentabilidade</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --azul: #0b5f8a;
+            --azul-escuro: #063c59;
+            --verde: #16875b;
+            --amarelo: #f2b134;
+            --vermelho: #d94a4a;
+            --fundo: #edf3f7;
+            --texto: #172033;
+            --cinza: #64748b;
+            --branco: #ffffff;
+            --borda: #d8e3ea;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: var(--texto);
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(11, 95, 138, 0.15),
+                    transparent 35%
+                ),
+                var(--fundo);
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .topo {
+            background: var(--branco);
+            border-bottom: 1px solid var(--borda);
+            padding: 16px 24px;
+        }
+
+        .topo-conteudo {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .marca {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .marca-icone {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: var(--azul);
+            color: white;
+            font-size: 1.6rem;
+        }
+
+        .marca strong {
+            display: block;
+            color: var(--azul-escuro);
+            font-size: 1.05rem;
+        }
+
+        .marca span {
+            color: var(--cinza);
+            font-size: 0.85rem;
+        }
+
+        .cabecalho-info {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .etiqueta {
+            background: #edf6fa;
+            color: var(--azul);
+            padding: 9px 13px;
+            border-radius: 999px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .pagina {
+            width: min(1200px, calc(100% - 32px));
+            margin: 30px auto;
+        }
+
+        .tela {
+            display: none;
+        }
+
+        .tela.ativa {
+            display: block;
+        }
+
+        .painel-inicial {
+            min-height: 620px;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            overflow: hidden;
+            background: var(--branco);
+            border: 1px solid var(--borda);
+            border-radius: 28px;
+            box-shadow: 0 18px 50px rgba(15, 45, 65, 0.12);
+        }
+
+        .introducao {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .selo {
+            display: inline-block;
+            width: fit-content;
+            margin-bottom: 15px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: #e4f5ee;
+            color: var(--verde);
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 0.06em;
+        }
+
+        h1 {
+            margin: 0 0 18px;
+            max-width: 650px;
+            color: var(--azul-escuro);
+            font-size: clamp(2.5rem, 6vw, 4.7rem);
+            line-height: 0.98;
+        }
+
+        .introducao > p {
+            max-width: 680px;
+            margin: 0 0 28px;
+            color: var(--cinza);
+            font-size: 1.08rem;
+            line-height: 1.7;
+        }
+
+        .regras {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .regra {
+            padding: 16px;
+            border: 1px solid var(--borda);
+            border-radius: 15px;
+            background: #f9fbfc;
+        }
+
+        .regra span {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 1.4rem;
+        }
+
+        .regra strong {
+            color: var(--azul-escuro);
+            font-size: 0.95rem;
+        }
+
+        .regra p {
+            margin: 5px 0 0;
+            color: var(--cinza);
+            font-size: 0.82rem;
+            line-height: 1.4;
+        }
+
+        .botao-principal,
+        .botao-secundario {
+            border: 0;
+            border-radius: 13px;
+            padding: 14px 22px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .botao-principal {
+            color: white;
+            background: var(--azul);
+        }
+
+        .botao-principal:hover {
+            background: var(--azul-escuro);
+            transform: translateY(-2px);
+        }
+
+        .botao-secundario {
+            color: var(--azul);
+            background: white;
+            border: 1px solid var(--borda);
+        }
+
+        .botao-secundario:hover {
+            border-color: var(--azul);
+        }
+
+        .visual-inicial {
+            position: relative;
+            min-height: 500px;
+            overflow: hidden;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(5, 52, 76, 0.96),
+                    rgba(11, 95, 138, 0.88)
+                );
+        }
+
+        .cidade {
+            position: absolute;
+            inset: 0;
+        }
+
+        .predio {
+            position: absolute;
+            bottom: 0;
+            width: 100px;
+            border-radius: 10px 10px 0 0;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .predio::after {
+            content: "";
+            position: absolute;
+            inset: 18px;
+            background:
+                repeating-linear-gradient(
+                    to bottom,
+                    rgba(255, 255, 255, 0.3) 0 8px,
+                    transparent 8px 22px
+                );
+        }
+
+        .predio.a {
+            left: 8%;
+            height: 38%;
+        }
+
+        .predio.b {
+            left: 31%;
+            width: 140px;
+            height: 63%;
+        }
+
+        .predio.c {
+            right: 9%;
+            width: 125px;
+            height: 48%;
+        }
+
+        .nucleo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 245px;
+            height: 245px;
+            transform: translate(-50%, -50%);
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .nucleo::before,
+        .nucleo::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 50%;
+        }
+
+        .nucleo::before {
+            width: 330px;
+            height: 330px;
+        }
+
+        .nucleo::after {
+            width: 420px;
+            height: 420px;
+        }
+
+        .nucleo span {
+            font-size: 7rem;
+            filter: drop-shadow(0 15px 20px rgba(0, 0, 0, 0.3));
+        }
+
+        .jogo-layout {
+            display: grid;
+            grid-template-columns: 310px 1fr;
+            gap: 22px;
+        }
+
+        .painel-lateral,
+        .evento-card {
+            background: var(--branco);
+            border: 1px solid var(--borda);
+            border-radius: 22px;
+            box-shadow: 0 12px 35px rgba(15, 45, 65, 0.08);
+        }
+
+        .painel-lateral {
+            padding: 22px;
+        }
+
+        .dia-atual {
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--borda);
+        }
+
+        .dia-atual span {
+            color: var(--cinza);
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .dia-atual strong {
+            display: block;
+            margin-top: 5px;
+            color: var(--azul-escuro);
+            font-size: 2rem;
+        }
+
+        .indicador {
+            margin: 20px 0;
+        }
+
+        .indicador-topo {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .indicador-topo strong {
+            color: var(--azul-escuro);
+        }
+
+        .barra {
+            height: 12px;
+            overflow: hidden;
+            border-radius: 999px;
+            background: #e8eef2;
+        }
+
+        .barra-preenchimento {
+            height: 100%;
+            width: 50%;
+            border-radius: inherit;
+            background: var(--azul);
+            transition: width 0.5s;
+        }
+
+        .alerta {
+            margin-top: 25px;
+            padding: 14px;
+            border-radius: 13px;
+            background: #fff5dd;
+            color: #72510c;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .evento-card {
+            min-height: 590px;
+            padding: clamp(25px, 5vw, 48px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .evento-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .categoria {
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: #edf6fa;
+            color: var(--azul);
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .tempo {
+            color: var(--cinza);
+            font-size: 0.9rem;
+        }
+
+        .evento-icone {
+            width: 78px;
+            height: 78px;
+            margin-bottom: 18px;
+            display: grid;
+            place-items: center;
+            border-radius: 22px;
+            background: #edf6fa;
+            font-size: 2.8rem;
+        }
+
+        .evento-card h2 {
+            margin: 0 0 14px;
+            color: var(--azul-escuro);
+            font-size: clamp(1.8rem, 4vw, 3rem);
+        }
+
+        .evento-card > p {
+            margin: 0 0 28px;
+            color: var(--cinza);
+            font-size: 1.02rem;
+            line-height: 1.7;
+        }
+
+        .opcoes {
+            display: grid;
+            gap: 13px;
+            margin-top: auto;
+        }
+
+        .opcao {
+            display: grid;
+            grid-template-columns: 44px 1fr;
+            gap: 14px;
+            align-items: center;
+            width: 100%;
+            padding: 16px;
+            text-align: left;
+            color: var(--texto);
+            border: 1px solid var(--borda);
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .opcao:hover {
+            border-color: var(--azul);
+            background: #f3f9fc;
+            transform: translateX(4px);
+        }
+
+        .opcao-letra {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            color: var(--azul);
+            background: #eaf4f9;
+            font-weight: bold;
+        }
+
+        .opcao strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--azul-escuro);
+        }
+
+        .opcao small {
+            color: var(--cinza);
+            line-height: 1.4;
+        }
+
+        .consequencia {
+            display: none;
+            margin-top: 24px;
+            padding: 20px;
+            border-radius: 16px;
+            background: #eef7f3;
+            border-left: 5px solid var(--verde);
+        }
+
+        .consequencia.ativa {
+            display: block;
+        }
+
+        .consequencia h3 {
+            margin: 0 0 7px;
+            color: var(--verde);
+        }
+
+        .consequencia p {
+            margin: 0;
+            color: #3d5b50;
+            line-height: 1.6;
+        }
+
+        .efeitos {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 13px;
+        }
+
+        .efeito {
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .positivo {
+            color: var(--verde);
+        }
+
+        .negativo {
+            color: var(--vermelho);
+        }
+
+        .acao-proxima {
+            display: none;
+            justify-content: flex-end;
+            margin-top: 18px;
+        }
+
+        .acao-proxima.ativa {
+            display: flex;
+        }
+
+        .resultado {
+            padding: 42px;
+            background: white;
+            border: 1px solid var(--borda);
+            border-radius: 26px;
+            box-shadow: 0 18px 50px rgba(15, 45, 65, 0.1);
+        }
+
+        .resultado-topo {
+            text-align: center;
+        }
+
+        .resultado-icone {
+            font-size: 5rem;
+        }
+
+        .resultado h1 {
+            max-width: none;
+            margin-top: 12px;
+            font-size: clamp(2.2rem, 6vw, 4rem);
+        }
+
+        .resultado-topo > p {
+            max-width: 720px;
+            margin: 0 auto;
+            color: var(--cinza);
+            line-height: 1.7;
+        }
+
+        .nota-final {
+            width: 190px;
+            height: 190px;
+            display: grid;
+            place-items: center;
+            margin: 30px auto;
+            border: 12px solid #d9ebf3;
+            border-radius: 50%;
+            background: #f7fbfd;
+        }
+
+        .nota-final strong {
+            display: block;
+            color: var(--azul);
+            font-size: 3.2rem;
+            text-align: center;
+        }
+
+        .nota-final span {
+            display: block;
+            color: var(--cinza);
+            font-size: 0.8rem;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .resultado-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 30px 0;
+        }
+
+        .resultado-item {
+            padding: 18px;
+            text-align: center;
+            border: 1px solid var(--borda);
+            border-radius: 15px;
+        }
+
+        .resultado-item span {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--cinza);
+            font-size: 0.85rem;
+        }
+
+        .resultado-item strong {
+            color: var(--azul-escuro);
+            font-size: 1.5rem;
+        }
+
+        .historico {
+            margin-top: 30px;
+        }
+
+        .historico h3 {
+            color: var(--azul-escuro);
+        }
+
+        .historico-item {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--borda);
+        }
+
+        .historico-item strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .historico-item span {
+            color: var(--cinza);
+            font-size: 0.9rem;
+        }
+
+        .resultado-acoes {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        @media print {
+            .topo,
+            .resultado-acoes {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            .pagina {
+                width: 100%;
+                margin: 0;
+            }
+
+            .resultado {
+                border: 0;
+                box-shadow: none;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .painel-inicial,
+            .jogo-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .visual-inicial {
+                min-height: 360px;
+            }
+
+            .painel-lateral {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .dia-atual,
+            .alerta {
+                grid-column: 1 / -1;
+            }
+
+            .indicador {
+                margin: 5px 0;
+            }
+
+            .resultado-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 560px) {
+            .pagina {
+                width: min(100% - 20px, 1200px);
+                margin-top: 15px;
+            }
+
+            .introducao,
+            .resultado {
+                padding: 25px;
+            }
+
+            .regras,
+            .painel-lateral,
+            .resultado-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dia-atual,
+            .alerta {
+                grid-column: auto;
+            }
+
+            .evento-card {
+                padding: 24px;
+            }
+        }
+    </style>
 </head>
-<body class="game-body">
-  <header class="game-header">
-    <div class="brand compact">
-      <div class="brand-icon">⚙️</div>
-      <div>
-        <strong>Operação Empresa Segura</strong>
-        <span id="teamLabel">Equipe</span>
-      </div>
-    </div>
 
-    <div class="hud">
-      <div><span>Fase</span><b id="phaseHud">1/4</b></div>
-      <div><span>Pontos</span><b id="scoreHud">0</b></div>
-      <div><span>Sequência</span><b id="streakHud">0x</b></div>
-      <div><span>Vidas</span><b id="livesHud">❤❤❤</b></div>
-      <button id="soundBtn" class="icon-btn" title="Ativar ou desativar som">🔊</button>
-    </div>
-  </header>
+<body>
 
-  <main class="game-shell">
-    <section id="introScreen" class="screen active">
-      <div class="mission-card">
-        <div class="radar"></div>
-        <span class="kicker">BRIEFING OPERACIONAL</span>
-        <h1>Uma auditoria surpresa começou.</h1>
-        <p>Auditores identificaram riscos de segurança, descarte inadequado, falhas de sinalização e procedimentos ambientais incompletos. Sua equipe deverá agir antes do encerramento da operação.</p>
-        <div class="brief-grid">
-          <div><span>Objetivo</span><b>Reconhecer e corrigir não conformidades</b></div>
-          <div><span>Regra</span><b>Decida com base nas evidências</b></div>
-          <div><span>Penalidade</span><b>Erros retiram vidas e quebram a sequência</b></div>
-          <div><span>Bônus</span><b>Acertos consecutivos multiplicam pontos</b></div>
-        </div>
-        <button id="beginBtn" class="primary-btn">COMEÇAR VARREDURA</button>
-      </div>
-    </section>
+    <header class="topo">
+        <div class="topo-conteudo">
+            <div class="marca">
+                <div class="marca-icone">🏢</div>
 
-    <section id="phase1" class="screen">
-      <div class="phase-title">
-        <div>
-          <span class="kicker">FASE 1 · VARREDURA DE RISCOS</span>
-          <h2>Encontre 6 não conformidades</h2>
-          <p>Clique apenas nos elementos que representam risco ou descumprimento de procedimento.</p>
-        </div>
-        <div class="timer-box"><span>Tempo</span><b id="timer1">60</b></div>
-      </div>
-
-      <div class="factory-scene" id="factoryScene">
-        <div class="wall-line"></div>
-        <div class="exit-sign">SAÍDA</div>
-        <div class="factory-door"></div>
-        <div class="machine">
-          <div class="machine-light"></div>
-          <div class="machine-panel"></div>
-          <div class="machine-belt"></div>
-        </div>
-        <div class="forklift"><span>🚜</span></div>
-        <div class="worker worker-a">👷</div>
-        <div class="worker worker-b">🧑‍🔧</div>
-        <div class="spill"></div>
-        <div class="cable"></div>
-        <div class="boxes block-exit">📦📦📦</div>
-        <div class="chemical">🧪</div>
-        <div class="extinguisher">🧯</div>
-        <div class="helmet">⛑️</div>
-
-        <button class="hotspot" data-risk="exit" style="left:8%;top:57%;width:18%;height:31%" aria-label="Caixas bloqueando saída"></button>
-        <button class="hotspot" data-risk="spill" style="left:42%;top:74%;width:18%;height:16%" aria-label="Vazamento no piso"></button>
-        <button class="hotspot" data-risk="cable" style="left:57%;top:77%;width:22%;height:12%" aria-label="Cabo atravessando passagem"></button>
-        <button class="hotspot" data-risk="worker" style="left:66%;top:32%;width:13%;height:28%" aria-label="Trabalhador sem EPI adequado"></button>
-        <button class="hotspot" data-risk="chemical" style="left:80%;top:58%;width:10%;height:19%" aria-label="Frasco químico sem identificação"></button>
-        <button class="hotspot" data-risk="guard" style="left:32%;top:32%;width:25%;height:33%" aria-label="Proteção da máquina removida"></button>
-
-        <button class="hotspot decoy" data-safe="ext" style="left:88%;top:26%;width:8%;height:18%" aria-label="Extintor adequado"></button>
-        <button class="hotspot decoy" data-safe="helmet" style="left:20%;top:25%;width:8%;height:14%" aria-label="Capacete disponível"></button>
-      </div>
-
-      <div class="phase-footer">
-        <div class="progress-chip">Encontrados: <b id="foundCount">0/6</b></div>
-        <div id="phase1Message" class="inline-message">Observe toda a cena antes de clicar.</div>
-      </div>
-    </section>
-
-    <section id="phase2" class="screen">
-      <div class="phase-title">
-        <div>
-          <span class="kicker">FASE 2 · ESTEIRA DE RESÍDUOS</span>
-          <h2>Classifique os resíduos</h2>
-          <p>Arraste cada item para o coletor correto ou clique no item e depois no coletor.</p>
-        </div>
-        <div class="timer-box"><span>Tempo</span><b id="timer2">75</b></div>
-      </div>
-
-      <div class="conveyor-zone">
-        <div id="wasteCard" class="waste-card" draggable="true">
-          <div id="wasteIcon" class="waste-icon">📄</div>
-          <h3 id="wasteName">Papel limpo</h3>
-          <p id="wasteHint">Sem contaminação</p>
-        </div>
-        <div class="conveyor">
-          <div class="belt-pattern"></div>
-        </div>
-      </div>
-
-      <div class="bins" id="bins">
-        <button class="bin" data-bin="papel"><span>📄</span><b>Papel</b></button>
-        <button class="bin" data-bin="plastico"><span>🧴</span><b>Plástico</b></button>
-        <button class="bin" data-bin="metal"><span>🥫</span><b>Metal</b></button>
-        <button class="bin" data-bin="organico"><span>🍎</span><b>Orgânico</b></button>
-        <button class="bin" data-bin="perigoso"><span>☣️</span><b>Perigoso/contaminado</b></button>
-      </div>
-
-      <div class="phase-footer">
-        <div class="progress-chip">Itens: <b id="wasteProgress">0/10</b></div>
-        <div id="phase2Message" class="inline-message">A classificação depende da composição e da contaminação.</div>
-      </div>
-    </section>
-
-    <section id="phase3" class="screen">
-      <div class="phase-title">
-        <div>
-          <span class="kicker">FASE 3 · DECISÃO SOB PRESSÃO</span>
-          <h2>Escolha a ação correta</h2>
-          <p>Cada situação tem apenas uma decisão tecnicamente adequada.</p>
-        </div>
-        <div class="timer-box"><span>Tempo</span><b id="timer3">15</b></div>
-      </div>
-
-      <div class="decision-card">
-        <div class="incident-badge" id="incidentIcon">⚠️</div>
-        <h3 id="incidentTitle"></h3>
-        <p id="incidentText"></p>
-        <div id="decisionOptions" class="decision-options"></div>
-        <div id="decisionFeedback" class="decision-feedback"></div>
-      </div>
-
-      <div class="phase-footer">
-        <div class="progress-chip">Situação: <b id="decisionProgress">1/6</b></div>
-        <div class="inline-message">Aja como auditor: reconheça o risco e priorize a prevenção.</div>
-      </div>
-    </section>
-
-    <section id="phase4" class="screen">
-      <div class="phase-title">
-        <div>
-          <span class="kicker">FASE 4 · CRISE AMBIENTAL</span>
-          <h2>Controle o incidente</h2>
-          <p>Monte a resposta correta escolhendo uma ação em cada etapa.</p>
-        </div>
-        <div class="timer-box"><span>Etapa</span><b id="crisisStepHud">1/3</b></div>
-      </div>
-
-      <div class="crisis-layout">
-        <div class="crisis-visual">
-          <div class="warning-light"></div>
-          <div class="tank">TANQUE</div>
-          <div class="leak-stream"></div>
-          <div class="drain">RALO</div>
-          <div class="containment" id="containmentVisual"></div>
-        </div>
-
-        <div class="crisis-panel">
-          <span class="kicker">INCIDENTE ATIVO</span>
-          <h3 id="crisisTitle">Vazamento próximo à drenagem</h3>
-          <p id="crisisText"></p>
-          <div id="crisisOptions" class="decision-options"></div>
-          <div id="crisisFeedback" class="decision-feedback"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="resultScreen" class="screen">
-      <div class="result-wrap">
-        <div class="result-main">
-          <span class="kicker">RELATÓRIO FINAL</span>
-          <h1 id="resultTitle">Operação concluída</h1>
-          <p id="resultText"></p>
-          <div class="score-orbit">
-            <div class="orbit-ring"></div>
-            <div class="score-core">
-              <b id="finalScore">0</b>
-              <span>pontos</span>
+                <div>
+                    <strong>Gestor em Alerta</strong>
+                    <span>Segurança e sustentabilidade empresarial</span>
+                </div>
             </div>
-          </div>
-          <div class="result-actions">
-            <button id="printResult" class="primary-btn">IMPRIMIR RELATÓRIO</button>
-            <button id="restartGame" class="secondary-btn">JOGAR NOVAMENTE</button>
-            <a class="secondary-btn link-btn" href="professor.html">ÁREA DOCENTE</a>
-          </div>
-        </div>
 
-        <div class="report-card">
-          <h3>Desempenho por fase</h3>
-          <div id="phaseReport"></div>
-          <div class="report-summary">
-            <span>Maior sequência</span><b id="bestStreak">0x</b>
-          </div>
-          <div class="report-summary">
-            <span>Vidas restantes</span><b id="remainingLives">0</b>
-          </div>
-          <div class="report-summary">
-            <span>Nível</span><b id="difficultyResult">—</b>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+            <div class="cabecalho-info">
+                <div class="etiqueta" id="equipeTopo">
+                    Equipe: não identificada
+                </div>
 
-  <div id="toast" class="toast"></div>
-  <script src="js/game.js"></script>
+                <div class="etiqueta">
+                    Decisões estratégicas
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="pagina">
+
+        <!-- TELA INICIAL -->
+        <section id="telaInicial" class="tela ativa">
+
+            <div class="painel-inicial">
+
+                <div class="introducao">
+                    <span class="selo">SIMULAÇÃO EMPRESARIAL</span>
+
+                    <h1>
+                        Você consegue manter a empresa funcionando?
+                    </h1>
+
+                    <p>
+                        Durante cinco dias, situações inesperadas colocarão
+                        a empresa em risco. Suas decisões afetarão a segurança,
+                        o meio ambiente, o orçamento e a confiança da equipe.
+                    </p>
+
+                    <div class="regras">
+                        <div class="regra">
+                            <span>🦺</span>
+                            <strong>Segurança</strong>
+                            <p>
+                                Evite acidentes e proteja os trabalhadores.
+                            </p>
+                        </div>
+
+                        <div class="regra">
+                            <span>🌱</span>
+                            <strong>Sustentabilidade</strong>
+                            <p>
+                                Reduza impactos ambientais e desperdícios.
+                            </p>
+                        </div>
+
+                        <div class="regra">
+                            <span>💰</span>
+                            <strong>Orçamento</strong>
+                            <p>
+                                Toda decisão possui custos e consequências.
+                            </p>
+                        </div>
+
+                        <div class="regra">
+                            <span>🤝</span>
+                            <strong>Confiança</strong>
+                            <p>
+                                A equipe observa e avalia suas escolhas.
+                            </p>
+                        </div>
+                    </div>
+
+                    <button
+                        id="iniciarJogo"
+                        class="botao-principal"
+                    >
+                        ASSUMIR A GESTÃO
+                    </button>
+                </div>
+
+                <div class="visual-inicial">
+                    <div class="cidade">
+                        <div class="predio a"></div>
+                        <div class="predio b"></div>
+                        <div class="predio c"></div>
+                    </div>
+
+                    <div class="nucleo">
+                        <span>⚖️</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TELA DO JOGO -->
+        <section id="telaJogo" class="tela">
+
+            <div class="jogo-layout">
+
+                <aside class="painel-lateral">
+
+                    <div class="dia-atual">
+                        <span>Operação</span>
+                        <strong id="diaAtual">Dia 1 de 5</strong>
+                    </div>
+
+                    <div class="indicador">
+                        <div class="indicador-topo">
+                            <span>🦺 Segurança</span>
+                            <strong id="segurancaValor">60</strong>
+                        </div>
+
+                        <div class="barra">
+                            <div
+                                id="segurancaBarra"
+                                class="barra-preenchimento"
+                            ></div>
+                        </div>
+                    </div>
+
+                    <div class="indicador">
+                        <div class="indicador-topo">
+                            <span>🌱 Sustentabilidade</span>
+                            <strong id="sustentabilidadeValor">60</strong>
+                        </div>
+
+                        <div class="barra">
+                            <div
+                                id="sustentabilidadeBarra"
+                                class="barra-preenchimento"
+                            ></div>
+                        </div>
+                    </div>
+
+                    <div class="indicador">
+                        <div class="indicador-topo">
+                            <span>💰 Orçamento</span>
+                            <strong id="orcamentoValor">60</strong>
+                        </div>
+
+                        <div class="barra">
+                            <div
+                                id="orcamentoBarra"
+                                class="barra-preenchimento"
+                            ></div>
+                        </div>
+                    </div>
+
+                    <div class="indicador">
+                        <div class="indicador-topo">
+                            <span>🤝 Confiança</span>
+                            <strong id="confiancaValor">60</strong>
+                        </div>
+
+                        <div class="barra">
+                            <div
+                                id="confiancaBarra"
+                                class="barra-preenchimento"
+                            ></div>
+                        </div>
+                    </div>
+
+                    <div class="alerta">
+                        <strong>Atenção:</strong>
+                        se qualquer indicador chegar a zero, a operação
+                        será encerrada.
+                    </div>
+
+                </aside>
+
+                <section class="evento-card">
+
+                    <div class="evento-meta">
+                        <span
+                            id="eventoCategoria"
+                            class="categoria"
+                        >
+                            Segurança
+                        </span>
+
+                        <span class="tempo">
+                            Analise antes de decidir
+                        </span>
+                    </div>
+
+                    <div
+                        id="eventoIcone"
+                        class="evento-icone"
+                    >
+                        ⚠️
+                    </div>
+
+                    <h2 id="eventoTitulo">
+                        Evento
+                    </h2>
+
+                    <p id="eventoTexto">
+                        Situação apresentada ao jogador.
+                    </p>
+
+                    <div
+                        id="opcoes"
+                        class="opcoes"
+                    ></div>
+
+                    <div
+                        id="consequencia"
+                        class="consequencia"
+                    >
+                        <h3 id="consequenciaTitulo">
+                            Consequência
+                        </h3>
+
+                        <p id="consequenciaTexto"></p>
+
+                        <div
+                            id="efeitos"
+                            class="efeitos"
+                        ></div>
+                    </div>
+
+                    <div
+                        id="acaoProxima"
+                        class="acao-proxima"
+                    >
+                        <button
+                            id="proximoEvento"
+                            class="botao-principal"
+                        >
+                            PRÓXIMO DIA
+                        </button>
+                    </div>
+
+                </section>
+
+            </div>
+        </section>
+
+        <!-- TELA DE RESULTADO -->
+        <section id="telaResultado" class="tela">
+
+            <div class="resultado">
+
+                <div class="resultado-topo">
+                    <div
+                        id="resultadoIcone"
+                        class="resultado-icone"
+                    >
+                        🏆
+                    </div>
+
+                    <span class="selo">RELATÓRIO DA GESTÃO</span>
+
+                    <h1 id="resultadoTitulo">
+                        Gestão concluída
+                    </h1>
+
+                    <p id="resultadoTexto"></p>
+                </div>
+
+                <div class="nota-final">
+                    <div>
+                        <strong id="pontuacaoFinal">0</strong>
+                        <span>pontos de gestão</span>
+                    </div>
+                </div>
+
+                <div class="resultado-grid">
+
+                    <div class="resultado-item">
+                        <span>Segurança</span>
+                        <strong id="resultadoSeguranca">0</strong>
+                    </div>
+
+                    <div class="resultado-item">
+                        <span>Sustentabilidade</span>
+                        <strong id="resultadoSustentabilidade">0</strong>
+                    </div>
+
+                    <div class="resultado-item">
+                        <span>Orçamento</span>
+                        <strong id="resultadoOrcamento">0</strong>
+                    </div>
+
+                    <div class="resultado-item">
+                        <span>Confiança</span>
+                        <strong id="resultadoConfianca">0</strong>
+                    </div>
+
+                </div>
+
+                <div class="historico">
+                    <h3>Decisões tomadas</h3>
+                    <div id="historicoDecisoes"></div>
+                </div>
+
+                <div class="resultado-acoes">
+                    <button
+                        id="imprimirResultado"
+                        class="botao-principal"
+                    >
+                        IMPRIMIR RESULTADO
+                    </button>
+
+                    <button
+                        id="reiniciarJogo"
+                        class="botao-secundario"
+                    >
+                        JOGAR NOVAMENTE
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const eventos = [
+            {
+                categoria: "Segurança operacional",
+                icone: "⚙️",
+                titulo: "A máquina precisa continuar funcionando",
+                texto:
+                    "A proteção de uma máquina foi retirada para acelerar " +
+                    "a produção. O setor está atrasado e a equipe afirma " +
+                    "que consegue trabalhar com cuidado.",
+                opcoes: [
+                    {
+                        titulo: "Interromper a máquina imediatamente",
+                        descricao:
+                            "Reinstalar a proteção e revisar o procedimento.",
+                        efeitos: {
+                            seguranca: 22,
+                            sustentabilidade: 0,
+                            orcamento: -12,
+                            confianca: 12
+                        },
+                        consequencia:
+                            "A produção ficou temporariamente mais lenta, " +
+                            "mas o risco de contato com partes móveis foi " +
+                            "eliminado. A equipe percebeu que a segurança " +
+                            "é prioridade."
+                    },
+                    {
+                        titulo: "Manter a operação até o fim do turno",
+                        descricao:
+                            "Corrigir o problema apenas após concluir a meta.",
+                        efeitos: {
+                            seguranca: -28,
+                            sustentabilidade: 0,
+                            orcamento: 12,
+                            confianca: -15
+                        },
+                        consequencia:
+                            "A meta foi alcançada, porém os trabalhadores " +
+                            "foram expostos a um risco grave. A confiança " +
+                            "na gestão diminuiu."
+                    },
+                    {
+                        titulo: "Colocar apenas uma placa de alerta",
+                        descricao:
+                            "Avisar sobre o risco sem interromper a máquina.",
+                        efeitos: {
+                            seguranca: -14,
+                            sustentabilidade: 0,
+                            orcamento: 5,
+                            confianca: -8
+                        },
+                        consequencia:
+                            "A placa chamou atenção, mas não eliminou o risco. " +
+                            "A medida foi insuficiente para proteger a equipe."
+                    }
+                ]
+            },
+            {
+                categoria: "Gestão de resíduos",
+                icone: "🛢️",
+                titulo: "Tambores sem identificação",
+                texto:
+                    "Durante uma inspeção, foram encontrados tambores com " +
+                    "resíduos líquidos sem rótulos. Ninguém sabe exatamente " +
+                    "qual produto está armazenado.",
+                opcoes: [
+                    {
+                        titulo: "Isolar e identificar os resíduos",
+                        descricao:
+                            "Suspender a movimentação até realizar a análise.",
+                        efeitos: {
+                            seguranca: 14,
+                            sustentabilidade: 20,
+                            orcamento: -10,
+                            confianca: 8
+                        },
+                        consequencia:
+                            "A área foi isolada e os resíduos foram analisados. " +
+                            "O descarte passou a seguir um procedimento seguro " +
+                            "e ambientalmente adequado."
+                    },
+                    {
+                        titulo: "Misturar tudo em um único recipiente",
+                        descricao:
+                            "Reduzir o espaço ocupado pelos tambores.",
+                        efeitos: {
+                            seguranca: -22,
+                            sustentabilidade: -25,
+                            orcamento: 8,
+                            confianca: -12
+                        },
+                        consequencia:
+                            "A mistura gerou risco de reação química e tornou " +
+                            "o tratamento dos resíduos mais difícil e caro."
+                    },
+                    {
+                        titulo: "Enviar diretamente para o lixo comum",
+                        descricao:
+                            "Liberar rapidamente o espaço de armazenamento.",
+                        efeitos: {
+                            seguranca: -15,
+                            sustentabilidade: -32,
+                            orcamento: 10,
+                            confianca: -18
+                        },
+                        consequencia:
+                            "A decisão causou descarte inadequado e risco de " +
+                            "contaminação do solo e da água."
+                    }
+                ]
+            },
+            {
+                categoria: "Saúde dos trabalhadores",
+                icone: "🌡️",
+                titulo: "Calor excessivo no setor",
+                texto:
+                    "Os trabalhadores relatam tontura e cansaço devido ao " +
+                    "calor intenso. A produção está alta e interromper o " +
+                    "setor poderá atrasar uma entrega.",
+                opcoes: [
+                    {
+                        titulo: "Criar pausas e melhorar a ventilação",
+                        descricao:
+                            "Reorganizar temporariamente a jornada de trabalho.",
+                        efeitos: {
+                            seguranca: 20,
+                            sustentabilidade: 4,
+                            orcamento: -10,
+                            confianca: 18
+                        },
+                        consequencia:
+                            "As pausas e a ventilação reduziram o risco de " +
+                            "mal-estar. A produtividade caiu no início, mas " +
+                            "a equipe passou a trabalhar com mais segurança."
+                    },
+                    {
+                        titulo: "Distribuir água e manter o ritmo",
+                        descricao:
+                            "Oferecer hidratação sem alterar a produção.",
+                        efeitos: {
+                            seguranca: 2,
+                            sustentabilidade: 0,
+                            orcamento: -2,
+                            confianca: -4
+                        },
+                        consequencia:
+                            "A hidratação ajudou parcialmente, mas não resolveu " +
+                            "a exposição prolongada ao calor."
+                    },
+                    {
+                        titulo: "Ignorar as reclamações",
+                        descricao:
+                            "Exigir que a equipe cumpra a meta planejada.",
+                        efeitos: {
+                            seguranca: -25,
+                            sustentabilidade: 0,
+                            orcamento: 12,
+                            confianca: -30
+                        },
+                        consequencia:
+                            "Os trabalhadores se sentiram desconsiderados e " +
+                            "o risco de acidentes e afastamentos aumentou."
+                    }
+                ]
+            },
+            {
+                categoria: "Consumo de recursos",
+                icone: "💧",
+                titulo: "Consumo de água acima da média",
+                texto:
+                    "O relatório mensal indicou aumento de 35% no consumo " +
+                    "de água. Há suspeita de vazamentos e desperdício durante " +
+                    "a limpeza dos equipamentos.",
+                opcoes: [
+                    {
+                        titulo: "Realizar diagnóstico e corrigir vazamentos",
+                        descricao:
+                            "Revisar instalações e orientar a equipe.",
+                        efeitos: {
+                            seguranca: 5,
+                            sustentabilidade: 25,
+                            orcamento: -8,
+                            confianca: 10
+                        },
+                        consequencia:
+                            "Vazamentos foram encontrados e corrigidos. " +
+                            "O consumo diminuiu e a equipe passou a acompanhar " +
+                            "os indicadores ambientais."
+                    },
+                    {
+                        titulo: "Reduzir a limpeza dos equipamentos",
+                        descricao:
+                            "Economizar água diminuindo a frequência de limpeza.",
+                        efeitos: {
+                            seguranca: -18,
+                            sustentabilidade: 6,
+                            orcamento: 10,
+                            confianca: -8
+                        },
+                        consequencia:
+                            "O consumo caiu, mas a redução da limpeza criou " +
+                            "riscos sanitários e operacionais."
+                    },
+                    {
+                        titulo: "Não realizar nenhuma mudança",
+                        descricao:
+                            "Considerar o aumento como um problema temporário.",
+                        efeitos: {
+                            seguranca: 0,
+                            sustentabilidade: -22,
+                            orcamento: -12,
+                            confianca: -5
+                        },
+                        consequencia:
+                            "O desperdício continuou e aumentou os custos da " +
+                            "empresa."
+                    }
+                ]
+            },
+            {
+                categoria: "Emergência ambiental",
+                icone: "☣️",
+                titulo: "Vazamento próximo ao ralo",
+                texto:
+                    "Um recipiente caiu e um produto químico começou a se " +
+                    "espalhar em direção ao sistema de drenagem. A equipe " +
+                    "aguarda sua orientação.",
+                opcoes: [
+                    {
+                        titulo: "Isolar, conter e comunicar",
+                        descricao:
+                            "Utilizar o kit de emergência e acionar responsáveis.",
+                        efeitos: {
+                            seguranca: 24,
+                            sustentabilidade: 28,
+                            orcamento: -14,
+                            confianca: 20
+                        },
+                        consequencia:
+                            "O produto foi contido antes de alcançar o ralo. " +
+                            "A equipe utilizou os equipamentos adequados e o " +
+                            "incidente foi registrado."
+                    },
+                    {
+                        titulo: "Lavar o produto com bastante água",
+                        descricao:
+                            "Empurrar rapidamente o produto para o ralo.",
+                        efeitos: {
+                            seguranca: -15,
+                            sustentabilidade: -35,
+                            orcamento: 5,
+                            confianca: -15
+                        },
+                        consequencia:
+                            "O produto alcançou a drenagem e ampliou o impacto " +
+                            "ambiental."
+                    },
+                    {
+                        titulo: "Pedir que um trabalhador limpe sozinho",
+                        descricao:
+                            "Usar panos comuns para absorver o produto.",
+                        efeitos: {
+                            seguranca: -30,
+                            sustentabilidade: -12,
+                            orcamento: 8,
+                            confianca: -25
+                        },
+                        consequencia:
+                            "O trabalhador foi exposto ao produto e a limpeza " +
+                            "não conteve adequadamente o vazamento."
+                    }
+                ]
+            }
+        ];
+
+        let dia = 0;
+
+        let indicadores = {
+            seguranca: 60,
+            sustentabilidade: 60,
+            orcamento: 60,
+            confianca: 60
+        };
+
+        let historico = [];
+        let jogoEncerrado = false;
+
+        const telaInicial = document.getElementById("telaInicial");
+        const telaJogo = document.getElementById("telaJogo");
+        const telaResultado = document.getElementById("telaResultado");
+
+        const iniciarJogo = document.getElementById("iniciarJogo");
+        const proximoEvento = document.getElementById("proximoEvento");
+        const reiniciarJogo = document.getElementById("reiniciarJogo");
+        const imprimirResultado =
+            document.getElementById("imprimirResultado");
+
+        iniciarJogo.addEventListener("click", iniciar);
+        proximoEvento.addEventListener("click", avancar);
+        reiniciarJogo.addEventListener("click", iniciar);
+        imprimirResultado.addEventListener("click", () => window.print());
+
+        function trocarTela(tela) {
+            document.querySelectorAll(".tela").forEach((elemento) => {
+                elemento.classList.remove("ativa");
+            });
+
+            tela.classList.add("ativa");
+        }
+
+        function iniciar() {
+            dia = 0;
+            jogoEncerrado = false;
+
+            indicadores = {
+                seguranca: 60,
+                sustentabilidade: 60,
+                orcamento: 60,
+                confianca: 60
+            };
+
+            historico = [];
+
+            trocarTela(telaJogo);
+            atualizarIndicadores();
+            carregarEvento();
+        }
+
+        function carregarEvento() {
+            const evento = eventos[dia];
+
+            document.getElementById("diaAtual").textContent =
+                `Dia ${dia + 1} de ${eventos.length}`;
+
+            document.getElementById("eventoCategoria").textContent =
+                evento.categoria;
+
+            document.getElementById("eventoIcone").textContent =
+                evento.icone;
+
+            document.getElementById("eventoTitulo").textContent =
+                evento.titulo;
+
+            document.getElementById("eventoTexto").textContent =
+                evento.texto;
+
+            const opcoes = document.getElementById("opcoes");
+            opcoes.innerHTML = "";
+
+            const letras = ["A", "B", "C"];
+
+            evento.opcoes.forEach((opcao, indice) => {
+                const botao = document.createElement("button");
+                botao.className = "opcao";
+
+                botao.innerHTML = `
+                    <span class="opcao-letra">${letras[indice]}</span>
+
+                    <span>
+                        <strong>${opcao.titulo}</strong>
+                        <small>${opcao.descricao}</small>
+                    </span>
+                `;
+
+                botao.addEventListener("click", () => {
+                    escolherOpcao(opcao);
+                });
+
+                opcoes.appendChild(botao);
+            });
+
+            document
+                .getElementById("consequencia")
+                .classList.remove("ativa");
+
+            document
+                .getElementById("acaoProxima")
+                .classList.remove("ativa");
+        }
+
+        function escolherOpcao(opcao) {
+            document.querySelectorAll(".opcao").forEach((botao) => {
+                botao.disabled = true;
+                botao.style.cursor = "default";
+            });
+
+            aplicarEfeitos(opcao.efeitos);
+
+            historico.push({
+                dia: dia + 1,
+                evento: eventos[dia].titulo,
+                decisao: opcao.titulo
+            });
+
+            document.getElementById("consequenciaTitulo").textContent =
+                "Consequência da decisão";
+
+            document.getElementById("consequenciaTexto").textContent =
+                opcao.consequencia;
+
+            mostrarEfeitos(opcao.efeitos);
+
+            document
+                .getElementById("consequencia")
+                .classList.add("ativa");
+
+            verificarEncerramento();
+
+            if (!jogoEncerrado) {
+                const botaoProximo =
+                    document.getElementById("proximoEvento");
+
+                botaoProximo.textContent =
+                    dia === eventos.length - 1
+                        ? "VER RESULTADO"
+                        : "PRÓXIMO DIA";
+
+                document
+                    .getElementById("acaoProxima")
+                    .classList.add("ativa");
+            }
+        }
+
+        function aplicarEfeitos(efeitos) {
+            Object.keys(efeitos).forEach((indicador) => {
+                indicadores[indicador] += efeitos[indicador];
+
+                indicadores[indicador] = Math.max(
+                    0,
+                    Math.min(100, indicadores[indicador])
+                );
+            });
+
+            atualizarIndicadores();
+        }
+
+        function atualizarIndicadores() {
+            atualizarIndicador(
+                "seguranca",
+                indicadores.seguranca
+            );
+
+            atualizarIndicador(
+                "sustentabilidade",
+                indicadores.sustentabilidade
+            );
+
+            atualizarIndicador(
+                "orcamento",
+                indicadores.orcamento
+            );
+
+            atualizarIndicador(
+                "confianca",
+                indicadores.confianca
+            );
+        }
+
+        function atualizarIndicador(nome, valor) {
+            const valorElemento =
+                document.getElementById(`${nome}Valor`);
+
+            const barraElemento =
+                document.getElementById(`${nome}Barra`);
+
+            valorElemento.textContent = valor;
+            barraElemento.style.width = `${valor}%`;
+
+            if (valor <= 25) {
+                barraElemento.style.background = "#d94a4a";
+            } else if (valor <= 50) {
+                barraElemento.style.background = "#f2b134";
+            } else if (valor >= 75) {
+                barraElemento.style.background = "#16875b";
+            } else {
+                barraElemento.style.background = "#0b5f8a";
+            }
+        }
+
+        function mostrarEfeitos(efeitos) {
+            const efeitosElemento =
+                document.getElementById("efeitos");
+
+            efeitosElemento.innerHTML = "";
+
+            const nomes = {
+                seguranca: "Segurança",
+                sustentabilidade: "Sustentabilidade",
+                orcamento: "Orçamento",
+                confianca: "Confiança"
+            };
+
+            Object.entries(efeitos).forEach(([nome, valor]) => {
+                if (valor === 0) {
+                    return;
+                }
+
+                const elemento = document.createElement("span");
+
+                elemento.className =
+                    valor > 0
+                        ? "efeito positivo"
+                        : "efeito negativo";
+
+                elemento.textContent =
+                    `${nomes[nome]} ${valor > 0 ? "+" : ""}${valor}`;
+
+                efeitosElemento.appendChild(elemento);
+            });
+        }
+
+        function verificarEncerramento() {
+            const algumIndicadorZerado =
+                Object.values(indicadores).some((valor) => valor <= 0);
+
+            if (algumIndicadorZerado) {
+                jogoEncerrado = true;
+
+                setTimeout(() => {
+                    finalizarJogo(true);
+                }, 1800);
+            }
+        }
+
+        function avancar() {
+            if (dia < eventos.length - 1) {
+                dia++;
+                carregarEvento();
+            } else {
+                finalizarJogo(false);
+            }
+        }
+
+        function finalizarJogo(interrompido) {
+            trocarTela(telaResultado);
+
+            const pontuacao = Math.round(
+                (
+                    indicadores.seguranca +
+                    indicadores.sustentabilidade +
+                    indicadores.orcamento +
+                    indicadores.confianca
+                ) / 4
+            );
+
+            document.getElementById("pontuacaoFinal").textContent =
+                pontuacao;
+
+            document.getElementById("resultadoSeguranca").textContent =
+                indicadores.seguranca;
+
+            document
+                .getElementById("resultadoSustentabilidade")
+                .textContent = indicadores.sustentabilidade;
+
+            document.getElementById("resultadoOrcamento").textContent =
+                indicadores.orcamento;
+
+            document.getElementById("resultadoConfianca").textContent =
+                indicadores.confianca;
+
+            definirClassificacao(pontuacao, interrompido);
+            montarHistorico();
+        }
+
+        function definirClassificacao(pontuacao, interrompido) {
+            const titulo =
+                document.getElementById("resultadoTitulo");
+
+            const texto =
+                document.getElementById("resultadoTexto");
+
+            const icone =
+                document.getElementById("resultadoIcone");
+
+            if (interrompido) {
+                icone.textContent = "🚨";
+                titulo.textContent = "Operação interrompida";
+
+                texto.textContent =
+                    "Um dos indicadores chegou ao nível crítico. " +
+                    "A gestão de segurança e sustentabilidade exige " +
+                    "equilíbrio entre prevenção, responsabilidade ambiental, " +
+                    "recursos financeiros e participação dos trabalhadores.";
+
+                return;
+            }
+
+            if (pontuacao >= 80) {
+                icone.textContent = "🏆";
+                titulo.textContent = "Gestão de excelência";
+
+                texto.textContent =
+                    "Suas decisões demonstraram visão preventiva, " +
+                    "responsabilidade ambiental e capacidade de equilibrar " +
+                    "os diferentes interesses da empresa.";
+            } else if (pontuacao >= 65) {
+                icone.textContent = "✅";
+                titulo.textContent = "Boa gestão";
+
+                texto.textContent =
+                    "A empresa concluiu a operação em boas condições, " +
+                    "mas algumas decisões ainda podem ser aprimoradas.";
+            } else if (pontuacao >= 45) {
+                icone.textContent = "⚠️";
+                titulo.textContent = "Gestão em alerta";
+
+                texto.textContent =
+                    "A operação foi concluída, porém alguns indicadores " +
+                    "ficaram fragilizados. Reveja as decisões e observe " +
+                    "quais riscos poderiam ter sido evitados.";
+            } else {
+                icone.textContent = "🚧";
+                titulo.textContent = "Gestão crítica";
+
+                texto.textContent =
+                    "A empresa terminou a operação em situação delicada. " +
+                    "Segurança e sustentabilidade não devem ser tratadas " +
+                    "apenas como custos, mas como condições para a continuidade " +
+                    "das atividades.";
+            }
+        }
+
+        function montarHistorico() {
+            const historicoElemento =
+                document.getElementById("historicoDecisoes");
+
+            historicoElemento.innerHTML = "";
+
+            historico.forEach((item) => {
+                const elemento = document.createElement("div");
+                elemento.className = "historico-item";
+
+                elemento.innerHTML = `
+                    <strong>
+                        Dia ${item.dia}: ${item.evento}
+                    </strong>
+
+                    <span>
+                        Decisão: ${item.decisao}
+                    </span>
+                `;
+
+                historicoElemento.appendChild(elemento);
+            });
+        }
+    </script>
+
 </body>
 </html>
