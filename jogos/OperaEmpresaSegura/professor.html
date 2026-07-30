@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Área docente — Operação Empresa Segura</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="teacher-body">
+  <header class="top">
+    <div class="brand">
+      <div class="brand-icon">⚙️</div>
+      <div>
+        <strong>Área docente</strong>
+        <span>Operação Empresa Segura</span>
+      </div>
+    </div>
+    <a class="ghost-link" href="index.html">Voltar ao jogo</a>
+  </header>
+
+  <main class="teacher-main">
+    <section class="teacher-hero">
+      <span class="kicker">GABARITO E MEDIAÇÃO</span>
+      <h1>Condução da atividade</h1>
+      <p>O jogo foi organizado com base nas capacidades da Aula 2: reconhecimento de normas, EPIs, EPCs, procedimentos de segurança, classificação de resíduos, sustentabilidade e postura diante de regras organizacionais.</p>
+    </section>
+
+    <section class="teacher-grid">
+      <article class="teacher-card">
+        <span>FASE 1</span>
+        <h2>Varredura de riscos</h2>
+        <ul>
+          <li>Rota de fuga bloqueada por caixas.</li>
+          <li>Vazamento no piso sem controle.</li>
+          <li>Cabo atravessando passagem.</li>
+          <li>Trabalhador sem EPI adequado.</li>
+          <li>Produto químico sem identificação.</li>
+          <li>Proteção de máquina removida.</li>
+        </ul>
+      </article>
+
+      <article class="teacher-card">
+        <span>FASE 2</span>
+        <h2>Classificação de resíduos</h2>
+        <ul>
+          <li>Papel limpo → papel.</li>
+          <li>Garrafa plástica limpa → plástico.</li>
+          <li>Lata de alumínio → metal.</li>
+          <li>Restos de alimento → orgânico.</li>
+          <li>Pano com óleo → perigoso/contaminado.</li>
+          <li>Lâmpada fluorescente → perigoso/contaminado.</li>
+          <li>Embalagem química → perigoso/contaminado.</li>
+          <li>Caixa de papelão limpa → papel.</li>
+          <li>Filme plástico limpo → plástico.</li>
+          <li>Limalha metálica limpa → metal.</li>
+        </ul>
+      </article>
+
+      <article class="teacher-card">
+        <span>FASE 3</span>
+        <h2>Decisões técnicas</h2>
+        <ul>
+          <li>Rota bloqueada: retirar a obstrução e comunicar.</li>
+          <li>Produto químico: interromper uso, identificar e verificar procedimento.</li>
+          <li>Máquina sem proteção: parar a operação e restabelecer o EPC.</li>
+          <li>Visitante em área logística: fornecer orientação e EPI exigido.</li>
+          <li>Resíduos misturados: segregar e investigar a causa.</li>
+          <li>Piso molhado: isolar, sinalizar e eliminar a causa.</li>
+        </ul>
+      </article>
+
+      <article class="teacher-card">
+        <span>FASE 4</span>
+        <h2>Crise ambiental</h2>
+        <ol>
+          <li>Interromper a fonte do vazamento e isolar a área.</li>
+          <li>Proteger a drenagem com contenção adequada.</li>
+          <li>Recolher, registrar, destinar corretamente e analisar a causa.</li>
+        </ol>
+      </article>
+
+      <article class="teacher-card wide">
+        <span>SUGESTÃO</span>
+        <h2>Uso em uma aula de 4 horas</h2>
+        <div class="schedule">
+          <div><b>30 min</b><span>Revisão de normas, EPIs, EPCs e classificação de resíduos.</span></div>
+          <div><b>40 min</b><span>Execução individual ou em duplas.</span></div>
+          <div><b>50 min</b><span>Reexecução em equipes tentando superar a pontuação.</span></div>
+          <div><b>60 min</b><span>Discussão coletiva das decisões e justificativas.</span></div>
+          <div><b>60 min</b><span>Registro avaliativo, correção e feedback.</span></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="last-result">
+      <h2>Último resultado salvo neste navegador</h2>
+      <pre id="lastResult">Nenhum resultado registrado.</pre>
+      <button id="clearResult" class="danger-btn">Apagar resultado local</button>
+    </section>
+  </main>
+
+  <script>
+    const saved = localStorage.getItem('empresaSeguraResult');
+    if (saved) {
+      const data = JSON.parse(saved);
+      document.getElementById('lastResult').textContent =
+        `Equipe: ${data.team}\nPontuação: ${data.score}\nMaior sequência: ${data.bestStreak}x\nVidas restantes: ${data.lives}\nNível: ${data.difficulty}\nData: ${new Date(data.date).toLocaleString('pt-BR')}`;
+    }
+    document.getElementById('clearResult').addEventListener('click', () => {
+      localStorage.removeItem('empresaSeguraResult');
+      location.reload();
+    });
+  </script>
+</body>
+</html>
