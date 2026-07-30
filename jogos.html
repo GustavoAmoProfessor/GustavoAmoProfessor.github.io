@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jogos Educacionais | Gustavo Garcia de Amo</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f6f8fb;
+            margin: 0;
+            color: #172033;
+        }
+
+        header {
+            background: #fff;
+            border-bottom: 1px solid #dbe5ee;
+            padding: 18px;
+        }
+
+        nav {
+            max-width: 1150px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #172033;
+            margin: 0 8px;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: #0b5f8a;
+        }
+
+        .logo {
+            color: #0b5f8a;
+            font-weight: 800;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: auto;
+            padding: 50px 20px;
+        }
+
+        .titulo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .titulo h1 {
+            color: #0b5f8a;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
+        .titulo p {
+            color: #64748b;
+            max-width: 700px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+        .jogos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 20px;
+        }
+
+        .jogo {
+            background: #fff;
+            border: 1px solid #dbe5ee;
+            border-radius: 18px;
+            padding: 25px;
+            transition: 0.2s;
+        }
+
+        .jogo:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(11, 95, 138, 0.12);
+        }
+
+        .jogo .icone {
+            font-size: 2.5rem;
+        }
+
+        .jogo h2 {
+            font-size: 1.25rem;
+            color: #0b5f8a;
+        }
+
+        .jogo p {
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .botao {
+            display: inline-block;
+            background: #0b5f8a;
+            color: #fff;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .botao:hover {
+            background: #08496b;
+        }
+
+        .voltar {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .voltar a {
+            color: #0b5f8a;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 700px) {
+            nav {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav a {
+                display: inline-block;
+                margin: 6px;
+            }
+
+            .titulo h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">Gustavo Garcia de Amo</div>
+
+            <div>
+                <a href="index.html">Início</a>
+                <a href="publicacoes.html">Publicações</a>
+                <a href="projetos.html">Projetos</a>
+                <a href="rea.html">REA</a>
+                <a href="ensino.html">Ensino</a>
+                <a href="jogos.html">Jogos</a>
+                <a href="contato.html">Contato</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <section class="titulo">
+            <h1>🎮 Jogos Educacionais</h1>
+
+            <p>
+                Jogos, quizzes, simulações e desafios digitais desenvolvidos
+                para apoiar as atividades realizadas em sala de aula.
+            </p>
+        </section>
+
+        <section class="jogos">
+
+            <article class="jogo">
+                <div class="icone">🏭</div>
+
+                <h2>Desafio da Melhoria Industrial</h2>
+
+                <p>
+                    Jogo sobre identificação de problemas, segurança,
+                    sustentabilidade e melhoria de processos.
+                </p>
+
+                <a
+                    class="botao"
+                    href="jogos/melhoria-industrial/index.html"
+                >
+                    Jogar
+                </a>
+            </article>
+
+            <article class="jogo">
+                <div class="icone">🧠</div>
+
+                <h2>Quiz de Lógica</h2>
+
+                <p>
+                    Questões e desafios sobre lógica de programação,
+                    algoritmos e resolução de problemas.
+                </p>
+
+                <a
+                    class="botao"
+                    href="jogos/quiz-logica/index.html"
+                >
+                    Jogar
+                </a>
+            </article>
+
+            <article class="jogo">
+                <div class="icone">🔐</div>
+
+                <h2>Missão Cidadania Digital</h2>
+
+                <p>
+                    Atividade interativa sobre segurança, privacidade,
+                    LGPD e comportamento responsável na internet.
+                </p>
+
+                <a
+                    class="botao"
+                    href="jogos/cidadania-digital/index.html"
+                >
+                    Jogar
+                </a>
+            </article>
+
+            <article class="jogo">
+                <div class="icone">🚧</div>
+
+                <h2>Novo jogo em desenvolvimento</h2>
+
+                <p>
+                    Este espaço poderá receber novas atividades e recursos
+                    educacionais interativos.
+                </p>
+
+                <a class="botao" href="#">
+                    Em breve
+                </a>
+            </article>
+
+        </section>
+
+        <div class="voltar">
+            <a href="index.html">← Voltar para a página inicial</a>
+        </div>
+
+    </main>
+
+</body>
+</html>
